@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/military-tour-calculator/static/css/main.abf0df1c.css",
+    "main.js": "/military-tour-calculator/static/js/main.ed01ae48.js",
+    "static/js/453.aaaf8dd7.chunk.js": "/military-tour-calculator/static/js/453.aaaf8dd7.chunk.js",
+    "index.html": "/military-tour-calculator/index.html",
+    "main.abf0df1c.css.map": "/military-tour-calculator/static/css/main.abf0df1c.css.map",
+    "main.ed01ae48.js.map": "/military-tour-calculator/static/js/main.ed01ae48.js.map",
+    "453.aaaf8dd7.chunk.js.map": "/military-tour-calculator/static/js/453.aaaf8dd7.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.abf0df1c.css",
+    "static/js/main.ed01ae48.js"
+  ]
+}
