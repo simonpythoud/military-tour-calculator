@@ -1,4 +1,4 @@
-export default {
+const englishTranslations = {
   title: "Military Tour Time Calculator",
   distanceMeasurements: "Distance Measurements",
   horizontalDistance: "Horizontal Distance (km)",
@@ -54,4 +54,6 @@ export default {
   advanced: "Advanced",
   basic: "Basic",
   none: "None"
-}; 
+};
+
+export default englishTranslations; 

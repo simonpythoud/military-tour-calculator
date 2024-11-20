@@ -1,4 +1,4 @@
-export default {
+const germanTranslations = {
   title: "Militärischer Marschzeitrechner",
   distanceMeasurements: "Distanzmessungen",
   horizontalDistance: "Horizontale Distanz (km)",
@@ -49,4 +49,6 @@ export default {
   advanced: "Fortgeschritten",
   basic: "Grundlegend",
   none: "Keine"
-}; 
+};
+
+export default germanTranslations; 

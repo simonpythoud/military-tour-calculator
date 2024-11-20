@@ -1,4 +1,4 @@
-export default {
+const romanshTranslations = {
   title: "Calculatur da temp da marcha militar",
   distanceMeasurements: "Mesiraziuns da distanza",
   horizontalDistance: "Distanza orizontala (km)",
@@ -49,4 +49,6 @@ export default {
   advanced: "Avanzà",
   basic: "Basic",
   none: "Nagin"
-}; 
+};
+
+export default romanshTranslations; 

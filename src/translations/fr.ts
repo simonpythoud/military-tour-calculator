@@ -1,4 +1,4 @@
-export default {
+const frenchTranslations = {
   title: "Calculateur de temps de marche militaire",
   distanceMeasurements: "Mesures de distance",
   horizontalDistance: "Distance horizontale (km)",
@@ -49,4 +49,6 @@ export default {
   advanced: "Avancé",
   basic: "Basique",
   none: "Aucune"
-}; 
+};
+
+export default frenchTranslations; 

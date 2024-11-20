@@ -1,4 +1,4 @@
-export default {
+const italianTranslations = {
   title: "Calcolatore tempo di marcia militare",
   distanceMeasurements: "Misure di distanza",
   horizontalDistance: "Distanza orizzontale (km)",
@@ -49,4 +49,6 @@ export default {
   advanced: "Avanzato",
   basic: "Base",
   none: "Nessuna"
-}; 
+};
+
+export default italianTranslations; 

@@ -1,59 +1,26 @@
 import { TourInputs } from '../types';
-
-const BASE_HORIZONTAL_SPEED = 4; // km/h
-const BASE_VERTICAL_SPEED = 400; // m/h
+import {
+  BASE_SPEEDS,
+  PACKAGE_WEIGHT,
+  DANGER_FACTORS,
+  LIGHT_FACTORS,
+  TERRAIN_FACTORS,
+  PHYSIQUE_FACTORS,
+  EXPERIENCE_FACTORS,
+} from '../constants/tourFactors';
 
 const getFactorMultiplier = (inputs: TourInputs): number => {
   let multiplier = 1;
 
   // Package weight factor
-  multiplier *= (1 - (inputs.package * 0.02)); // Each 5kg reduces speed by 2%
+  multiplier *= (1 - (inputs.package * PACKAGE_WEIGHT.REDUCTION_PER_5KG));
 
-  // Danger level factor
-  const dangerFactors = {
-    low: 1,
-    medium: 0.9,
-    high: 0.7,
-    extreme: 0.5
-  };
-  multiplier *= dangerFactors[inputs.dangerLevel];
-
-  // Light factor
-  const lightFactors = {
-    day: 1,
-    night: 0.6,
-    mixed: 0.8
-  };
-  multiplier *= lightFactors[inputs.light];
-
-  // Terrain factor
-  const terrainFactors = {
-    easy: 1,
-    alpine_medium: 0.8,
-    alpine_hard: 0.6,
-    alpine_extreme: 0.4
-  };
-  multiplier *= terrainFactors[inputs.terrain];
-
-  // Physique factor
-  const physiqueFactors = {
-    very_fit: 1.2,
-    fit: 1,
-    medium: 0.8,
-    poor: 0.6,
-    injured: 0.3
-  };
-  multiplier *= physiqueFactors[inputs.physique];
-
-  // Experience factor
-  const experienceFactors = {
-    expert: 1.2,
-    advanced: 1.1,
-    medium: 1,
-    basic: 0.8,
-    none: 0.6
-  };
-  multiplier *= experienceFactors[inputs.experience];
+  // Apply all other factors
+  multiplier *= DANGER_FACTORS[inputs.dangerLevel];
+  multiplier *= LIGHT_FACTORS[inputs.light];
+  multiplier *= TERRAIN_FACTORS[inputs.terrain];
+  multiplier *= PHYSIQUE_FACTORS[inputs.physique];
+  multiplier *= EXPERIENCE_FACTORS[inputs.experience];
 
   return multiplier;
 };
@@ -68,12 +35,12 @@ export const calculateTourTime = (inputs: TourInputs): {
   
   // Calculate horizontal time
   const horizontalHours = inputs.horizontalDistance 
-    ? inputs.horizontalDistance / (BASE_HORIZONTAL_SPEED * multiplier)
+    ? inputs.horizontalDistance / (BASE_SPEEDS.HORIZONTAL * multiplier)
     : 0;
   
-  // Calculate vertical time (convert meters to kilometers for consistency)
+  // Calculate vertical time
   const verticalHours = inputs.verticalDistance 
-    ? inputs.verticalDistance / (BASE_VERTICAL_SPEED * multiplier)
+    ? inputs.verticalDistance / (BASE_SPEEDS.VERTICAL * multiplier)
     : 0;
   
   return {
