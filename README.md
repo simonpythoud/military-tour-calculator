@@ -1,46 +1,91 @@
-# Getting Started with Create React App
+# Military Tour Time Calculator
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A web-based calculator for estimating military march durations, taking into account various terrain and condition factors.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- Calculate total march time based on:
+  - Horizontal distance (km)
+  - Vertical distance (m)
+  - Package/equipment weight (0-30kg)
+  - Danger level conditions
+  - Light conditions
+  - Terrain type
+  - Physical condition
+  - Experience level
+- Multilingual support (English, German, French, Italian, Romansh)
+- Detailed breakdown of horizontal and vertical times
+- Real-time calculations
+- Mobile-responsive design
 
-### `npm start`
+## Getting Started
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Prerequisites
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- Node.js (version 14 or higher)
+- npm or yarn
 
-### `npm test`
+### Installation
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. Clone the repository
 
-### `npm run build`
+```bash
+git clone https://github.com/simonpythoud/military-tour-calculator.git
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+2. Install dependencies
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```bash
+npm install
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+3. Start the development server
 
-### `npm run eject`
+```bash
+npm start
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+The application will be available at [http://localhost:3000](http://localhost:3000)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Calculation Method
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+The calculator uses the following base parameters:
+- Base horizontal speed: 4 km/h
+- Base vertical speed: 400 m/h
 
-## Learn More
+These base speeds are then modified by various factors:
+- Package weight: Each 5kg reduces speed by 2%
+- Danger level: Affects speed from 100% (low) to 50% (extreme)
+- Light conditions: Day (100%), Mixed (80%), Night (60%)
+- Terrain type: From easy (100%) to alpine extreme (40%)
+- Physical condition: From very fit (120%) to injured (30%)
+- Experience level: From expert (120%) to none (60%)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Note: The calculation of cumulative fatigue over time is not currently part of this application. This feature may be developed in the future based on military requirements and user needs.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Technologies Used
+
+- React
+- TypeScript
+- Tailwind CSS
+- React Icons
+
+## Acknowledgments
+
+- This project was inspired by the need to estimate military march times in the field.
+- Thanks to [@simonpythoud](https://github.com/simonpythoud) for the initial implementation.
+- Thanks to Ivo for the request to develop this as part of the toolset used by the swiss mountain specialist.
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is open source and available under the MIT License.
+
+## Deployment
+
+The application is deployed at [https://simonpythoud.github.io/military-tour-calculator](https://simonpythoud.github.io/military-tour-calculator)
+
