@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { TourInputs, Package } from '../types';
 import { calculateTourTime } from '../utils/calculateTime';
-import { FaRuler, FaMountain, FaWeightHanging, FaExclamationTriangle, FaSun, FaHiking, FaRunning, FaMedal, FaChevronDown, FaWindowClose, FaInfoCircle } from 'react-icons/fa';
+import { FaRuler, FaMountain, FaWeightHanging, FaExclamationTriangle, FaSun, FaHiking, FaRunning, FaMedal, FaChevronDown, FaWindowClose } from 'react-icons/fa';
 import { useLanguage } from '../contexts/LanguageContext';
 import { calculatePerformanceOverTime } from '../utils/calculateFatigue';
 import PerformanceGraph from './PerformanceGraph';
