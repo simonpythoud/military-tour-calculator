@@ -48,7 +48,14 @@ const frenchTranslations = {
   expert: "Expert",
   advanced: "Avancé",
   basic: "Basique",
-  none: "Aucune"
+  none: "Aucune",
+
+  // Performance calculation
+  performanceEvolution: "Évolution de la performance",
+  performanceDescription: "Évolution estimée de la performance sur la durée",
+  hours: "Heures",
+  performancePercentage: "Performance (%)",
+  performanceWarning: "Remarque : Cette estimation peut varier en fonction de facteurs individuels",
 };
 
 export default frenchTranslations; 

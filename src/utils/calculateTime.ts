@@ -9,7 +9,7 @@ import {
   EXPERIENCE_FACTORS,
 } from '../constants/tourFactors';
 
-const getFactorMultiplier = (inputs: TourInputs): number => {
+export const getFactorMultiplier = (inputs: TourInputs): number => {
   let multiplier = 1;
 
   // Package weight factor

@@ -48,7 +48,14 @@ const germanTranslations = {
   expert: "Experte",
   advanced: "Fortgeschritten",
   basic: "Grundlegend",
-  none: "Keine"
+  none: "Keine",
+
+  // Performance calculation
+  performanceEvolution: "Leistungsentwicklung",
+  performanceDescription: "Geschätzte Leistungsentwicklung über die Zeit",
+  hours: "Stunden",
+  performancePercentage: "Leistung (%)",
+  performanceWarning: "Hinweis: Dies ist eine Schätzung und kann aufgrund individueller Faktoren variieren",
 };
 
 export default germanTranslations; 

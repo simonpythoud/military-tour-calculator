@@ -48,7 +48,14 @@ const romanshTranslations = {
   expert: "Expert",
   advanced: "Avanzà",
   basic: "Basic",
-  none: "Nagin"
+  none: "Nagin",
+
+  // Performance calculation
+  performanceEvolution: "Evoluziun da la performance",
+  performanceDescription: "Evoluziun estimada da la performance in temp",
+  hours: "Ores",
+  performancePercentage: "Performance (%)",
+  performanceWarning: "Nota: Questa è una stima e può variare in base a fattori individuali",
 };
 
 export default romanshTranslations; 

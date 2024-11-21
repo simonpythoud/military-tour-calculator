@@ -48,7 +48,14 @@ const italianTranslations = {
   expert: "Esperto",
   advanced: "Avanzato",
   basic: "Base",
-  none: "Nessuna"
+  none: "Nessuna",
+
+  // Performance calculation
+  performanceEvolution: "Evoluzione della performance",
+  performanceDescription: "Evoluzione stimata della performance nel tempo",
+  hours: "Ore",
+  performancePercentage: "Performance (%)",
+  performanceWarning: "Nota: Questa è una stima e può variare in base a fattori individuali",
 };
 
 export default italianTranslations; 

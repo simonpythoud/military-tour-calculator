@@ -53,7 +53,14 @@ const englishTranslations = {
   expert: "Expert",
   advanced: "Advanced",
   basic: "Basic",
-  none: "None"
+  none: "None",
+  
+  // Performance calculation
+  performanceEvolution: "Performance Evolution",
+  performanceDescription: "Estimated performance level over time",
+  hours: "Hours",
+  performancePercentage: "Performance (%)",
+  performanceWarning: "Note: This is an estimation and may vary based on individual factors",
 };
 
 export default englishTranslations; 

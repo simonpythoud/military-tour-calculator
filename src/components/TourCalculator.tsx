@@ -3,6 +3,8 @@ import { TourInputs, Package } from '../types';
 import { calculateTourTime } from '../utils/calculateTime';
 import { FaRuler, FaMountain, FaWeightHanging, FaExclamationTriangle, FaSun, FaHiking, FaRunning, FaMedal } from 'react-icons/fa';
 import { useLanguage } from '../contexts/LanguageContext';
+import { calculatePerformanceOverTime } from '../utils/calculateFatigue';
+import PerformanceGraph from './PerformanceGraph';
 
 const TourCalculator: React.FC = () => {
   const { t } = useLanguage();
@@ -26,6 +28,8 @@ const TourCalculator: React.FC = () => {
   };
 
   const packageOptions: Package[] = [0, 5, 10, 15, 20, 25, 30];
+
+  const performanceData = calculatePerformanceOverTime(inputs, result.totalHours);
 
   return (
     <div className="max-w-4xl mx-auto p-3 sm:p-6 bg-gray-100 rounded-lg shadow-lg">
@@ -225,6 +229,19 @@ const TourCalculator: React.FC = () => {
             <li>{t('verticalCalculation')}: {inputs.verticalDistance}m ÷ ({400} × {result.multiplier.toFixed(2)})</li>
           </ul>
         </div>
+      </div>
+
+      <div className="bg-white p-3 sm:p-4 rounded-lg shadow mt-4">
+        <h2 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">
+          {t('performanceEvolution')}
+        </h2>
+        <p className="text-sm text-gray-600 mb-4">
+          {t('performanceDescription')}
+        </p>
+        <PerformanceGraph data={performanceData} />
+        <p className="text-xs text-gray-500 mt-2 italic">
+          {t('performanceWarning')}
+        </p>
       </div>
     </div>
   );
