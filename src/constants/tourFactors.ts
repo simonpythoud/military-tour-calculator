@@ -48,4 +48,24 @@ export const EXPERIENCE_FACTORS = {
   medium: 1.0,    // 100% of base speed
   basic: 0.8,     // 80% of base speed
   none: 0.6,      // 60% of base speed
+};
+
+// Weather condition multipliers
+export const WEATHER_FACTORS = {
+  clear: 1.0,      // 100% of base speed
+  rain: 0.8,       // 80% of base speed
+  snow: 0.6,       // 60% of base speed
+  storm: 0.4,      // 40% of base speed
+  extreme: 0.3     // 30% of base speed
 }; 
+
+export const BREAK_DURATION = {
+  short: 10,
+  long: 30,
+  meal: 60
+};
+
+export const SEASON_FACTORS = {
+  winter: 0.8,
+  summer: 1.0,
+};

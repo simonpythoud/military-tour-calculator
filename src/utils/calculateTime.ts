@@ -30,23 +30,50 @@ export const calculateTourTime = (inputs: TourInputs): {
   horizontalHours: number;
   verticalHours: number;
   multiplier: number;
+  reliabilityFactor: 'high' | 'medium' | 'low';
+  warnings: string[];
 } => {
   const multiplier = getFactorMultiplier(inputs);
   
-  // Calculate horizontal time
   const horizontalHours = inputs.horizontalDistance 
     ? inputs.horizontalDistance / (BASE_SPEEDS.HORIZONTAL * multiplier)
     : 0;
   
-  // Calculate vertical time
   const verticalHours = inputs.verticalDistance 
     ? inputs.verticalDistance / (BASE_SPEEDS.VERTICAL * multiplier)
     : 0;
   
+  const totalHours = horizontalHours + verticalHours;
+  
+  // Determine reliability factor and generate warnings
+  const warnings: string[] = [];
+  let reliabilityFactor: 'high' | 'medium' | 'low' = 'high';
+  
+  if (totalHours > 24) {
+    reliabilityFactor = 'low';
+    warnings.push('multiDayTourWarning');
+  } else if (totalHours > 18) {
+    reliabilityFactor = 'low';
+    warnings.push('extendedTourWarning');
+  } else if (totalHours > 12) {
+    reliabilityFactor = 'medium';
+    warnings.push('longTourWarning');
+  }
+  
+  if (inputs.dangerLevel === 'extreme' || inputs.dangerLevel === 'high') {
+    warnings.push('highDangerWarning');
+  }
+  
+  if (inputs.terrain === 'alpine_extreme') {
+    warnings.push('extremeTerrainWarning');
+  }
+  
   return {
-    totalHours: horizontalHours + verticalHours,
+    totalHours,
     horizontalHours,
     verticalHours,
-    multiplier
+    multiplier,
+    reliabilityFactor,
+    warnings
   };
 };

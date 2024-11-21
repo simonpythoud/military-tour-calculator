@@ -1,10 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TourInputs, Package } from '../types';
 import { calculateTourTime } from '../utils/calculateTime';
-import { FaRuler, FaMountain, FaWeightHanging, FaExclamationTriangle, FaSun, FaHiking, FaRunning, FaMedal, FaChevronDown } from 'react-icons/fa';
+import { FaRuler, FaMountain, FaWeightHanging, FaExclamationTriangle, FaSun, FaHiking, FaRunning, FaMedal, FaChevronDown, FaWindowClose, FaInfoCircle } from 'react-icons/fa';
 import { useLanguage } from '../contexts/LanguageContext';
 import { calculatePerformanceOverTime } from '../utils/calculateFatigue';
 import PerformanceGraph from './PerformanceGraph';
+import { saveCalculation, loadCalculation } from '../utils/storage';
+import ExportResults from './ExportResults';
+import TourDisclaimers from './TourDisclaimers';
+import ReliabilityIndicator from './ReliabilityIndicator';
+import InfoTooltip from './InfoTooltip';
 
 const TourCalculator: React.FC = () => {
   const { t } = useLanguage();
@@ -18,8 +23,16 @@ const TourCalculator: React.FC = () => {
     physique: 'fit',
     experience: 'medium'
   });
+  const [calculationName, setCalculationName] = useState('');
+  const [savedCalculations, setSavedCalculations] = useState<string[]>([]);
 
-  const result = calculateTourTime(inputs);
+  useEffect(() => {
+    const saved = localStorage.getItem('savedCalculations') || '{}';
+    const calculations = JSON.parse(saved);
+    setSavedCalculations(Object.keys(calculations));
+  }, []);
+
+  const { totalHours, horizontalHours, verticalHours, multiplier, reliabilityFactor } = calculateTourTime(inputs);
 
   const formatTime = (hours: number): string => {
     const h = Math.floor(hours);
@@ -29,7 +42,29 @@ const TourCalculator: React.FC = () => {
 
   const packageOptions: Package[] = [0, 5, 10, 15, 20, 25, 30];
 
-  const performanceData = calculatePerformanceOverTime(inputs, result.totalHours);
+  const performanceData = calculatePerformanceOverTime(inputs, totalHours);
+
+  const handleSave = () => {
+    if (calculationName.trim()) {
+      saveCalculation(calculationName, inputs);
+      setSavedCalculations(prev => [...prev, calculationName]);
+      setCalculationName('');
+    }
+  };
+
+  const handleLoad = (name: string) => {
+    const loadedInputs = loadCalculation(name);
+    if (loadedInputs) {
+      setInputs(loadedInputs);
+    }
+  };
+
+  const handleRemove = (name: string) => {
+    const saved = JSON.parse(localStorage.getItem('savedCalculations') || '{}');
+    delete saved[name];
+    localStorage.setItem('savedCalculations', JSON.stringify(saved));
+    setSavedCalculations(Object.keys(saved));
+  };
 
   return (
     <div className="max-w-4xl mx-auto p-3 sm:p-6 bg-gray-100 rounded-lg shadow-lg">
@@ -95,6 +130,7 @@ const TourCalculator: React.FC = () => {
             <label className="block mb-2 flex items-center gap-1">
               <FaWeightHanging className="text-gray-600" />
               {t('packageWeight')}
+              <InfoTooltip content={t('tooltip_packageWeight')} />
             </label>
             <select
               value={inputs.package}
@@ -111,6 +147,7 @@ const TourCalculator: React.FC = () => {
             <label className="block mb-2 flex items-center gap-1">
               <FaExclamationTriangle className="text-gray-600" />
               {t('dangerLevel')}
+              <InfoTooltip content={t('tooltip_dangerLevel')} />
             </label>
             <select
               value={inputs.dangerLevel}
@@ -128,6 +165,7 @@ const TourCalculator: React.FC = () => {
             <label className="block mb-2 flex items-center gap-1">
               <FaSun className="text-gray-600" />
               {t('lightConditions')}
+              <InfoTooltip content={t('tooltip_lightConditions')} />
             </label>
             <select
               value={inputs.light}
@@ -144,6 +182,7 @@ const TourCalculator: React.FC = () => {
             <label className="block mb-2 flex items-center gap-1">
               <FaMountain className="text-gray-600" />
               {t('terrainType')}
+              <InfoTooltip content={t('tooltip_terrainType')} />
             </label>
             <select
               value={inputs.terrain}
@@ -161,6 +200,7 @@ const TourCalculator: React.FC = () => {
             <label className="block mb-2 flex items-center gap-1">
               <FaRunning className="text-gray-600" />
               {t('physicalCondition')}
+              <InfoTooltip content={t('tooltip_physicalCondition')} />
             </label>
             <select
               value={inputs.physique}
@@ -179,6 +219,7 @@ const TourCalculator: React.FC = () => {
             <label className="block mb-2 flex items-center gap-1">
               <FaMedal className="text-gray-600" />
               {t('experienceLevel')}
+              <InfoTooltip content={t('tooltip_experienceLevel')} />
             </label>
             <select
               value={inputs.experience}
@@ -201,35 +242,45 @@ const TourCalculator: React.FC = () => {
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4 mb-4 sm:mb-6">
           <div className="p-2 sm:p-3 bg-gray-50 rounded-lg">
             <div className="text-xs sm:text-sm text-gray-600">{t('totalTime')}</div>
-            <div className="text-lg sm:text-xl font-bold">{formatTime(result.totalHours)}</div>
+            <div className="text-lg sm:text-xl font-bold">{formatTime(totalHours)}</div>
           </div>
           <div className="p-2 sm:p-3 bg-blue-50 rounded-lg">
             <div className="text-xs sm:text-sm text-gray-600">{t('horizontalTime')}</div>
-            <div className="text-lg sm:text-xl font-bold text-blue-700">{formatTime(result.horizontalHours)}</div>
+            <div className="text-lg sm:text-xl font-bold text-blue-700">{formatTime(horizontalHours)}</div>
           </div>
           <div className="p-2 sm:p-3 bg-orange-50 rounded-lg">
             <div className="text-xs sm:text-sm text-gray-600">{t('verticalTime')}</div>
-            <div className="text-lg sm:text-xl font-bold text-orange-700">{formatTime(result.verticalHours)}</div>
+            <div className="text-lg sm:text-xl font-bold text-orange-700">{formatTime(verticalHours)}</div>
           </div>
           <div className="p-2 sm:p-3 bg-gray-50 rounded-lg">
             {/* <div className="text-xs sm:text-sm text-gray-600">{t('speedMultiplier')}</div> */}
             <div className="text-xs sm:text-sm text-gray-600">{t('speedAdaptedToFactorPercentage')}</div>
             {/* <div className="text-lg sm:text-xl font-bold">{result.multiplier.toFixed(2)}x</div> */}
-            <div className="text-lg sm:text-xl font-bold">{Math.round(result.multiplier * 100)}%</div>
+            <div className="text-lg sm:text-xl font-bold">{Math.round(multiplier * 100)}%</div>
           </div>
         </div>
           
+        <div className="mb-4 border-b pb-4">
+          <ReliabilityIndicator reliability={reliabilityFactor} />
+        </div>
+
         <div className="bg-gray-50 p-3 sm:p-4 rounded-lg">
           <h3 className="text-sm sm:text-base font-bold mb-2">{t('calculationMethod')}</h3>
           <ul className="list-disc list-inside space-y-1 text-xs sm:text-sm">
             <li>{t('baseHorizontalSpeed')}: 4 km/h</li>
             <li>{t('baseVerticalSpeed')}: 400 m/h</li>
             <li>{t('packageWeightEffect')}: -{inputs.package * 2}% speed</li>
-            <li>{t('currentMultiplier')}: {result.multiplier.toFixed(2)}</li>
-            <li>{t('horizontalCalculation')}: {inputs.horizontalDistance}km ÷ ({4} × {result.multiplier.toFixed(2)})</li>
-            <li>{t('verticalCalculation')}: {inputs.verticalDistance}m ÷ ({400} × {result.multiplier.toFixed(2)})</li>
+            <li>{t('currentMultiplier')}: {multiplier.toFixed(2)}</li>
+            <li>{t('horizontalCalculation')}: {inputs.horizontalDistance}km ÷ ({4} × {multiplier.toFixed(2)})</li>
+            <li>{t('verticalCalculation')}: {inputs.verticalDistance}m ÷ ({400} × {multiplier.toFixed(2)})</li>
           </ul>
         </div>
+
+        <TourDisclaimers 
+          totalHours={totalHours}
+          dangerLevel={inputs.dangerLevel}
+          terrain={inputs.terrain}
+        />
       </div>
 
       <div className="bg-white p-3 sm:p-4 rounded-lg shadow mt-4">
@@ -244,6 +295,65 @@ const TourCalculator: React.FC = () => {
           {t('performanceWarning')}
         </p>
       </div>
+
+      <div className="mt-6 p-4 bg-white rounded-lg shadow">
+        <h2 className="text-xl font-bold mb-4">{t('savedCalculations')}</h2>
+        
+        <div className="flex gap-2 mb-4">
+          <input
+            type="text"
+            value={calculationName}
+            onChange={(e) => setCalculationName(e.target.value)}
+            placeholder={t('enterCalculationName')}
+            className="flex-1 p-2 border rounded"
+          />
+          <button
+            onClick={handleSave}
+            className="px-4 py-2 bg-military-green text-white rounded hover:bg-opacity-90"
+          >
+            {t('save')}
+          </button>
+        </div>
+
+        {savedCalculations.length > 0 && (
+          <div className="flex flex-wrap gap-2">
+            {savedCalculations.map((name) => (
+              <div key={name} className="relative">
+                <button
+                  onClick={() => handleLoad(name)}
+                  className="px-3 py-1 pr-8 bg-gray-200 rounded hover:bg-gray-300"
+                >
+                  {name}
+                </button>
+                <button
+                  onClick={() => handleRemove(name)}
+                  className="absolute top-0 right-0 h-full px-2 text-gray-600"
+                >
+                  <FaWindowClose />
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Export Section */}
+      <div className="mt-6 p-4 bg-white rounded-lg shadow">
+        <h2 className="text-xl font-bold mb-4">{t('exportResults')}</h2>
+        <ExportResults 
+          results={{
+            inputs,
+            calculations: {
+              total: formatTime(totalHours),
+              horizontal: formatTime(horizontalHours),
+              vertical: formatTime(verticalHours),
+              multiplier: multiplier
+            },
+            performance: performanceData,
+          }} 
+        />
+      </div>
+
     </div>
   );
 };
