@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/military-tour-calculator/static/css/main.e8a9551a.css",
-    "main.js": "/military-tour-calculator/static/js/main.d1ce11b8.js",
-    "static/js/453.aaaf8dd7.chunk.js": "/military-tour-calculator/static/js/453.aaaf8dd7.chunk.js",
+    "main.css": "/military-tour-calculator/static/css/main.2d8c24d9.css",
+    "main.js": "/military-tour-calculator/static/js/main.1e0883d4.js",
+    "static/js/453.6dc4eeed.chunk.js": "/military-tour-calculator/static/js/453.6dc4eeed.chunk.js",
     "index.html": "/military-tour-calculator/index.html",
-    "main.e8a9551a.css.map": "/military-tour-calculator/static/css/main.e8a9551a.css.map",
-    "main.d1ce11b8.js.map": "/military-tour-calculator/static/js/main.d1ce11b8.js.map",
-    "453.aaaf8dd7.chunk.js.map": "/military-tour-calculator/static/js/453.aaaf8dd7.chunk.js.map"
+    "main.2d8c24d9.css.map": "/military-tour-calculator/static/css/main.2d8c24d9.css.map",
+    "main.1e0883d4.js.map": "/military-tour-calculator/static/js/main.1e0883d4.js.map",
+    "453.6dc4eeed.chunk.js.map": "/military-tour-calculator/static/js/453.6dc4eeed.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.e8a9551a.css",
-    "static/js/main.d1ce11b8.js"
+    "static/css/main.2d8c24d9.css",
+    "static/js/main.1e0883d4.js"
   ]
 }
