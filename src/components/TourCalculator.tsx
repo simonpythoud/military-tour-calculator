@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { TourInputs, Package } from '../types';
 import { calculateTourTime } from '../utils/calculateTime';
-import { FaRuler, FaMountain, FaWeightHanging, FaExclamationTriangle, FaSun, FaHiking, FaRunning, FaMedal } from 'react-icons/fa';
+import { FaRuler, FaMountain, FaWeightHanging, FaExclamationTriangle, FaSun, FaHiking, FaRunning, FaMedal, FaChevronDown } from 'react-icons/fa';
 import { useLanguage } from '../contexts/LanguageContext';
 import { calculatePerformanceOverTime } from '../utils/calculateFatigue';
 import PerformanceGraph from './PerformanceGraph';
@@ -83,12 +83,13 @@ const TourCalculator: React.FC = () => {
         </div>
       </div>
 
-      {/* Factors Section */}
-      <div className="bg-white p-3 sm:p-4 rounded-lg shadow mb-4 sm:mb-6">
-        <h2 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4 flex items-center gap-2">
+      {/* Factors Section - Updated with gray chevron */}
+      <details className="bg-white p-3 sm:p-4 rounded-lg shadow mb-4 sm:mb-6 group" open>
+        <summary className="text-base sm:text-lg font-semibold mb-3 sm:mb-4 flex items-center gap-2 cursor-pointer">
           <FaWeightHanging className="text-military-green" />
           {t('influencingFactors')}
-        </h2>
+          <FaChevronDown className="ml-auto transform transition-transform duration-200 group-open:rotate-180 text-gray-600" />
+        </summary>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
           <div>
             <label className="block mb-2 flex items-center gap-1">
@@ -192,7 +193,7 @@ const TourCalculator: React.FC = () => {
             </select>
           </div>
         </div>
-      </div>
+      </details>
         
       {/* Results Section */}
       <div className="bg-white p-3 sm:p-4 rounded-lg shadow">
