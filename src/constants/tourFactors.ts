@@ -69,3 +69,11 @@ export const SEASON_FACTORS = {
   winter: 0.8,
   summer: 1.0,
 };
+
+const GROUP_SIZE_FACTORS = {
+  individual: 1.0,
+  small_team: 0.95,  // 2-5 people
+  squad: 0.9,        // 6-12 people
+  platoon: 0.8,      // 13-30 people
+  company: 0.7       // 31+ people
+};
