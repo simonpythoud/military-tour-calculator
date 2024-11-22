@@ -1,6 +1,10 @@
 import React from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
-import { FaCheckCircle, FaExclamationCircle, FaTimesCircle } from 'react-icons/fa';
+import {
+  FaCheckCircle,
+  FaExclamationCircle,
+  FaTimesCircle,
+} from 'react-icons/fa';
 
 interface Props {
   reliability: 'high' | 'medium' | 'low';
@@ -8,7 +12,7 @@ interface Props {
 
 const ReliabilityIndicator: React.FC<Props> = ({ reliability }) => {
   const { t } = useLanguage();
-  
+
   const getIcon = () => {
     switch (reliability) {
       case 'high':
@@ -19,7 +23,7 @@ const ReliabilityIndicator: React.FC<Props> = ({ reliability }) => {
         return <FaTimesCircle className="text-red-500" />;
     }
   };
-  
+
   return (
     <div className="flex items-center gap-2 mt-2">
       {getIcon()}
@@ -30,4 +34,4 @@ const ReliabilityIndicator: React.FC<Props> = ({ reliability }) => {
   );
 };
 
-export default ReliabilityIndicator; 
+export default ReliabilityIndicator;

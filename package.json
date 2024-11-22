@@ -19,6 +19,7 @@
     "react-dom": "^18.3.1",
     "react-icons": "^5.3.0",
     "react-scripts": "^5.0.1",
+    "react-toastify": "^10.0.6",
     "recharts": "^2.13.3",
     "tailwindcss": "^3.4.15",
     "typescript": "^4.9.5",
@@ -30,7 +31,10 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "vercel deploy --prod",
+    "lint": "biome lint ./src",
+    "format": "biome format ./src --write",
+    "check": "biome check ./src"
   },
   "eslintConfig": {
     "extends": [
@@ -52,6 +56,6 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "gh-pages": "^6.2.0"
+    "@biomejs/biome": "^1.9.4"
   }
 }

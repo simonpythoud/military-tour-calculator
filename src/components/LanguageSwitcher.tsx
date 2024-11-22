@@ -11,8 +11,8 @@ const LanguageSwitcher: React.FC = () => {
           key={lang}
           onClick={() => setLanguage(lang as any)}
           className={`px-3 py-1 rounded ${
-            language === lang 
-              ? 'bg-military-green text-white' 
+            language === lang
+              ? 'bg-military-green text-white'
               : 'bg-gray-200 hover:bg-gray-300'
           }`}
         >
@@ -23,4 +23,4 @@ const LanguageSwitcher: React.FC = () => {
   );
 };
 
-export default LanguageSwitcher; 
+export default LanguageSwitcher;

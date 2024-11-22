@@ -1,5 +1,13 @@
 import React from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from 'recharts';
 import { useLanguage } from '../contexts/LanguageContext';
 
 interface PerformancePoint {
@@ -17,25 +25,35 @@ const FatigueGraph: React.FC<Props> = ({ data }) => {
   return (
     <div className="w-full h-64">
       <ResponsiveContainer>
-        <LineChart data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+        <LineChart
+          data={data}
+          margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
+        >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis 
-            dataKey="hour" 
-            label={{ value: t('hours'), position: 'bottom' }} 
+          <XAxis
+            dataKey="hour"
+            label={{ value: t('hours'), position: 'bottom' }}
           />
-          <YAxis 
-            label={{ value: t('performancePercentage'), angle: -90, position: 'insideLeft' }} 
-            domain={[0, 100]} 
+          <YAxis
+            label={{
+              value: t('performancePercentage'),
+              angle: -90,
+              position: 'insideLeft',
+            }}
+            domain={[0, 100]}
           />
-          <Tooltip 
-            formatter={(value: number) => [`${Math.round(value)}%`, t('performancePercentage')]}
+          <Tooltip
+            formatter={(value: number) => [
+              `${Math.round(value)}%`,
+              t('performancePercentage'),
+            ]}
             labelFormatter={(label: number) => `${label} ${t('hours')}`}
           />
-          <Line 
-            type="monotone" 
-            dataKey="performance" 
-            stroke="#4B5320" 
-            strokeWidth={2} 
+          <Line
+            type="monotone"
+            dataKey="performance"
+            stroke="#4B5320"
+            strokeWidth={2}
           />
         </LineChart>
       </ResponsiveContainer>
@@ -43,4 +61,4 @@ const FatigueGraph: React.FC<Props> = ({ data }) => {
   );
 };
 
-export default FatigueGraph; 
+export default FatigueGraph;

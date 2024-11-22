@@ -5,7 +5,7 @@ export const saveCalculation = (name: string, inputs: TourInputs) => {
   const calculations = JSON.parse(saved);
   calculations[name] = {
     inputs,
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
   };
   localStorage.setItem('savedCalculations', JSON.stringify(calculations));
 };
@@ -14,5 +14,4 @@ export const loadCalculation = (name: string): TourInputs | null => {
   const saved = localStorage.getItem('savedCalculations') || '{}';
   const calculations = JSON.parse(saved);
   return calculations[name]?.inputs || null;
-}; 
-
+};

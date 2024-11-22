@@ -1,0 +1,78 @@
+{
+    "BASE_SPEEDS": {
+      "HORIZONTAL": 4,
+      "VERTICAL": 400
+    },
+    "PACKAGE_WEIGHT": {
+      "REDUCTION_PER_KG": 2
+    },
+    "DANGER_FACTORS": {
+      "LOW": 1.0,
+      "MEDIUM": 0.9,
+      "HIGH": 0.7,
+      "EXTREME": 0.5
+    },
+    "LIGHT_FACTORS": {
+      "DAY": 1.0,
+      "NIGHT": 0.6,
+      "MIXED": 0.8
+    },
+    "TERRAIN_FACTORS": {
+      "EASY": 1.0,
+      "ALPINE_MEDIUM": 0.8,
+      "ALPINE_HARD": 0.6,
+      "ALPINE_EXTREME": 0.4
+    },
+    "PHYSIQUE_FACTORS": {
+      "VERY_FIT": 1.2,
+      "FIT": 1.0,
+      "MEDIUM": 0.8,
+      "POOR": 0.6,
+      "INJURED": 0.3
+    },
+    "EXPERIENCE_FACTORS": {
+      "EXPERT": 1.2,
+      "ADVANCED": 1.1,
+      "MEDIUM": 1.0,
+      "BASIC": 0.8,
+      "NONE": 0.6
+    },
+    "CONDITION_FACTORS": {
+      "POOR": 0.6,
+      "SUFFICIENT": 0.8,
+      "GOOD": 1.0,
+      "VERY_GOOD": 1.2,
+      "EXCELLENT": 1.4
+    },
+    "TECHNICAL_SKILL_FACTORS": {
+      "NONE": 0.6,
+      "BASIC": 0.8,
+      "INTERMEDIATE": 1.0,
+      "ADVANCED": 1.2,
+      "EXPERT": 1.4
+    },
+    "WEIGHT_FACTORS": {
+      "LIGHT": 1.0,
+      "MEDIUM": 0.8,
+      "HEAVY": 0.6,
+      "VERY_HEAVY": 0.4
+    },
+    "TACTICAL_TERRAIN_FACTORS": {
+      "FLAT": 1.0,
+      "HIKING_TRAIL": 0.8,
+      "DIFFICULT": 0.6,
+      "ALPINE": 0.4,
+      "TECHNICAL_ALPINE": 0.3
+    },
+    "CONDITION_TYPE_FACTORS": {
+      "SPRING": 0.8,
+      "SUMMER": 1.0,
+      "AUTUMN": 0.7,
+      "WINTER": 0.6
+    },
+    "THREAT_LEVEL_FACTORS": {
+      "GREEN": 1.0,
+      "YELLOW": 0.8,
+      "RED": 0.5
+    }
+  }

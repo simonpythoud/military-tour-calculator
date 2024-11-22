@@ -1,30 +1,49 @@
 import React, { useState, useEffect } from 'react';
 import { TourInputs, Package } from '../types';
 import { calculateTourTime } from '../utils/calculateTime';
-import { FaRuler, FaMountain, FaWeightHanging, FaExclamationTriangle, FaSun, FaHiking, FaRunning, FaMedal, FaChevronDown, FaWindowClose } from 'react-icons/fa';
+import {
+  FaRuler,
+  FaMountain,
+  FaWeightHanging,
+  FaHiking,
+  FaChevronDown,
+  FaWindowClose,
+} from 'react-icons/fa';
 import { useLanguage } from '../contexts/LanguageContext';
-import { calculatePerformanceOverTime } from '../utils/calculateFatigue';
+import { calculatePerformanceOverTime } from '../utils/calculatePerformance';
 import PerformanceGraph from './PerformanceGraph';
 import { saveCalculation, loadCalculation } from '../utils/storage';
 import ExportResults from './ExportResults';
 import TourDisclaimers from './TourDisclaimers';
 import ReliabilityIndicator from './ReliabilityIndicator';
-import InfoTooltip from './InfoTooltip';
+import TacticalTourFactors from './TacticalTourFactors';
+import StandardTourFactors from './StandardTourFactors';
+import { validateConstants } from '../utils/manageConstants';
+import { toast } from 'react-toastify';
 
 const TourCalculator: React.FC = () => {
   const { t } = useLanguage();
   const [inputs, setInputs] = useState<TourInputs>({
     horizontalDistance: 0,
     verticalDistance: 0,
+    // standard factors
     package: 0,
     dangerLevel: 'low',
     light: 'day',
     terrain: 'easy',
     physique: 'fit',
-    experience: 'medium'
+    experience: 'medium',
+    // tactical factors
+    condition: 'good',
+    technicalSkill: 'intermediate',
+    weight: 'light',
+    tacticalTerrain: 'flat',
+    conditionType: 'summer',
+    threatLevel: 'green',
   });
   const [calculationName, setCalculationName] = useState('');
   const [savedCalculations, setSavedCalculations] = useState<string[]>([]);
+  const [useTacticalFactors, setUseTacticalFactors] = useState(true);
 
   useEffect(() => {
     const saved = localStorage.getItem('savedCalculations') || '{}';
@@ -32,7 +51,13 @@ const TourCalculator: React.FC = () => {
     setSavedCalculations(Object.keys(calculations));
   }, []);
 
-  const { totalHours, horizontalHours, verticalHours, multiplier, reliabilityFactor } = calculateTourTime(inputs);
+  const {
+    totalHours,
+    horizontalHours,
+    verticalHours,
+    multiplier,
+    reliabilityFactor,
+  } = calculateTourTime(inputs, useTacticalFactors);
 
   const formatTime = (hours: number): string => {
     const h = Math.floor(hours);
@@ -42,12 +67,16 @@ const TourCalculator: React.FC = () => {
 
   const packageOptions: Package[] = [0, 5, 10, 15, 20, 25, 30];
 
-  const performanceData = calculatePerformanceOverTime(inputs, totalHours);
+  const performanceData = calculatePerformanceOverTime(
+    inputs,
+    totalHours,
+    useTacticalFactors
+  );
 
   const handleSave = () => {
     if (calculationName.trim()) {
       saveCalculation(calculationName, inputs);
-      setSavedCalculations(prev => [...prev, calculationName]);
+      setSavedCalculations((prev) => [...prev, calculationName]);
       setCalculationName('');
     }
   };
@@ -66,13 +95,54 @@ const TourCalculator: React.FC = () => {
     setSavedCalculations(Object.keys(saved));
   };
 
+  const handleDownloadDefaultConstants = () => {
+    const link = document.createElement('a');
+    link.href = '/tour-calculator-constants-default.json';
+    link.download = 'tour-calculator-constants-default.json';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const handleConstantsUpload = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    try {
+      const text = await file.text();
+      const constants = JSON.parse(text);
+
+      // Validate the constants structure
+      if (!validateConstants(constants)) {
+        toast.error(t('invalidFormat'));
+        return;
+      }
+
+      // Save to localStorage
+      localStorage.setItem('customConstants', JSON.stringify(constants));
+      toast.success(t('constantsUpdated'));
+
+      // Reload the page to apply new constants
+      window.location.reload();
+    } catch (error) {
+      toast.error(t('invalidFormat'));
+    }
+  };
+
+  const handleResetConstants = () => {
+    localStorage.removeItem('customConstants');
+    window.location.reload(); // Reload to reset to default constants
+  };
+
   return (
     <div className="max-w-4xl mx-auto p-3 sm:p-6 bg-gray-100 rounded-lg shadow-lg">
       <h1 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 flex items-center gap-2">
         <FaHiking className="text-military-green" />
         {t('title')}
       </h1>
-      
+
       {/* Distance Inputs Section */}
       <div className="bg-white p-3 sm:p-4 rounded-lg shadow mb-4 sm:mb-6">
         <h2 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4 flex items-center gap-2">
@@ -88,10 +158,12 @@ const TourCalculator: React.FC = () => {
             <input
               type="number"
               value={inputs.horizontalDistance ?? ''}
-              onChange={(e) => setInputs({
-                ...inputs, 
-                horizontalDistance: Number(e.target.value)
-              })}
+              onChange={(e) =>
+                setInputs({
+                  ...inputs,
+                  horizontalDistance: Number(e.target.value),
+                })
+              }
               onFocus={(e) => e.target.select()}
               className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-300 border-blue-200"
               placeholder={t('enterDistance')}
@@ -106,10 +178,12 @@ const TourCalculator: React.FC = () => {
             <input
               type="number"
               value={inputs.verticalDistance ?? ''}
-              onChange={(e) => setInputs({
-                ...inputs, 
-                verticalDistance: Number(e.target.value)
-              })}
+              onChange={(e) =>
+                setInputs({
+                  ...inputs,
+                  verticalDistance: Number(e.target.value),
+                })
+              }
               onFocus={(e) => e.target.select()}
               className="w-full p-2 border rounded focus:ring-2 focus:ring-orange-300 border-orange-200"
               placeholder={t('enterAltitude')}
@@ -118,165 +192,115 @@ const TourCalculator: React.FC = () => {
         </div>
       </div>
 
-      {/* Factors Section - Updated with gray chevron */}
-      <details className="bg-white p-3 sm:p-4 rounded-lg shadow mb-4 sm:mb-6 group" open>
-        <summary className="text-base sm:text-lg font-semibold mb-3 sm:mb-4 flex items-center gap-2 cursor-pointer">
+      {/* Factors Section - Changed from details to div since it should always be visible */}
+      <div className="bg-white p-3 sm:p-4 rounded-lg shadow mb-4 sm:mb-6">
+        <div className="text-base sm:text-lg font-semibold mb-3 sm:mb-4 flex items-center gap-2">
           <FaWeightHanging className="text-military-green" />
-          {t('influencingFactors')}
-          <FaChevronDown className="ml-auto transform transition-transform duration-200 group-open:rotate-180 text-gray-600" />
-        </summary>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-          <div>
-            <label className="block mb-2 flex items-center gap-1">
-              <FaWeightHanging className="text-gray-600" />
-              {t('packageWeight')}
-              <InfoTooltip content={t('tooltip_packageWeight')} />
-            </label>
-            <select
-              value={inputs.package}
-              onChange={(e) => setInputs({...inputs, package: Number(e.target.value) as Package})}
-              className="w-full p-2 border rounded"
-            >
-              {packageOptions.map(weight => (
-                <option key={weight} value={weight}>{weight} kg</option>
-              ))}
-            </select>
-          </div>
-
-          <div>
-            <label className="block mb-2 flex items-center gap-1">
-              <FaExclamationTriangle className="text-gray-600" />
-              {t('dangerLevel')}
-              <InfoTooltip content={t('tooltip_dangerLevel')} />
-            </label>
-            <select
-              value={inputs.dangerLevel}
-              onChange={(e) => setInputs({...inputs, dangerLevel: e.target.value as any})}
-              className="w-full p-2 border rounded"
-            >
-              <option value="low">{t('low')}</option>
-              <option value="medium">{t('medium')}</option>
-              <option value="high">{t('high')}</option>
-              <option value="extreme">{t('extreme')}</option>
-            </select>
-          </div>
-
-          <div>
-            <label className="block mb-2 flex items-center gap-1">
-              <FaSun className="text-gray-600" />
-              {t('lightConditions')}
-              <InfoTooltip content={t('tooltip_lightConditions')} />
-            </label>
-            <select
-              value={inputs.light}
-              onChange={(e) => setInputs({...inputs, light: e.target.value as any})}
-              className="w-full p-2 border rounded"
-            >
-              <option value="day">{t('day')}</option>
-              <option value="night">{t('night')}</option>
-              <option value="mixed">{t('mixed')}</option>
-            </select>
-          </div>
-
-          <div>
-            <label className="block mb-2 flex items-center gap-1">
-              <FaMountain className="text-gray-600" />
-              {t('terrainType')}
-              <InfoTooltip content={t('tooltip_terrainType')} />
-            </label>
-            <select
-              value={inputs.terrain}
-              onChange={(e) => setInputs({...inputs, terrain: e.target.value as any})}
-              className="w-full p-2 border rounded"
-            >
-              <option value="easy">{t('easy')}</option>
-              <option value="alpine_medium">{t('alpine_medium')}</option>
-              <option value="alpine_hard">{t('alpine_hard')}</option>
-              <option value="alpine_extreme">{t('alpine_extreme')}</option>
-            </select>
-          </div>
-
-          <div>
-            <label className="block mb-2 flex items-center gap-1">
-              <FaRunning className="text-gray-600" />
-              {t('physicalCondition')}
-              <InfoTooltip content={t('tooltip_physicalCondition')} />
-            </label>
-            <select
-              value={inputs.physique}
-              onChange={(e) => setInputs({...inputs, physique: e.target.value as any})}
-              className="w-full p-2 border rounded"
-            >
-              <option value="very_fit">{t('very_fit')}</option>
-              <option value="fit">{t('fit')}</option>
-              <option value="medium">{t('medium')}</option>
-              <option value="poor">{t('poor')}</option>
-              <option value="injured">{t('injured')}</option>
-            </select>
-          </div>
-
-          <div>
-            <label className="block mb-2 flex items-center gap-1">
-              <FaMedal className="text-gray-600" />
-              {t('experienceLevel')}
-              <InfoTooltip content={t('tooltip_experienceLevel')} />
-            </label>
-            <select
-              value={inputs.experience}
-              onChange={(e) => setInputs({...inputs, experience: e.target.value as any})}
-              className="w-full p-2 border rounded"
-            >
-              <option value="expert">{t('expert')}</option>
-              <option value="advanced">{t('advanced')}</option>
-              <option value="medium">{t('medium')}</option>
-              <option value="basic">{t('basic')}</option>
-              <option value="none">{t('none')}</option>
-            </select>
+          <div className="flex items-center gap-4 flex-1">
+            {t('influencingFactors')}
           </div>
         </div>
-      </details>
-        
+        <div className="flex items-center gap-2 text-sm font-normal mb-4">
+          <button
+            onClick={() => setUseTacticalFactors(!useTacticalFactors)}
+            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-0 focus:ring-military-green focus:ring-offset-0 ${useTacticalFactors ? 'bg-military-green' : 'bg-gray-200'}`}
+          >
+            <span
+              className={`${
+                useTacticalFactors ? 'translate-x-6' : 'translate-x-1'
+              } inline-block h-4 w-4 transform rounded-full bg-white transition-transform`}
+            />
+          </button>
+          <span
+            className={`${useTacticalFactors ? 'text-military-green font-bold' : 'text-gray-900'}`}
+          >
+            {useTacticalFactors
+              ? t('useTacticalFactors')
+              : t('useStandardFactors')}
+          </span>
+        </div>
+        {useTacticalFactors ? (
+          <TacticalTourFactors inputs={inputs} setInputs={setInputs} />
+        ) : (
+          <StandardTourFactors
+            inputs={inputs}
+            setInputs={setInputs}
+            packageOptions={packageOptions}
+          />
+        )}
+      </div>
+
       {/* Results Section */}
       <div className="bg-white p-3 sm:p-4 rounded-lg shadow">
-        <h2 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">Results</h2>
+        <h2 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">
+          Results
+        </h2>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4 mb-4 sm:mb-6">
           <div className="p-2 sm:p-3 bg-gray-50 rounded-lg">
-            <div className="text-xs sm:text-sm text-gray-600">{t('totalTime')}</div>
-            <div className="text-lg sm:text-xl font-bold">{formatTime(totalHours)}</div>
+            <div className="text-xs sm:text-sm text-gray-600">
+              {t('totalTime')}
+            </div>
+            <div className="text-lg sm:text-xl font-bold">
+              {formatTime(totalHours)}
+            </div>
           </div>
           <div className="p-2 sm:p-3 bg-blue-50 rounded-lg">
-            <div className="text-xs sm:text-sm text-gray-600">{t('horizontalTime')}</div>
-            <div className="text-lg sm:text-xl font-bold text-blue-700">{formatTime(horizontalHours)}</div>
+            <div className="text-xs sm:text-sm text-gray-600">
+              {t('horizontalTime')}
+            </div>
+            <div className="text-lg sm:text-xl font-bold text-blue-700">
+              {formatTime(horizontalHours)}
+            </div>
           </div>
           <div className="p-2 sm:p-3 bg-orange-50 rounded-lg">
-            <div className="text-xs sm:text-sm text-gray-600">{t('verticalTime')}</div>
-            <div className="text-lg sm:text-xl font-bold text-orange-700">{formatTime(verticalHours)}</div>
+            <div className="text-xs sm:text-sm text-gray-600">
+              {t('verticalTime')}
+            </div>
+            <div className="text-lg sm:text-xl font-bold text-orange-700">
+              {formatTime(verticalHours)}
+            </div>
           </div>
           <div className="p-2 sm:p-3 bg-gray-50 rounded-lg">
             {/* <div className="text-xs sm:text-sm text-gray-600">{t('speedMultiplier')}</div> */}
-            <div className="text-xs sm:text-sm text-gray-600">{t('speedAdaptedToFactorPercentage')}</div>
+            <div className="text-xs sm:text-sm text-gray-600">
+              {t('speedAdaptedToFactorPercentage')}
+            </div>
             {/* <div className="text-lg sm:text-xl font-bold">{result.multiplier.toFixed(2)}x</div> */}
-            <div className="text-lg sm:text-xl font-bold">{Math.round(multiplier * 100)}%</div>
+            <div className="text-lg sm:text-xl font-bold">
+              {Math.round(multiplier * 100)}%
+            </div>
           </div>
         </div>
-          
+
         <div className="mb-4 border-b pb-4">
           <ReliabilityIndicator reliability={reliabilityFactor} />
         </div>
 
         <div className="bg-gray-50 p-3 sm:p-4 rounded-lg">
-          <h3 className="text-sm sm:text-base font-bold mb-2">{t('calculationMethod')}</h3>
+          <h3 className="text-sm sm:text-base font-bold mb-2">
+            {t('calculationMethod')}
+          </h3>
           <ul className="list-disc list-inside space-y-1 text-xs sm:text-sm">
             <li>{t('baseHorizontalSpeed')}: 4 km/h</li>
             <li>{t('baseVerticalSpeed')}: 400 m/h</li>
-            <li>{t('packageWeightEffect')}: -{inputs.package * 2}% speed</li>
-            <li>{t('currentMultiplier')}: {multiplier.toFixed(2)}</li>
-            <li>{t('horizontalCalculation')}: {inputs.horizontalDistance}km ÷ ({4} × {multiplier.toFixed(2)})</li>
-            <li>{t('verticalCalculation')}: {inputs.verticalDistance}m ÷ ({400} × {multiplier.toFixed(2)})</li>
+            <li>
+              {t('packageWeightEffect')}: -{inputs.package * 2}% speed
+            </li>
+            <li>
+              {t('currentMultiplier')}: {multiplier.toFixed(2)}
+            </li>
+            <li>
+              {t('horizontalCalculation')}: {inputs.horizontalDistance}km ÷ ({4}{' '}
+              × {multiplier.toFixed(2)})
+            </li>
+            <li>
+              {t('verticalCalculation')}: {inputs.verticalDistance}m ÷ ({400} ×{' '}
+              {multiplier.toFixed(2)})
+            </li>
           </ul>
         </div>
 
-        <TourDisclaimers 
+        <TourDisclaimers
           totalHours={totalHours}
           dangerLevel={inputs.dangerLevel}
           terrain={inputs.terrain}
@@ -298,7 +322,7 @@ const TourCalculator: React.FC = () => {
 
       <div className="mt-6 p-4 bg-white rounded-lg shadow">
         <h2 className="text-xl font-bold mb-4">{t('savedCalculations')}</h2>
-        
+
         <div className="flex gap-2 mb-4">
           <input
             type="text"
@@ -340,20 +364,189 @@ const TourCalculator: React.FC = () => {
       {/* Export Section */}
       <div className="mt-6 p-4 bg-white rounded-lg shadow">
         <h2 className="text-xl font-bold mb-4">{t('exportResults')}</h2>
-        <ExportResults 
+        <ExportResults
           results={{
             inputs,
             calculations: {
               total: formatTime(totalHours),
               horizontal: formatTime(horizontalHours),
               vertical: formatTime(verticalHours),
-              multiplier: multiplier
+              multiplier: multiplier,
             },
             performance: performanceData,
-          }} 
+          }}
         />
       </div>
 
+      {/* Constants Section - Changed to details to make it collapsible */}
+      <details className="mt-6 p-4 bg-white rounded-lg shadow group">
+        <summary className="text-xl font-bold mb-4 cursor-pointer flex items-center justify-between">
+          {t('calculationConstants')}
+          <FaChevronDown className="transform transition-transform duration-200 group-open:rotate-180 text-gray-600" />
+        </summary>
+        <div className="space-y-6">
+          {/* Tactical Factors */}
+          <div className="text-military-green">
+            <h3 className="text-lg font-semibold mb-2">
+              {t('tacticalFactors')}
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div>
+                <h4 className="font-medium mb-1">{t('conditionFactors')}</h4>
+                <ul className="list-disc list-inside text-sm">
+                  <li>Poor: 60%</li>
+                  <li>Sufficient: 80%</li>
+                  <li>Good: 100%</li>
+                  <li>Very Good: 120%</li>
+                  <li>Excellent: 140%</li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="font-medium mb-1">
+                  {t('technicalSkillFactors')}
+                </h4>
+                <ul className="list-disc list-inside text-sm">
+                  <li>None: 60%</li>
+                  <li>Basic: 80%</li>
+                  <li>Intermediate: 100%</li>
+                  <li>Advanced: 120%</li>
+                  <li>Expert: 140%</li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="font-medium mb-1">{t('weightFactors')}</h4>
+                <ul className="list-disc list-inside text-sm">
+                  <li>Light: 100%</li>
+                  <li>Medium: 80%</li>
+                  <li>Heavy: 60%</li>
+                  <li>Very Heavy: 40%</li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="font-medium mb-1">
+                  {t('tacticalTerrainFactors')}
+                </h4>
+                <ul className="list-disc list-inside text-sm">
+                  <li>Flat: 100%</li>
+                  <li>Hiking Trail: 80%</li>
+                  <li>Difficult: 60%</li>
+                  <li>Alpine: 40%</li>
+                  <li>Technical Alpine: 30%</li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="font-medium mb-1">
+                  {t('conditionTypeFactors')}
+                </h4>
+                <ul className="list-disc list-inside text-sm">
+                  <li>Spring: 80%</li>
+                  <li>Summer: 100%</li>
+                  <li>Autumn: 70%</li>
+                  <li>Winter: 60%</li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="font-medium mb-1">{t('threatLevelFactors')}</h4>
+                <ul className="list-disc list-inside text-sm">
+                  <li>Green: 100%</li>
+                  <li>Yellow: 80%</li>
+                  <li>Red: 50%</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          {/* Standard Factors */}
+          <div>
+            <h3 className="text-lg font-semibold mb-2">
+              {t('standardFactors')}
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div>
+                <h4 className="font-medium mb-1">{t('baseSpeeds')}</h4>
+                <ul className="list-disc list-inside text-sm">
+                  <li>{t('baseHorizontalSpeed')}: 4 km/h</li>
+                  <li>{t('baseVerticalSpeed')}: 400 m/h</li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="font-medium mb-1">{t('dangerFactors')}</h4>
+                <ul className="list-disc list-inside text-sm">
+                  <li>Low: 100%</li>
+                  <li>Medium: 90%</li>
+                  <li>High: 70%</li>
+                  <li>Extreme: 50%</li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="font-medium mb-1">{t('lightFactors')}</h4>
+                <ul className="list-disc list-inside text-sm">
+                  <li>Day: 100%</li>
+                  <li>Night: 60%</li>
+                  <li>Mixed: 80%</li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="font-medium mb-1">{t('terrainFactors')}</h4>
+                <ul className="list-disc list-inside text-sm">
+                  <li>Easy: 100%</li>
+                  <li>Alpine Medium: 80%</li>
+                  <li>Alpine Hard: 60%</li>
+                  <li>Alpine Extreme: 40%</li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="font-medium mb-1">{t('physiqueFactors')}</h4>
+                <ul className="list-disc list-inside text-sm">
+                  <li>Very Fit: 120%</li>
+                  <li>Fit: 100%</li>
+                  <li>Medium: 80%</li>
+                  <li>Poor: 60%</li>
+                  <li>Injured: 30%</li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="font-medium mb-1">{t('experienceFactors')}</h4>
+                <ul className="list-disc list-inside text-sm">
+                  <li>Expert: 120%</li>
+                  <li>Advanced: 110%</li>
+                  <li>Medium: 100%</li>
+                  <li>Basic: 80%</li>
+                  <li>None: 60%</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex justify-end gap-2 mb-4">
+          <button
+            onClick={handleDownloadDefaultConstants}
+            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+          >
+            {t('downloadDefaultConstantsFile')}
+          </button>
+          <input
+            type="file"
+            accept=".json"
+            onChange={handleConstantsUpload}
+            className="hidden"
+            id="constants-upload"
+          />
+          <label
+            htmlFor="constants-upload"
+            className="px-4 py-2 bg-military-green text-white rounded hover:bg-opacity-90 cursor-pointer"
+          >
+            {t('uploadConstants')}
+          </label>
+          <button
+            onClick={handleResetConstants}
+            className="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300"
+          >
+            {t('resetToDefault')}
+          </button>
+        </div>
+      </details>
     </div>
   );
 };

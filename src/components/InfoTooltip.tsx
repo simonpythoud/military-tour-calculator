@@ -11,7 +11,10 @@ const InfoTooltip: React.FC<Props> = ({ content }) => {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (tooltipRef.current && !tooltipRef.current.contains(event.target as Node)) {
+      if (
+        tooltipRef.current &&
+        !tooltipRef.current.contains(event.target as Node)
+      ) {
         setIsVisible(false);
       }
     };
@@ -22,12 +25,12 @@ const InfoTooltip: React.FC<Props> = ({ content }) => {
 
   return (
     <div className="relative inline-block">
-      <FaInfoCircle 
+      <FaInfoCircle
         className="text-gray-400 text-sm ml-1 cursor-pointer hover:text-gray-600"
         onClick={() => setIsVisible(!isVisible)}
       />
       {isVisible && (
-        <div 
+        <div
           ref={tooltipRef}
           className="absolute z-10 w-64 p-3 mt-2 -right-2 text-sm bg-white rounded-lg shadow-lg border border-gray-200"
         >
@@ -38,4 +41,4 @@ const InfoTooltip: React.FC<Props> = ({ content }) => {
   );
 };
 
-export default InfoTooltip; 
+export default InfoTooltip;
