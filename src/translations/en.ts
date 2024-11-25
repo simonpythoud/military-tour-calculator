@@ -114,6 +114,7 @@ const englishTranslations = {
 
   // Physical Condition
   condition_title: 'Physical Condition',
+  condition_factors: 'Condition Factors',
   condition_description:
     'Better condition enables higher performance on all terrain types',
   condition_poor: 'Poor',
@@ -124,6 +125,7 @@ const englishTranslations = {
 
   // Technical Skills
   technical_title: 'Technical Skills',
+  technical_factors: 'Technical Skill Factors',
   technical_description:
     'Influences performance, especially in technical terrain',
   technical_none: 'No Mountain Skills',
@@ -134,6 +136,7 @@ const englishTranslations = {
 
   // Weight
   weight_title: 'Weight',
+  weight_factors: 'Weight Factors',
   weight_description: 'Heavier loads significantly reduce speed and endurance',
   weight_light: 'Light (<15 kg)',
   weight_medium: 'Medium (15-25 kg)',
@@ -142,6 +145,7 @@ const englishTranslations = {
   
   // Tactical Terrain
   terrain_title: 'Tactical Terrain',
+  terrain_factors: 'Terrain Factors',
   terrain_description:
     'A fundamental factor that strongly influences movement speed',
   terrain_flat: 'Flat Terrain',
@@ -152,6 +156,7 @@ const englishTranslations = {
 
   // Conditions
   conditions_title: 'Conditions',
+  conditions_factors: 'Condition Type Factors',
   conditions_description: 'Influences overall speed and energy consumption',
   conditions_spring: 'Spring (Old snow/Wet snow/Firn)',
   conditions_summer: 'Summer',
@@ -160,6 +165,7 @@ const englishTranslations = {
 
   // Threat Level
   threat_title: 'Threat Level',
+  threat_factors: 'Threat Level Factors',
   threat_description: 'Influences route choice and movement speed',
   threat_none: 'No Threat',
   threat_green: 'Green (Low Threat)',
@@ -168,19 +174,9 @@ const englishTranslations = {
 
   // Add these new translations
   calculationConstants: 'Calculation Constants',
-  standardFactors: 'Standard Factors',
   tacticalFactors: 'Tactical Factors',
   baseSpeeds: 'Base Speeds',
-  dangerFactors: 'Danger Level Factors',
-  lightFactors: 'Light Condition Factors',
-  terrainFactors: 'Terrain Factors',
-  physiqueFactors: 'Physical Condition Factors',
-  experienceFactors: 'Experience Level Factors',
-  conditionFactors: 'Condition Factors',
-  technicalSkillFactors: 'Technical Skill Factors',
-  weightFactors: 'Weight Factors',
-  conditionTypeFactors: 'Condition Type Factors',
-  threatLevelFactors: 'Threat Level Factors',
+
   customConstants: 'Custom Constants',
   uploadConstants: 'Upload Constants',
   resetToDefault: 'Reset to Default',
@@ -188,6 +184,13 @@ const englishTranslations = {
   constantsUpdated: 'Constants updated successfully',
   uploadInstructions: 'Upload a JSON file with your custom constants',
   downloadDefaultConstantsFile: 'Download default constants file',
+
+  // TODO: Remove
+  standardFactors: 'Standard Factors',
+  dangerFactors: 'Danger Level Factors',
+  lightFactors: 'Light Condition Factors',
+  physiqueFactors: 'Physical Condition Factors',
+  experienceFactors: 'Experience Level Factors',
 };
 
 export default englishTranslations;

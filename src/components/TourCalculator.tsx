@@ -19,6 +19,7 @@ import ReliabilityIndicator from './ReliabilityIndicator';
 import TacticalTourFactors from './TacticalTourFactors';
 import { validateConstants } from '../utils/manageConstants';
 import { toast } from 'react-toastify';
+import TacticalFactorsDisplay from './TacticalFactorsDisplay';
 
 const TourCalculator: React.FC = () => {
   const { t } = useLanguage();
@@ -364,78 +365,8 @@ const TourCalculator: React.FC = () => {
           {t('calculationConstants')}
           <FaChevronDown className="transform transition-transform duration-200 group-open:rotate-180 text-gray-600" />
         </summary>
-        <div className="space-y-6">
-          {/* Tactical Factors */}
-          <div className="text-military-green">
-            <h3 className="text-lg font-semibold mb-2">
-              {t('tacticalFactors')}
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              <div>
-                <h4 className="font-medium mb-1">{t('conditionFactors')}</h4>
-                <ul className="list-disc list-inside text-sm">
-                  <li>Poor: 60%</li>
-                  <li>Sufficient: 80%</li>
-                  <li>Good: 100%</li>
-                  <li>Very Good: 120%</li>
-                  <li>Excellent: 140%</li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="font-medium mb-1">
-                  {t('technicalSkillFactors')}
-                </h4>
-                <ul className="list-disc list-inside text-sm">
-                  <li>None: 60%</li>
-                  <li>Basic: 80%</li>
-                  <li>Intermediate: 100%</li>
-                  <li>Advanced: 120%</li>
-                  <li>Expert: 140%</li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="font-medium mb-1">{t('weightFactors')}</h4>
-                <ul className="list-disc list-inside text-sm">
-                  <li>Light: 100%</li>
-                  <li>Medium: 80%</li>
-                  <li>Heavy: 60%</li>
-                  <li>Very Heavy: 40%</li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="font-medium mb-1">
-                  {t('terrainFactors')}
-                </h4>
-                <ul className="list-disc list-inside text-sm">
-                  <li>Flat: 100%</li>
-                  <li>Hiking Trail: 80%</li>
-                  <li>Difficult: 60%</li>
-                  <li>Alpine: 40%</li>
-                  <li>Technical Alpine: 30%</li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="font-medium mb-1">
-                  {t('conditionTypeFactors')}
-                </h4>
-                <ul className="list-disc list-inside text-sm">
-                  <li>Spring: 80%</li>
-                  <li>Summer: 100%</li>
-                  <li>Autumn: 70%</li>
-                  <li>Winter: 60%</li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="font-medium mb-1">{t('threatLevelFactors')}</h4>
-                <ul className="list-disc list-inside text-sm">
-                  <li>Green: 100%</li>
-                  <li>Yellow: 80%</li>
-                  <li>Red: 50%</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
+        
+        <TacticalFactorsDisplay/>
 
         <div className="flex justify-end gap-2 mt-4">
           <button

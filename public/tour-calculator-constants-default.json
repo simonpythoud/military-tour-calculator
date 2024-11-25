@@ -3,40 +3,6 @@
       "HORIZONTAL": 4,
       "VERTICAL": 400
     },
-    "PACKAGE_WEIGHT": {
-      "REDUCTION_PER_KG": 2
-    },
-    "DANGER_FACTORS": {
-      "LOW": 1.0,
-      "MEDIUM": 0.9,
-      "HIGH": 0.7,
-      "EXTREME": 0.5
-    },
-    "LIGHT_FACTORS": {
-      "DAY": 1.0,
-      "NIGHT": 0.6,
-      "MIXED": 0.8
-    },
-    "TERRAIN_FACTORS": {
-      "EASY": 1.0,
-      "ALPINE_MEDIUM": 0.8,
-      "ALPINE_HARD": 0.6,
-      "ALPINE_EXTREME": 0.4
-    },
-    "PHYSIQUE_FACTORS": {
-      "VERY_FIT": 1.2,
-      "FIT": 1.0,
-      "MEDIUM": 0.8,
-      "POOR": 0.6,
-      "INJURED": 0.3
-    },
-    "EXPERIENCE_FACTORS": {
-      "EXPERT": 1.2,
-      "ADVANCED": 1.1,
-      "MEDIUM": 1.0,
-      "BASIC": 0.8,
-      "NONE": 0.6
-    },
     "CONDITION_FACTORS": {
       "POOR": 0.6,
       "SUFFICIENT": 0.8,
