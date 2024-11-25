@@ -22,11 +22,11 @@ export const calculatePerformanceOverTime = (
     // Additional fatigue factors
     const packageFatigue = (inputs.package / 10) * hour;
     const terrainFatigue =
-      inputs.terrain === 'alpine_extreme'
+      inputs.terrain === 'ALPINE_EXTREME'
         ? hour * 0.5
-        : inputs.terrain === 'alpine_hard'
+        : inputs.terrain === 'ALPINE_HARD'
           ? hour * 0.3
-          : inputs.terrain === 'alpine_medium'
+          : inputs.terrain === 'ALPINE_MEDIUM'
             ? hour * 0.2
             : 0;
 

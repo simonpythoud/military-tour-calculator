@@ -1,38 +1,38 @@
 export type Package = 0 | 5 | 10 | 15 | 20 | 25 | 30 | 35;
 
 // Standard Factors
-export type DangerLevel = 'low' | 'medium' | 'high' | 'extreme';
-export type Light = 'day' | 'night' | 'mixed';
+export type DangerLevel = 'LOW' | 'MEDIUM' | 'HIGH' | 'EXTREME';
+export type Light = 'DAY' | 'NIGHT' | 'MIXED';
 export type Terrain =
-  | 'easy'
-  | 'alpine_medium'
-  | 'alpine_hard'
-  | 'alpine_extreme';
-export type Physique = 'very_fit' | 'fit' | 'medium' | 'poor' | 'injured';
-export type Experience = 'none' | 'basic' | 'medium' | 'advanced' | 'expert';
+  | 'EASY'
+  | 'ALPINE_MEDIUM'
+  | 'ALPINE_HARD'
+  | 'ALPINE_EXTREME';
+export type Physique = 'VERY_FIT' | 'FIT' | 'MEDIUM' | 'POOR' | 'INJURED';
+export type Experience = 'NONE' | 'BASIC' | 'MEDIUM' | 'ADVANCED' | 'EXPERT';
 
 // Tactical Factors
 export type Condition =
-  | 'poor'
-  | 'sufficient'
-  | 'good'
-  | 'very_good'
-  | 'excellent';
+  | 'POOR'
+  | 'SUFFICIENT'
+  | 'GOOD'
+  | 'VERY_GOOD'
+  | 'EXCELLENT';
 export type TechnicalSkill =
-  | 'none'
-  | 'basic'
-  | 'intermediate'
-  | 'advanced'
-  | 'expert';
-export type Weight = 'light' | 'medium' | 'heavy' | 'very_heavy';
+  | 'NONE'
+  | 'BASIC'
+  | 'INTERMEDIATE'
+  | 'ADVANCED'
+  | 'EXPERT';
+export type Weight = 'LIGHT' | 'MEDIUM' | 'HEAVY' | 'VERY_HEAVY';
 export type TacticalTerrain =
-  | 'flat'
-  | 'hiking_trail'
-  | 'difficult'
-  | 'alpine'
-  | 'technical_alpine';
-export type ConditionType = 'spring' | 'summer' | 'autumn' | 'winter';
-export type ThreatLevel = 'green' | 'yellow' | 'red';
+  | 'FLAT'
+  | 'HIKING_TRAIL'
+  | 'DIFFICULT'
+  | 'ALPINE'
+  | 'TECHNICAL_ALPINE';
+export type ConditionType = 'SPRING' | 'SUMMER' | 'AUTUMN' | 'WINTER';
+export type ThreatLevel = 'GREEN' | 'YELLOW' | 'RED';
 
 export interface TourInputs {
   horizontalDistance: number;

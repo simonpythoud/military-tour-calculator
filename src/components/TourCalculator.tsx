@@ -28,18 +28,18 @@ const TourCalculator: React.FC = () => {
     verticalDistance: 0,
     // standard factors
     package: 0,
-    dangerLevel: 'low',
-    light: 'day',
-    terrain: 'easy',
-    physique: 'fit',
-    experience: 'medium',
+    dangerLevel: 'LOW',
+    light: 'DAY',
+    terrain: 'EASY',
+    physique: 'FIT',
+    experience: 'MEDIUM',
     // tactical factors
-    condition: 'good',
-    technicalSkill: 'intermediate',
-    weight: 'light',
-    tacticalTerrain: 'flat',
-    conditionType: 'summer',
-    threatLevel: 'green',
+    condition: 'GOOD',
+    technicalSkill: 'INTERMEDIATE',
+    weight: 'LIGHT',
+    tacticalTerrain: 'FLAT',
+    conditionType: 'SUMMER',
+    threatLevel: 'GREEN',
   });
   const [calculationName, setCalculationName] = useState('');
   const [savedCalculations, setSavedCalculations] = useState<string[]>([]);
@@ -206,9 +206,8 @@ const TourCalculator: React.FC = () => {
             className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-0 focus:ring-military-green focus:ring-offset-0 ${useTacticalFactors ? 'bg-military-green' : 'bg-gray-200'}`}
           >
             <span
-              className={`${
-                useTacticalFactors ? 'translate-x-6' : 'translate-x-1'
-              } inline-block h-4 w-4 transform rounded-full bg-white transition-transform`}
+              className={`${useTacticalFactors ? 'translate-x-6' : 'translate-x-1'
+                } inline-block h-4 w-4 transform rounded-full bg-white transition-transform`}
             />
           </button>
           <span
@@ -519,32 +518,35 @@ const TourCalculator: React.FC = () => {
           </div>
         </div>
 
-        <div className="flex justify-end gap-2 mb-4">
+        <div className="flex justify-end gap-2 mt-4">
           <button
             onClick={handleDownloadDefaultConstants}
             className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
           >
             {t('downloadDefaultConstantsFile')}
           </button>
-          <input
-            type="file"
-            accept=".json"
-            onChange={handleConstantsUpload}
-            className="hidden"
-            id="constants-upload"
-          />
-          <label
-            htmlFor="constants-upload"
-            className="px-4 py-2 bg-military-green text-white rounded hover:bg-opacity-90 cursor-pointer"
-          >
-            {t('uploadConstants')}
-          </label>
-          <button
-            onClick={handleResetConstants}
-            className="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300"
-          >
-            {t('resetToDefault')}
-          </button>
+          { /* Hide this section until further development */}
+          {false && <div>
+            <input
+              type="file"
+              accept=".json"
+              onChange={handleConstantsUpload}
+              className="hidden"
+              id="constants-upload"
+            />
+            <label
+              htmlFor="constants-upload"
+              className="px-4 py-2 bg-military-green text-white rounded hover:bg-opacity-90 cursor-pointer"
+            >
+              {t('uploadConstants')}
+            </label>
+            <button
+              onClick={handleResetConstants}
+              className="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300"
+            >
+              {t('resetToDefault')}
+            </button>
+          </div>}
         </div>
       </details>
     </div>

@@ -1,4 +1,5 @@
-import { TourInputs, Constants } from '../types';
+import { TourInputs } from '../types';
+// import { TourInputs, Constants } from '../types';
 import * as standardConstants from '../constants/standardTourFactors';
 import * as tacticalConstants from '../constants/tacticalTourFactors';
 
@@ -93,17 +94,17 @@ export const calculateTourTime = (
 
   // Factor-specific warnings
   if (useTacticalFactors) {
-    if (inputs.threatLevel === 'red') {
+    if (inputs.threatLevel === 'RED') {
       warnings.push('highThreatWarning');
     }
-    if (inputs.tacticalTerrain === 'technical_alpine') {
+    if (inputs.tacticalTerrain === 'TECHNICAL_ALPINE') {
       warnings.push('technicalTerrainWarning');
     }
   } else {
-    if (inputs.dangerLevel === 'extreme' || inputs.dangerLevel === 'high') {
+    if (inputs.dangerLevel === 'EXTREME' || inputs.dangerLevel === 'HIGH') {
       warnings.push('highDangerWarning');
     }
-    if (inputs.terrain === 'alpine_extreme') {
+    if (inputs.terrain === 'ALPINE_EXTREME') {
       warnings.push('extremeTerrainWarning');
     }
   }
@@ -123,44 +124,46 @@ const getConstants = () => {
   // Ensure tactical constants are merged first as base
   let baseConstants = { ...tacticalConstants, ...standardConstants };
 
-  const customConstants = localStorage.getItem('customConstants');
-  if (customConstants) {
-    console.log('using custom constants');
-    const parsed = JSON.parse(customConstants);
-    baseConstants = { ...baseConstants, ...parsed };
-  }
+  return baseConstants;
 
-  return standardizeConstants(baseConstants);
+  // const customConstants = localStorage.getItem('customConstants');
+  // if (customConstants) {
+  //   console.log('using custom constants');
+  //   const parsed = JSON.parse(customConstants);
+  //   baseConstants = { ...baseConstants, ...parsed };
+  // }
+
+  // return standardizeConstants(baseConstants);
 };
 
-const standardizeConstants = (constants: Constants): Constants => {
-  const standardized: Constants = { ...constants };
+// const standardizeConstants = (constants: Constants): Constants => {
+//   const standardized: Constants = { ...constants };
 
-  // Get all possible factor keys from both standard and tactical constants
-  const factorKeys = new Set([
-    ...Object.keys(standardConstants),
-    ...Object.keys(tacticalConstants),
-  ]);
+//   // Get all possible factor keys from both standard and tactical constants
+//   const factorKeys = new Set([
+//     ...Object.keys(standardConstants),
+//     ...Object.keys(tacticalConstants),
+//   ]);
 
-  factorKeys.forEach((key) => {
-    if (
-      standardized[key as keyof Constants] &&
-      typeof standardized[key as keyof Constants] === 'object'
-    ) {
-      standardized[key as keyof Constants] = Object.entries(
-        standardized[key as keyof Constants] as Record<string, number>
-      ).reduce<Record<string, number>>((acc, [subKey, value]) => {
-        if (typeof value === 'number') {
-          acc[subKey.toUpperCase()] = value;
-        } else {
-          console.warn(
-            `Invalid value for ${key}.${subKey}: expected number, got ${typeof value}`
-          );
-        }
-        return acc;
-      }, {});
-    }
-  });
+//   factorKeys.forEach((key) => {
+//     if (
+//       standardized[key as keyof Constants] &&
+//       typeof standardized[key as keyof Constants] === 'object'
+//     ) {
+//       standardized[key as keyof Constants] = Object.entries(
+//         standardized[key as keyof Constants] as Record<string, number>
+//       ).reduce<Record<string, number>>((acc, [subKey, value]) => {
+//         if (typeof value === 'number') {
+//           acc[subKey.toUpperCase()] = value;
+//         } else {
+//           console.warn(
+//             `Invalid value for ${key}.${subKey}: expected number, got ${typeof value}`
+//           );
+//         }
+//         return acc;
+//       }, {});
+//     }
+//   });
 
-  return standardized;
-};
+//   return standardized;
+// };
