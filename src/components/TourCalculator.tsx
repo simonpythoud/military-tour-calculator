@@ -44,11 +44,17 @@ const TourCalculator: React.FC = () => {
   const [calculationName, setCalculationName] = useState('');
   const [savedCalculations, setSavedCalculations] = useState<string[]>([]);
   const [useTacticalFactors, setUseTacticalFactors] = useState(true);
+  const [hasCustomConstants, setHasCustomConstants] = useState(false);
 
   useEffect(() => {
     const saved = localStorage.getItem('savedCalculations') || '{}';
     const calculations = JSON.parse(saved);
     setSavedCalculations(Object.keys(calculations));
+  }, []);
+
+  useEffect(() => {
+    const customConstants = localStorage.getItem('customConstants');
+    setHasCustomConstants(!!customConstants);
   }, []);
 
   const {
@@ -206,9 +212,8 @@ const TourCalculator: React.FC = () => {
             className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-0 focus:ring-military-green focus:ring-offset-0 ${useTacticalFactors ? 'bg-military-green' : 'bg-gray-200'}`}
           >
             <span
-              className={`${
-                useTacticalFactors ? 'translate-x-6' : 'translate-x-1'
-              } inline-block h-4 w-4 transform rounded-full bg-white transition-transform`}
+              className={`${useTacticalFactors ? 'translate-x-6' : 'translate-x-1'
+                } inline-block h-4 w-4 transform rounded-full bg-white transition-transform`}
             />
           </button>
           <span
@@ -235,6 +240,22 @@ const TourCalculator: React.FC = () => {
         <h2 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">
           Results
         </h2>
+        {hasCustomConstants && (
+          <div className="mt-2 text-xs text-gray-600 flex items-center gap-1">
+            {/* <span>{t('usingCustomConstants')}</span> */}
+            <span>Using custom constants</span>
+            <button
+              onClick={() => {
+                const constantsSection = document.querySelector('#calculation-constants');
+                constantsSection?.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="text-military-green hover:underline"
+            >
+              {/* {t('viewCustomFactors')} */}
+              view constants
+            </button>
+          </div>
+        )}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4 mb-4 sm:mb-6">
           <div className="p-2 sm:p-3 bg-gray-50 rounded-lg">
             <div className="text-xs sm:text-sm text-gray-600">
@@ -303,7 +324,6 @@ const TourCalculator: React.FC = () => {
         <TourDisclaimers
           totalHours={totalHours}
           dangerLevel={inputs.dangerLevel}
-          terrain={inputs.terrain}
         />
       </div>
 
@@ -379,7 +399,10 @@ const TourCalculator: React.FC = () => {
       </div>
 
       {/* Constants Section - Changed to details to make it collapsible */}
-      <details className="mt-6 p-4 bg-white rounded-lg shadow group">
+      <details
+        id="calculation-constants"
+        className="mt-6 p-4 bg-white rounded-lg shadow group"
+      >
         <summary className="text-xl font-bold mb-4 cursor-pointer flex items-center justify-between">
           {t('calculationConstants')}
           <FaChevronDown className="transform transition-transform duration-200 group-open:rotate-180 text-gray-600" />
@@ -519,7 +542,7 @@ const TourCalculator: React.FC = () => {
           </div>
         </div>
 
-        <div className="flex justify-end gap-2 mb-4">
+        <div className="flex justify-end gap-2 mt-4">
           <button
             onClick={handleDownloadDefaultConstants}
             className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"

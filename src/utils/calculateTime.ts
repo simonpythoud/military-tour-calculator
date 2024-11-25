@@ -130,6 +130,8 @@ const getConstants = () => {
     baseConstants = { ...baseConstants, ...parsed };
   }
 
+  console
+
   return standardizeConstants(baseConstants);
 };
 

@@ -189,6 +189,8 @@ const englishTranslations = {
   constantsUpdated: 'Constants updated successfully',
   uploadInstructions: 'Upload a JSON file with your custom constants',
   downloadDefaultConstantsFile: 'Download default constants file',
+  // usingCustomConstants: 'Using custom calculation factors',
+  // viewCustomFactors: 'View custom factors',
 };
 
 export default englishTranslations;

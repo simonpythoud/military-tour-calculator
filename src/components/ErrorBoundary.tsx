@@ -1,4 +1,4 @@
-import React, { Component, ErrorInfo, ReactNode } from 'react';
+import React, { Component, type ErrorInfo, type ReactNode } from 'react';
 
 interface Props {
   children: ReactNode;
@@ -27,6 +27,7 @@ class ErrorBoundary extends Component<Props, State> {
         <div className="p-4 bg-red-50 text-red-700 rounded">
           <h2>Something went wrong.</h2>
           <button
+            type="button"
             className="mt-2 px-4 py-2 bg-red-600 text-white rounded"
             onClick={() => this.setState({ hasError: false })}
           >

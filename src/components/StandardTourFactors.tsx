@@ -26,12 +26,13 @@ const StandardTourFactors: React.FC<Props> = ({
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 text-gray-900">
       <div>
-        <label className="block mb-2 flex items-center gap-1">
+        <label htmlFor="package-weight" className="block mb-2 flex items-center gap-1">
           <FaWeightHanging className="text-gray-600" />
           {t('packageWeight')}
           <InfoTooltip content={t('tooltip_packageWeight')} />
         </label>
         <select
+          id="package-weight"
           value={inputs.package}
           onChange={(e) =>
             setInputs({ ...inputs, package: Number(e.target.value) as Package })

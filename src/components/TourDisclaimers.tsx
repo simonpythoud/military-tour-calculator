@@ -5,13 +5,11 @@ import { FaExclamationTriangle, FaInfoCircle } from 'react-icons/fa';
 interface Props {
   totalHours: number;
   dangerLevel: string;
-  terrain: string;
 }
 
 const TourDisclaimers: React.FC<Props> = ({
   totalHours,
   dangerLevel,
-  terrain,
 }) => {
   const { t } = useLanguage();
 

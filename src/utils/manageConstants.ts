@@ -35,6 +35,6 @@ export const validateConstants = (constants: any) => {
   ];
 
   return requiredKeys.every(
-    (key) => constants.hasOwnProperty(key) && typeof constants[key] === 'object'
+    (key) => Object.hasOwn(constants, key) && typeof constants[key] === 'object'
   );
 };
