@@ -2,8 +2,11 @@
 
 ## High Priority
 
-### Adapt the factor system to the information provided by the chef
-
+### Modify and upload new constants
+- [ ] Allow uploading new constants as JSON file
+- [ ] Validate constants file
+- [ ] Enable toggle between default and custom constants
+- [ ] Allow to edit constants in the app
 
 ### Break Calculation Feature
 - [ ] Add automatic break calculations based on:
@@ -31,11 +34,12 @@ isOptional: boolean; // Whether the break is mandatory or optional
 
 ## Medium Priority
 
+- [ ] Use measured factors from real tours
 - [ ] Weather conditions integration
 - [ ] Group size factor
 - [ ] Night navigation time penalties
-- [ ] Seasonal adjustments
 - [ ] Alternative routes suggestion
+- [ ] Publish the app in the app store
 
 ## Low Priority
 
@@ -50,3 +54,5 @@ isOptional: boolean; // Whether the break is mandatory or optional
 - [x] Multiple language support
 - [x] Performance graph
 - [x] Save/load calculations
+- [x] Adapt the factor system to the information provided by the chef
+- [x] Seasonal adjustments
