@@ -20,12 +20,6 @@ import { Constants } from '../types';
 export const validateConstants = (constants: any) => {
   const requiredKeys: Array<keyof Constants> = [
     'BASE_SPEEDS',
-    'PACKAGE_WEIGHT',
-    'DANGER_FACTORS',
-    'LIGHT_FACTORS',
-    'TERRAIN_FACTORS',
-    'PHYSIQUE_FACTORS',
-    'EXPERIENCE_FACTORS',
     'CONDITION_FACTORS',
     'TECHNICAL_SKILL_FACTORS',
     'WEIGHT_FACTORS',

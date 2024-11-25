@@ -27,7 +27,7 @@ const frenchTranslations = {
   verticalCalculation: 'Calcul vertical',
 
   // Factors
-  useTacticalFactors: 'Utiliser les facteurs tactiques',
+  useCustomFactorConstants: 'Utiliser des facteurs personnalisés',
   useStandardFactors: 'Utiliser les facteurs standard',
 
   low: 'Faible',

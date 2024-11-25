@@ -27,7 +27,7 @@ const germanTranslations = {
   verticalCalculation: 'Vertikale Berechnung',
 
   // Factors
-  useTacticalFactors: 'Taktische Faktoren verwenden',
+  useCustomFactorConstants: 'Benutzerdefinierte Faktoren verwenden',
   useStandardFactors: 'Standardfaktoren verwenden',
 
   low: 'Niedrig',

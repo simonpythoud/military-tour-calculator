@@ -1,40 +1,27 @@
 import { TourInputs } from '../types';
 // import { TourInputs, Constants } from '../types';
-import * as standardConstants from '../constants/standardTourFactors';
 import * as tacticalConstants from '../constants/tacticalTourFactors';
 
 export const getFactorMultiplier = (
   inputs: TourInputs,
-  useTacticalFactors: boolean = true
 ): number => {
   let multiplier = 1;
   const constants = getConstants();
 
-  if (useTacticalFactors) {
-    // Apply tactical factors using constants
-    multiplier *= constants.CONDITION_FACTORS[inputs.condition];
-    multiplier *= constants.TECHNICAL_SKILL_FACTORS[inputs.technicalSkill];
-    multiplier *= constants.WEIGHT_FACTORS[inputs.weight];
-    multiplier *= constants.TACTICAL_TERRAIN_FACTORS[inputs.tacticalTerrain];
-    multiplier *= constants.CONDITION_TYPE_FACTORS[inputs.conditionType];
-    multiplier *= constants.THREAT_LEVEL_FACTORS[inputs.threatLevel];
-  } else {
-    // Apply standard factors using constants
-    multiplier *=
-      1 - inputs.package * constants.PACKAGE_WEIGHT.REDUCTION_PER_5KG;
-    multiplier *= constants.DANGER_FACTORS[inputs.dangerLevel];
-    multiplier *= constants.LIGHT_FACTORS[inputs.light];
-    multiplier *= constants.TERRAIN_FACTORS[inputs.terrain];
-    multiplier *= constants.PHYSIQUE_FACTORS[inputs.physique];
-    multiplier *= constants.EXPERIENCE_FACTORS[inputs.experience];
-  }
+  // Apply tactical factors using constants
+  multiplier *= constants.CONDITION_FACTORS[inputs.condition];
+  multiplier *= constants.TECHNICAL_SKILL_FACTORS[inputs.technicalSkill];
+  multiplier *= constants.WEIGHT_FACTORS[inputs.weight];
+  multiplier *= constants.TACTICAL_TERRAIN_FACTORS[inputs.tacticalTerrain];
+  multiplier *= constants.CONDITION_TYPE_FACTORS[inputs.conditionType];
+  multiplier *= constants.THREAT_LEVEL_FACTORS[inputs.threatLevel];
 
   return multiplier;
 };
 
 export const calculateTourTime = (
   inputs: TourInputs,
-  useTacticalFactors: boolean = true
+  useCustomFactorConstants: boolean
 ): {
   totalHours: number;
   horizontalHours: number;
@@ -43,7 +30,7 @@ export const calculateTourTime = (
   reliabilityFactor: 'high' | 'medium' | 'low';
   warnings: string[];
 } => {
-  const constants = getConstants();
+  const constants = getConstants(useCustomFactorConstants);
 
   if (
     !constants ||
@@ -63,11 +50,11 @@ export const calculateTourTime = (
     };
   }
 
-  const multiplier = getFactorMultiplier(inputs, useTacticalFactors);
+  const multiplier = getFactorMultiplier(inputs);
 
   const horizontalHours = inputs.horizontalDistance
     ? inputs.horizontalDistance /
-      (constants.BASE_SPEEDS.HORIZONTAL * multiplier)
+    (constants.BASE_SPEEDS.HORIZONTAL * multiplier)
     : 0;
 
   const verticalHours = inputs.verticalDistance
@@ -92,21 +79,12 @@ export const calculateTourTime = (
     warnings.push('longTourWarning');
   }
 
-  // Factor-specific warnings
-  if (useTacticalFactors) {
-    if (inputs.threatLevel === 'RED') {
-      warnings.push('highThreatWarning');
-    }
-    if (inputs.tacticalTerrain === 'TECHNICAL_ALPINE') {
-      warnings.push('technicalTerrainWarning');
-    }
-  } else {
-    if (inputs.dangerLevel === 'EXTREME' || inputs.dangerLevel === 'HIGH') {
-      warnings.push('highDangerWarning');
-    }
-    if (inputs.terrain === 'ALPINE_EXTREME') {
-      warnings.push('extremeTerrainWarning');
-    }
+
+  if (inputs.threatLevel === 'RED') {
+    warnings.push('highThreatWarning');
+  }
+  if (inputs.tacticalTerrain === 'TECHNICAL_ALPINE') {
+    warnings.push('technicalTerrainWarning');
   }
 
   return {
@@ -120,9 +98,9 @@ export const calculateTourTime = (
 };
 
 // Returns consolidated constants object
-const getConstants = () => {
+const getConstants = (useCustomFactorConstants: boolean = false) => {
   // Ensure tactical constants are merged first as base
-  let baseConstants = { ...tacticalConstants, ...standardConstants };
+  let baseConstants = { ...tacticalConstants };
 
   return baseConstants;
 
@@ -141,7 +119,6 @@ const getConstants = () => {
 
 //   // Get all possible factor keys from both standard and tactical constants
 //   const factorKeys = new Set([
-//     ...Object.keys(standardConstants),
 //     ...Object.keys(tacticalConstants),
 //   ]);
 

@@ -9,9 +9,9 @@ interface PerformancePoint {
 export const calculatePerformanceOverTime = (
   inputs: TourInputs,
   totalHours: number,
-  useTacticalFactors: boolean = true
+  useCustomFactors: boolean
 ): PerformancePoint[] => {
-  const baseMultiplier = getFactorMultiplier(inputs, useTacticalFactors);
+  const baseMultiplier = getFactorMultiplier(inputs);
   const points: PerformancePoint[] = [];
 
   // Calculate performance points for each hour
@@ -20,19 +20,37 @@ export const calculatePerformanceOverTime = (
     const baseFatigue = Math.pow(hour / 4, 1.5);
 
     // Additional fatigue factors
-    const packageFatigue = (inputs.package / 10) * hour;
+    const weightFatigue = 
+      inputs.weight === 'VERY_HEAVY'
+        ? hour * 0.5  // Significant fatigue for very heavy loads
+        : inputs.weight === 'HEAVY'
+          ? hour * 0.3  // Heavy loads cause substantial fatigue
+          : inputs.weight === 'MEDIUM'
+            ? hour * 0.2  // Medium loads cause moderate fatigue
+            : hour * 0.1; // Light loads cause minimal fatigue
+
     const terrainFatigue =
-      inputs.terrain === 'ALPINE_EXTREME'
-        ? hour * 0.5
-        : inputs.terrain === 'ALPINE_HARD'
-          ? hour * 0.3
-          : inputs.terrain === 'ALPINE_MEDIUM'
-            ? hour * 0.2
-            : 0;
+      inputs.tacticalTerrain === 'TECHNICAL_ALPINE'
+        ? hour * 0.5  // Most demanding terrain
+        : inputs.tacticalTerrain === 'ALPINE'
+          ? hour * 0.4  // Very difficult terrain
+          : inputs.tacticalTerrain === 'DIFFICULT'
+            ? hour * 0.3  // Difficult terrain
+            : inputs.tacticalTerrain === 'HIKING_TRAIL'
+              ? hour * 0.2  // Moderate terrain
+              : hour * 0.1; // Flat terrain causes minimal fatigue
+
+    // Additional condition-based fatigue
+    const conditionTypeFatigue = 
+      inputs.conditionType === 'WINTER'
+        ? hour * 0.3  // Winter conditions are most fatiguing
+        : inputs.conditionType === 'AUTUMN' || inputs.conditionType === 'SPRING'
+          ? hour * 0.2  // Shoulder seasons are moderately fatiguing
+          : hour * 0.1; // Summer conditions are least fatiguing
 
     // Calculate total fatigue and convert to performance (100% - fatigue%)
     let totalFatigue =
-      (baseFatigue + packageFatigue + terrainFatigue) * (1 / baseMultiplier);
+      (baseFatigue + weightFatigue + terrainFatigue + conditionTypeFatigue) * (1 / baseMultiplier);
     totalFatigue = Math.min(100, Math.max(0, totalFatigue));
 
     points.push({

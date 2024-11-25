@@ -35,11 +35,11 @@ const TacticalTourFactors: React.FC<Props> = ({ inputs, setInputs }) => {
           }
           className="w-full p-2 border rounded"
         >
-          <option value="poor">{t('condition_poor')}</option>
-          <option value="sufficient">{t('condition_sufficient')}</option>
-          <option value="good">{t('condition_good')}</option>
-          <option value="very_good">{t('condition_very_good')}</option>
-          <option value="excellent">{t('condition_excellent')}</option>
+          <option value="POOR">{t('condition_poor')}</option>
+          <option value="SUFFICIENT">{t('condition_sufficient')}</option>
+          <option value="GOOD">{t('condition_good')}</option>
+          <option value="VERY_GOOD">{t('condition_very_good')}</option>
+          <option value="EXCELLENT">{t('condition_excellent')}</option>
         </select>
       </div>
 
@@ -57,11 +57,11 @@ const TacticalTourFactors: React.FC<Props> = ({ inputs, setInputs }) => {
           }
           className="w-full p-2 border rounded"
         >
-          <option value="none">{t('technical_none')}</option>
-          <option value="basic">{t('technical_basic')}</option>
-          <option value="intermediate">{t('technical_intermediate')}</option>
-          <option value="advanced">{t('technical_advanced')}</option>
-          <option value="expert">{t('technical_expert')}</option>
+          <option value="NONE">{t('technical_none')}</option>
+          <option value="BASIC">{t('technical_basic')}</option>
+          <option value="INTERMEDIATE">{t('technical_intermediate')}</option>
+          <option value="ADVANCED">{t('technical_advanced')}</option>
+          <option value="EXPERT">{t('technical_expert')}</option>
         </select>
       </div>
 
@@ -79,10 +79,10 @@ const TacticalTourFactors: React.FC<Props> = ({ inputs, setInputs }) => {
           }
           className="w-full p-2 border rounded"
         >
-          <option value="light">{t('weight_light')}</option>
-          <option value="medium">{t('weight_medium')}</option>
-          <option value="heavy">{t('weight_heavy')}</option>
-          <option value="very_heavy">{t('weight_very_heavy')}</option>
+          <option value="LIGHT">{t('weight_light')}</option>
+          <option value="MEDIUM">{t('weight_medium')}</option>
+          <option value="HEAVY">{t('weight_heavy')}</option>
+          <option value="VERY_HEAVY">{t('weight_very_heavy')}</option>
         </select>
       </div>
 
@@ -100,11 +100,11 @@ const TacticalTourFactors: React.FC<Props> = ({ inputs, setInputs }) => {
           }
           className="w-full p-2 border rounded"
         >
-          <option value="flat">{t('terrain_flat')}</option>
-          <option value="hiking_trail">{t('terrain_hiking_trail')}</option>
-          <option value="difficult">{t('terrain_difficult')}</option>
-          <option value="alpine">{t('terrain_alpine')}</option>
-          <option value="technical_alpine">
+          <option value="FLAT">{t('terrain_flat')}</option>
+          <option value="HIKING_TRAIL">{t('terrain_hiking_trail')}</option>
+          <option value="DIFFICULT">{t('terrain_difficult')}</option>
+          <option value="ALPINE">{t('terrain_alpine')}</option>
+          <option value="TECHNICAL_ALPINE">
             {t('terrain_technical_alpine')}
           </option>
         </select>
@@ -124,10 +124,10 @@ const TacticalTourFactors: React.FC<Props> = ({ inputs, setInputs }) => {
           }
           className="w-full p-2 border rounded"
         >
-          <option value="spring">{t('conditions_spring')}</option>
-          <option value="summer">{t('conditions_summer')}</option>
-          <option value="autumn">{t('conditions_autumn')}</option>
-          <option value="winter">{t('conditions_winter')}</option>
+          <option value="SPRING">{t('conditions_spring')}</option>
+          <option value="SUMMER">{t('conditions_summer')}</option>
+          <option value="AUTUMN">{t('conditions_autumn')}</option>
+          <option value="WINTER">{t('conditions_winter')}</option>
         </select>
       </div>
 
@@ -145,9 +145,9 @@ const TacticalTourFactors: React.FC<Props> = ({ inputs, setInputs }) => {
           }
           className="w-full p-2 border rounded"
         >
-          <option value="green">{t('threat_green')}</option>
-          <option value="yellow">{t('threat_yellow')}</option>
-          <option value="red">{t('threat_red')}</option>
+          <option value="GREEN">{t('threat_green')}</option>
+          <option value="YELLOW">{t('threat_yellow')}</option>
+          <option value="RED">{t('threat_red')}</option>
         </select>
       </div>
     </div>

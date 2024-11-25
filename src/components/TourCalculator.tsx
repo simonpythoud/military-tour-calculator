@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { TourInputs, Package } from '../types';
+import { TourInputs } from '../types';
 import { calculateTourTime } from '../utils/calculateTime';
 import {
   FaRuler,
@@ -17,7 +17,6 @@ import ExportResults from './ExportResults';
 import TourDisclaimers from './TourDisclaimers';
 import ReliabilityIndicator from './ReliabilityIndicator';
 import TacticalTourFactors from './TacticalTourFactors';
-import StandardTourFactors from './StandardTourFactors';
 import { validateConstants } from '../utils/manageConstants';
 import { toast } from 'react-toastify';
 
@@ -26,14 +25,6 @@ const TourCalculator: React.FC = () => {
   const [inputs, setInputs] = useState<TourInputs>({
     horizontalDistance: 0,
     verticalDistance: 0,
-    // standard factors
-    package: 0,
-    dangerLevel: 'LOW',
-    light: 'DAY',
-    terrain: 'EASY',
-    physique: 'FIT',
-    experience: 'MEDIUM',
-    // tactical factors
     condition: 'GOOD',
     technicalSkill: 'INTERMEDIATE',
     weight: 'LIGHT',
@@ -43,7 +34,7 @@ const TourCalculator: React.FC = () => {
   });
   const [calculationName, setCalculationName] = useState('');
   const [savedCalculations, setSavedCalculations] = useState<string[]>([]);
-  const [useTacticalFactors, setUseTacticalFactors] = useState(true);
+  // const [useCustomFactorConstants, setUseCustomFactorConstants] = useState(true);
 
   useEffect(() => {
     const saved = localStorage.getItem('savedCalculations') || '{}';
@@ -57,7 +48,7 @@ const TourCalculator: React.FC = () => {
     verticalHours,
     multiplier,
     reliabilityFactor,
-  } = calculateTourTime(inputs, useTacticalFactors);
+  } = calculateTourTime(inputs, false); //, useCustomFactorConstants);
 
   const formatTime = (hours: number): string => {
     const h = Math.floor(hours);
@@ -65,12 +56,10 @@ const TourCalculator: React.FC = () => {
     return `${h}h ${m}m`;
   };
 
-  const packageOptions: Package[] = [0, 5, 10, 15, 20, 25, 30];
-
   const performanceData = calculatePerformanceOverTime(
     inputs,
     totalHours,
-    useTacticalFactors
+    false //, useCustomFactorConstants
   );
 
   const handleSave = () => {
@@ -200,33 +189,28 @@ const TourCalculator: React.FC = () => {
             {t('influencingFactors')}
           </div>
         </div>
+        {/*
         <div className="flex items-center gap-2 text-sm font-normal mb-4">
+          // TODO: Replace this component by a "Use custom factors constants"
           <button
-            onClick={() => setUseTacticalFactors(!useTacticalFactors)}
-            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-0 focus:ring-military-green focus:ring-offset-0 ${useTacticalFactors ? 'bg-military-green' : 'bg-gray-200'}`}
+            onClick={() => setUseCustomFactorConstants(!useCustomFactorConstants)}
+            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-0 focus:ring-military-green focus:ring-offset-0 ${useCustomFactorConstants ? 'bg-military-green' : 'bg-gray-200'}`}
           >
             <span
-              className={`${useTacticalFactors ? 'translate-x-6' : 'translate-x-1'
+              className={`${useCustomFactorConstants ? 'translate-x-6' : 'translate-x-1'
                 } inline-block h-4 w-4 transform rounded-full bg-white transition-transform`}
             />
           </button>
-          <span
-            className={`${useTacticalFactors ? 'text-military-green font-bold' : 'text-gray-900'}`}
+
+          /* <span
+            className={`${useCustomFactorConstants ? 'text-military-green font-bold' : 'text-gray-900'}`}
           >
-            {useTacticalFactors
-              ? t('useTacticalFactors')
+            {useCustomFactorConstants
+              ? t('useCustomFactorConstants')
               : t('useStandardFactors')}
           </span>
-        </div>
-        {useTacticalFactors ? (
-          <TacticalTourFactors inputs={inputs} setInputs={setInputs} />
-        ) : (
-          <StandardTourFactors
-            inputs={inputs}
-            setInputs={setInputs}
-            packageOptions={packageOptions}
-          />
-        )}
+        </div> */}
+        <TacticalTourFactors inputs={inputs} setInputs={setInputs} />
       </div>
 
       {/* Results Section */}
@@ -283,9 +267,6 @@ const TourCalculator: React.FC = () => {
             <li>{t('baseHorizontalSpeed')}: 4 km/h</li>
             <li>{t('baseVerticalSpeed')}: 400 m/h</li>
             <li>
-              {t('packageWeightEffect')}: -{inputs.package * 2}% speed
-            </li>
-            <li>
               {t('currentMultiplier')}: {multiplier.toFixed(2)}
             </li>
             <li>
@@ -301,8 +282,8 @@ const TourCalculator: React.FC = () => {
 
         <TourDisclaimers
           totalHours={totalHours}
-          dangerLevel={inputs.dangerLevel}
-          terrain={inputs.terrain}
+          // dangerLevel={inputs.dangerLevel}
+          // terrain={inputs.terrain}
         />
       </div>
 
@@ -450,68 +431,6 @@ const TourCalculator: React.FC = () => {
                   <li>Green: 100%</li>
                   <li>Yellow: 80%</li>
                   <li>Red: 50%</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          {/* Standard Factors */}
-          <div>
-            <h3 className="text-lg font-semibold mb-2">
-              {t('standardFactors')}
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              <div>
-                <h4 className="font-medium mb-1">{t('baseSpeeds')}</h4>
-                <ul className="list-disc list-inside text-sm">
-                  <li>{t('baseHorizontalSpeed')}: 4 km/h</li>
-                  <li>{t('baseVerticalSpeed')}: 400 m/h</li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="font-medium mb-1">{t('dangerFactors')}</h4>
-                <ul className="list-disc list-inside text-sm">
-                  <li>Low: 100%</li>
-                  <li>Medium: 90%</li>
-                  <li>High: 70%</li>
-                  <li>Extreme: 50%</li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="font-medium mb-1">{t('lightFactors')}</h4>
-                <ul className="list-disc list-inside text-sm">
-                  <li>Day: 100%</li>
-                  <li>Night: 60%</li>
-                  <li>Mixed: 80%</li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="font-medium mb-1">{t('terrainFactors')}</h4>
-                <ul className="list-disc list-inside text-sm">
-                  <li>Easy: 100%</li>
-                  <li>Alpine Medium: 80%</li>
-                  <li>Alpine Hard: 60%</li>
-                  <li>Alpine Extreme: 40%</li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="font-medium mb-1">{t('physiqueFactors')}</h4>
-                <ul className="list-disc list-inside text-sm">
-                  <li>Very Fit: 120%</li>
-                  <li>Fit: 100%</li>
-                  <li>Medium: 80%</li>
-                  <li>Poor: 60%</li>
-                  <li>Injured: 30%</li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="font-medium mb-1">{t('experienceFactors')}</h4>
-                <ul className="list-disc list-inside text-sm">
-                  <li>Expert: 120%</li>
-                  <li>Advanced: 110%</li>
-                  <li>Medium: 100%</li>
-                  <li>Basic: 80%</li>
-                  <li>None: 60%</li>
                 </ul>
               </div>
             </div>

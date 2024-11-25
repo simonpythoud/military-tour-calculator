@@ -27,7 +27,7 @@ const englishTranslations = {
   verticalCalculation: 'Vertical calculation',
 
   // Factors
-  useTacticalFactors: 'Use tactical factors',
+  useCustomFactorConstants: 'Use custom factors',
   useStandardFactors: 'Use standard factors',
 
   // Danger levels

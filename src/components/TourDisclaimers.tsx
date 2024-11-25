@@ -4,27 +4,28 @@ import { FaExclamationTriangle, FaInfoCircle } from 'react-icons/fa';
 
 interface Props {
   totalHours: number;
-  dangerLevel: string;
-  terrain: string;
+  // TODO: Replace by actual tactical warnings
+  // dangerLevel: string;
+  // terrain: string;
 }
 
 const TourDisclaimers: React.FC<Props> = ({
   totalHours,
-  dangerLevel,
-  terrain,
+  // dangerLevel,
+  // terrain,
 }) => {
   const { t } = useLanguage();
 
   return (
     <div className="mt-4 space-y-3">
-      {(dangerLevel === 'high' || dangerLevel === 'extreme') && (
+      {/* {(dangerLevel === 'high' || dangerLevel === 'extreme') && (
         <div className="p-4 bg-red-50 border-l-4 border-red-400 rounded">
           <div className="flex items-start">
             <FaExclamationTriangle className="text-red-600 mt-1 mr-3 w-6" />
             <p className="text-sm text-red-700">{t('dangerLevelWarning')}</p>
           </div>
         </div>
-      )}
+      )} */}
 
       {totalHours > 18 && (
         <div className="p-4 bg-yellow-50 border-l-4 border-yellow-400 rounded">
