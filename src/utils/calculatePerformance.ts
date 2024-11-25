@@ -30,13 +30,13 @@ export const calculatePerformanceOverTime = (
             : hour * 0.1; // Light loads cause minimal fatigue
 
     const terrainFatigue =
-      inputs.tacticalTerrain === 'TECHNICAL_ALPINE'
+      inputs.terrain === 'TECHNICAL_ALPINE'
         ? hour * 0.5  // Most demanding terrain
-        : inputs.tacticalTerrain === 'ALPINE'
+        : inputs.terrain === 'ALPINE'
           ? hour * 0.4  // Very difficult terrain
-          : inputs.tacticalTerrain === 'DIFFICULT'
+          : inputs.terrain === 'DIFFICULT'
             ? hour * 0.3  // Difficult terrain
-            : inputs.tacticalTerrain === 'HIKING_TRAIL'
+            : inputs.terrain === 'HIKING_TRAIL'
               ? hour * 0.2  // Moderate terrain
               : hour * 0.1; // Flat terrain causes minimal fatigue
 

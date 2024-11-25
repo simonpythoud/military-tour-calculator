@@ -177,7 +177,6 @@ const romanshTranslations = {
   conditionFactors: 'Facturs da cundiziun',
   technicalSkillFactors: 'Facturs da capacitads tecnicas',
   weightFactors: 'Facturs da pais',
-  tacticalTerrainFactors: 'Facturs tactics da terrain',
   conditionTypeFactors: 'Facturs da tip da cundiziun',
   threatLevelFactors: 'Facturs da nivel da smanatscha',
   customConstants: 'Constantas persunalisadas',

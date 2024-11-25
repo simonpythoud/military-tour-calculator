@@ -139,9 +139,9 @@ const englishTranslations = {
   weight_medium: 'Medium (15-25 kg)',
   weight_heavy: 'Heavy (25-35 kg)',
   weight_very_heavy: 'Very Heavy (>35 kg)',
-
-  // Terrain
-  terrain_title: 'Terrain',
+  
+  // Tactical Terrain
+  terrain_title: 'Tactical Terrain',
   terrain_description:
     'A fundamental factor that strongly influences movement speed',
   terrain_flat: 'Flat Terrain',
@@ -179,7 +179,6 @@ const englishTranslations = {
   conditionFactors: 'Condition Factors',
   technicalSkillFactors: 'Technical Skill Factors',
   weightFactors: 'Weight Factors',
-  tacticalTerrainFactors: 'Tactical Terrain Factors',
   conditionTypeFactors: 'Condition Type Factors',
   threatLevelFactors: 'Threat Level Factors',
   customConstants: 'Custom Constants',

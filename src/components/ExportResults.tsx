@@ -48,12 +48,11 @@ const ExportResults: React.FC<Props> = ({ results }) => {
     doc.text(t('influencingFactors'), 20, 75);
 
     const factorsData = [
-      [t('packageWeight'), `${results.inputs.package} kg`],
-      [t('dangerLevel'), t(results.inputs.dangerLevel)],
-      [t('lightConditions'), t(results.inputs.light)],
-      [t('terrainType'), t(results.inputs.terrain)],
-      [t('physicalCondition'), t(results.inputs.physique)],
-      [t('experienceLevel'), t(results.inputs.experience)],
+      [t('condition_title'), t(`condition_${results.inputs.condition.toLowerCase()}` as any)],
+      [t('technical_title'), t(`technicalSkill_${results.inputs.technicalSkill.toLowerCase()}` as any)],
+      [t('weight_title'), t(`weight_${results.inputs.weight.toLowerCase()}` as any)],
+      [t('terrain_title'), t(`terrain_${results.inputs.terrain.toLowerCase()}` as any)],
+      [t('conditions_title'), t(`conditions_${results.inputs.conditionType.toLowerCase()}` as any)]
     ];
 
     autoTable(doc, {
@@ -125,14 +124,12 @@ const ExportResults: React.FC<Props> = ({ results }) => {
       [t('verticalDistance'), `${results.inputs.verticalDistance} m`],
       ['', ''], // Empty row for separation
 
-      // Influencing Factors
-      [t('packageWeight'), `${results.inputs.package} kg`],
-      [t('dangerLevel'), t(results.inputs.dangerLevel)],
-      [t('lightConditions'), t(results.inputs.light)],
-      [t('terrainType'), t(results.inputs.terrain)],
-      [t('physicalCondition'), t(results.inputs.physique)],
-      [t('experienceLevel'), t(results.inputs.experience)],
-      ['', ''], // Empty row for separation
+      // Tactical Factors
+      [t('condition_title'), t(`condition_${results.inputs.condition.toLowerCase()}` as any)],
+      [t('technical_title'), t(`technicalSkill_${results.inputs.technicalSkill.toLowerCase()}` as any)],
+      [t('weight_title'), t(`weight_${results.inputs.weight.toLowerCase()}` as any)],
+      [t('terrain_title'), t(`terrain_${results.inputs.terrain.toLowerCase()}` as any)],
+      [t('conditions_title'), t(`conditions_${results.inputs.conditionType.toLowerCase()}` as any), '', ''], // Empty row for separation
 
       // Results
       [t('totalTime'), results.calculations.total],

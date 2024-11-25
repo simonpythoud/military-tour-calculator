@@ -94,9 +94,9 @@ const TacticalTourFactors: React.FC<Props> = ({ inputs, setInputs }) => {
           <InfoTooltip content={t('terrain_description')} />
         </label>
         <select
-          value={inputs.tacticalTerrain}
+          value={inputs.terrain}
           onChange={(e) =>
-            setInputs({ ...inputs, tacticalTerrain: e.target.value as any })
+            setInputs({ ...inputs, terrain: e.target.value as any })
           }
           className="w-full p-2 border rounded"
         >

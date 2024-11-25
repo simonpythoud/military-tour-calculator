@@ -12,7 +12,7 @@ export const getFactorMultiplier = (
   multiplier *= constants.CONDITION_FACTORS[inputs.condition];
   multiplier *= constants.TECHNICAL_SKILL_FACTORS[inputs.technicalSkill];
   multiplier *= constants.WEIGHT_FACTORS[inputs.weight];
-  multiplier *= constants.TACTICAL_TERRAIN_FACTORS[inputs.tacticalTerrain];
+  multiplier *= constants.TACTICAL_TERRAIN_FACTORS[inputs.terrain];
   multiplier *= constants.CONDITION_TYPE_FACTORS[inputs.conditionType];
   multiplier *= constants.THREAT_LEVEL_FACTORS[inputs.threatLevel];
 
@@ -83,7 +83,7 @@ export const calculateTourTime = (
   if (inputs.threatLevel === 'RED') {
     warnings.push('highThreatWarning');
   }
-  if (inputs.tacticalTerrain === 'TECHNICAL_ALPINE') {
+  if (inputs.terrain === 'TECHNICAL_ALPINE') {
     warnings.push('technicalTerrainWarning');
   }
 

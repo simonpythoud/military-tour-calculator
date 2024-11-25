@@ -177,7 +177,6 @@ const italianTranslations = {
   conditionFactors: 'Fattori di condizione',
   technicalSkillFactors: 'Fattori di abilità tecnica',
   weightFactors: 'Fattori di peso',
-  tacticalTerrainFactors: 'Fattori tattici del terreno',
   conditionTypeFactors: 'Fattori di tipo di condizione',
   threatLevelFactors: 'Fattori di livello di minaccia',
   customConstants: 'Costanti personalizzate',

@@ -28,7 +28,7 @@ const TourCalculator: React.FC = () => {
     condition: 'GOOD',
     technicalSkill: 'INTERMEDIATE',
     weight: 'LIGHT',
-    tacticalTerrain: 'FLAT',
+    terrain: 'FLAT',
     conditionType: 'SUMMER',
     threatLevel: 'GREEN',
   });
@@ -404,7 +404,7 @@ const TourCalculator: React.FC = () => {
               </div>
               <div>
                 <h4 className="font-medium mb-1">
-                  {t('tacticalTerrainFactors')}
+                  {t('terrainFactors')}
                 </h4>
                 <ul className="list-disc list-inside text-sm">
                   <li>Flat: 100%</li>

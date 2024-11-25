@@ -177,7 +177,6 @@ const germanTranslations = {
   conditionFactors: 'Konditionsfaktoren',
   technicalSkillFactors: 'Technische Fähigkeitsfaktoren',
   weightFactors: 'Gewichtsfaktoren',
-  tacticalTerrainFactors: 'Taktische Geländefaktoren',
   conditionTypeFactors: 'Bedingungstypfaktoren',
   threatLevelFactors: 'Bedrohungsstufenfaktoren',
   customConstants: 'Benutzerdefinierte Konstanten',
