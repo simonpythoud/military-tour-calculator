@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { TourInputs } from '../types';
-import { calculateTourTime } from '../utils/calculateTime';
+import { calculateTourTime, getConstants } from '../utils/calculateTime';
 import {
   FaRuler,
   FaMountain,
@@ -20,6 +20,7 @@ import TacticalTourFactors from './TacticalTourFactors';
 import { validateConstants } from '../utils/manageConstants';
 import { toast } from 'react-toastify';
 import TacticalFactorsDisplay from './TacticalFactorsDisplay';
+import ConstantsToggle from './ConstantsToggle';
 
 const TourCalculator: React.FC = () => {
   const { t } = useLanguage();
@@ -35,12 +36,25 @@ const TourCalculator: React.FC = () => {
   });
   const [calculationName, setCalculationName] = useState('');
   const [savedCalculations, setSavedCalculations] = useState<string[]>([]);
-  // const [useCustomFactorConstants, setUseCustomFactorConstants] = useState(true);
+  const [useCustomFactorConstants, setUseCustomFactorConstants] = useState(false);
+
+  const tacticalConstants = getConstants(useCustomFactorConstants);
 
   useEffect(() => {
     const saved = localStorage.getItem('savedCalculations') || '{}';
     const calculations = JSON.parse(saved);
     setSavedCalculations(Object.keys(calculations));
+  }, []);
+
+  useEffect(() => {
+    const customConstants = localStorage.getItem('customConstants');
+    if (customConstants) {
+      console.log('Currently loaded custom constants:', JSON.parse(customConstants));
+      setUseCustomFactorConstants(true);
+    } else {
+      console.log('No custom constants found in localStorage');
+      setUseCustomFactorConstants(false);
+    }
   }, []);
 
   const {
@@ -49,7 +63,7 @@ const TourCalculator: React.FC = () => {
     verticalHours,
     multiplier,
     reliabilityFactor,
-  } = calculateTourTime(inputs, false); //, useCustomFactorConstants);
+  } = calculateTourTime(inputs, useCustomFactorConstants);
 
   const formatTime = (hours: number): string => {
     const h = Math.floor(hours);
@@ -60,7 +74,7 @@ const TourCalculator: React.FC = () => {
   const performanceData = calculatePerformanceOverTime(
     inputs,
     totalHours,
-    false //, useCustomFactorConstants
+    useCustomFactorConstants
   );
 
   const handleSave = () => {
@@ -85,14 +99,14 @@ const TourCalculator: React.FC = () => {
     setSavedCalculations(Object.keys(saved));
   };
 
-  const handleDownloadDefaultConstants = () => {
-    const link = document.createElement('a');
-    link.href = '/tour-calculator-constants-default.json';
-    link.download = 'tour-calculator-constants-default.json';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
+  // const handleDownloadDefaultConstants = () => {
+  //   const link = document.createElement('a');
+  //   link.href = '/tour-calculator-constants-default.json';
+  //   link.download = 'tour-calculator-constants-default.json';
+  //   document.body.appendChild(link);
+  //   link.click();
+  //   document.body.removeChild(link);
+  // };
 
   const handleConstantsUpload = async (
     event: React.ChangeEvent<HTMLInputElement>
@@ -104,26 +118,35 @@ const TourCalculator: React.FC = () => {
       const text = await file.text();
       const constants = JSON.parse(text);
 
+      console.log('Uploaded constants:', constants);
+      console.log('Constants structure:', JSON.stringify(constants, null, 2)); // Pretty print
+
       // Validate the constants structure
       if (!validateConstants(constants)) {
+        console.log('Constants validation failed');
         toast.error(t('invalidFormat'));
         return;
       }
 
       // Save to localStorage
       localStorage.setItem('customConstants', JSON.stringify(constants));
+      console.log('Constants saved to localStorage');
+      const savedConstants = localStorage.getItem('customConstants');
+      console.log('Verified saved constants:', JSON.parse(savedConstants || '{}'));
+      
       toast.success(t('constantsUpdated'));
 
       // Reload the page to apply new constants
       window.location.reload();
     } catch (error) {
+      console.error('Error processing constants:', error);
       toast.error(t('invalidFormat'));
     }
   };
 
   const handleResetConstants = () => {
     localStorage.removeItem('customConstants');
-    window.location.reload(); // Reload to reset to default constants
+    window.location.reload();
   };
 
   return (
@@ -190,35 +213,23 @@ const TourCalculator: React.FC = () => {
             {t('influencingFactors')}
           </div>
         </div>
-        {/*
-        <div className="flex items-center gap-2 text-sm font-normal mb-4">
-          // TODO: Replace this component by a "Use custom factors constants"
-          <button
-            onClick={() => setUseCustomFactorConstants(!useCustomFactorConstants)}
-            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-0 focus:ring-military-green focus:ring-offset-0 ${useCustomFactorConstants ? 'bg-military-green' : 'bg-gray-200'}`}
-          >
-            <span
-              className={`${useCustomFactorConstants ? 'translate-x-6' : 'translate-x-1'
-                } inline-block h-4 w-4 transform rounded-full bg-white transition-transform`}
-            />
-          </button>
-
-          /* <span
-            className={`${useCustomFactorConstants ? 'text-military-green font-bold' : 'text-gray-900'}`}
-          >
-            {useCustomFactorConstants
-              ? t('useCustomFactorConstants')
-              : t('useStandardFactors')}
-          </span>
-        </div> */}
         <TacticalTourFactors inputs={inputs} setInputs={setInputs} />
       </div>
 
       {/* Results Section */}
       <div className="bg-white p-3 sm:p-4 rounded-lg shadow">
-        <h2 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">
-          Results
-        </h2>
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-3 sm:mb-4">
+          <h2 className="text-base sm:text-lg font-semibold">
+            {t('results')}
+          </h2>
+          <div className="pt-2">
+            <ConstantsToggle 
+              useCustomFactorConstants={useCustomFactorConstants}
+              setUseCustomFactorConstants={setUseCustomFactorConstants}
+            />
+          </div>
+        </div>
+
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4 mb-4 sm:mb-6">
           <div className="p-2 sm:p-3 bg-gray-50 rounded-lg">
             <div className="text-xs sm:text-sm text-gray-600">
@@ -257,7 +268,7 @@ const TourCalculator: React.FC = () => {
         </div>
 
         <div className="mb-4 border-b pb-4">
-          <ReliabilityIndicator reliability={reliabilityFactor} />
+            <ReliabilityIndicator reliability={reliabilityFactor} />
         </div>
 
         <div className="bg-gray-50 p-3 sm:p-4 rounded-lg">
@@ -265,17 +276,17 @@ const TourCalculator: React.FC = () => {
             {t('calculationMethod')}
           </h3>
           <ul className="list-disc list-inside space-y-1 text-xs sm:text-sm">
-            <li>{t('baseHorizontalSpeed')}: 4 km/h</li>
-            <li>{t('baseVerticalSpeed')}: 400 m/h</li>
+            <li>{t('baseHorizontalSpeed')}: {tacticalConstants.BASE_SPEEDS.HORIZONTAL} km/h</li>
+            <li>{t('baseVerticalSpeed')}: {tacticalConstants.BASE_SPEEDS.VERTICAL} m/h</li>
             <li>
               {t('currentMultiplier')}: {multiplier.toFixed(2)}
             </li>
             <li>
-              {t('horizontalCalculation')}: {inputs.horizontalDistance}km ÷ ({4}{' '}
+              {t('horizontalCalculation')}: {inputs.horizontalDistance}km ÷ ({tacticalConstants.BASE_SPEEDS.HORIZONTAL}{' '}
               × {multiplier.toFixed(2)})
             </li>
             <li>
-              {t('verticalCalculation')}: {inputs.verticalDistance}m ÷ ({400} ×{' '}
+              {t('verticalCalculation')}: {inputs.verticalDistance}m ÷ ({tacticalConstants.BASE_SPEEDS.VERTICAL} ×{' '}
               {multiplier.toFixed(2)})
             </li>
           </ul>
@@ -283,8 +294,8 @@ const TourCalculator: React.FC = () => {
 
         <TourDisclaimers
           totalHours={totalHours}
-          // dangerLevel={inputs.dangerLevel}
-          // terrain={inputs.terrain}
+        // dangerLevel={inputs.dangerLevel}
+        // terrain={inputs.terrain}
         />
       </div>
 
@@ -359,24 +370,21 @@ const TourCalculator: React.FC = () => {
         />
       </div>
 
-      {/* Constants Section - Changed to details to make it collapsible */}
       <details className="mt-6 p-4 bg-white rounded-lg shadow group">
         <summary className="text-xl font-bold mb-4 cursor-pointer flex items-center justify-between">
           {t('calculationConstants')}
           <FaChevronDown className="transform transition-transform duration-200 group-open:rotate-180 text-gray-600" />
         </summary>
-        
-        <TacticalFactorsDisplay/>
 
-        <div className="flex justify-end gap-2 mt-4">
-          <button
-            onClick={handleDownloadDefaultConstants}
-            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-          >
-            {t('downloadDefaultConstantsFile')}
-          </button>
-          { /* Hide this section until further development */}
-          {false && <div>
+        <ConstantsToggle 
+          useCustomFactorConstants={useCustomFactorConstants}
+          setUseCustomFactorConstants={setUseCustomFactorConstants}
+        />
+
+        <TacticalFactorsDisplay tacticalConstants={tacticalConstants} />
+
+        <div className="space-y-4">
+          <div className="flex justify-end gap-2">
             <input
               type="file"
               accept=".json"
@@ -396,7 +404,16 @@ const TourCalculator: React.FC = () => {
             >
               {t('resetToDefault')}
             </button>
-          </div>}
+          </div>
+          <div className="text-right">
+            <a
+              href="/tour-calculator-constants-default.json"
+              download
+              className="text-blue-600 hover:text-blue-800 hover:underline"
+            >
+              {t('downloadDefaultConstantsFile')}
+            </a>
+          </div>
         </div>
       </details>
     </div>

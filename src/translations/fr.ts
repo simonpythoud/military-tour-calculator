@@ -27,8 +27,8 @@ const frenchTranslations = {
   verticalCalculation: 'Calcul vertical',
 
   // Factors
-  useCustomFactorConstants: 'Utiliser des facteurs personnalisés',
-  useStandardFactors: 'Utiliser les facteurs standard',
+  useCustomFactorConstants: 'Utiliser des constantes personnalisées pour les facteurs',
+  useDefaultFactorConstants: 'Utiliser les constantes standard pour les facteurs',
 
   low: 'Faible',
   medium: 'Moyen',

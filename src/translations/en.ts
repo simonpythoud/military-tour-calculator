@@ -27,8 +27,8 @@ const englishTranslations = {
   verticalCalculation: 'Vertical calculation',
 
   // Factors
-  useCustomFactorConstants: 'Use custom factors',
-  useStandardFactors: 'Use standard factors',
+  useCustomFactorConstants: 'Use custom constants for factors',
+  useDefaultFactorConstants: 'Use default constants for factors',
 
   // Danger levels
   low: 'Low',

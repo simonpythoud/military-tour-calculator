@@ -27,8 +27,8 @@ const italianTranslations = {
   verticalCalculation: 'Calcolo verticale',
 
   // Factors
-  useCustomFactorConstants: 'Utilizzare fattori personalizzati',
-  useStandardFactors: 'Utilizzare i fattori standard',
+  useCustomFactorConstants: 'Usare costanti personalizzate per i fattori',
+  useDefaultFactorConstants: 'Usare costanti standard per i fattori',
 
   low: 'Basso',
   medium: 'Medio',

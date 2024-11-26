@@ -27,8 +27,8 @@ const romanshTranslations = {
   verticalCalculation: 'Calculaziun verticala',
 
   // Factors
-  useCustomFactorConstants: 'Utilisar facturs personalisads',
-  useStandardFactors: 'Utilisar facturs standard',
+  useCustomFactorConstants: 'Utilisar constantas personalisadas per facturs',
+  useDefaultFactorConstants: 'Utilisar constantas standard per facturs',
 
   low: 'Bass',
   medium: 'Mesaun',

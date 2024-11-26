@@ -11,7 +11,7 @@ export const calculatePerformanceOverTime = (
   totalHours: number,
   useCustomFactors: boolean
 ): PerformancePoint[] => {
-  const baseMultiplier = getFactorMultiplier(inputs);
+  const baseMultiplier = getFactorMultiplier(inputs, useCustomFactors);
   const points: PerformancePoint[] = [];
 
   // Calculate performance points for each hour

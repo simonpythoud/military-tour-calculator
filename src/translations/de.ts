@@ -27,8 +27,8 @@ const germanTranslations = {
   verticalCalculation: 'Vertikale Berechnung',
 
   // Factors
-  useCustomFactorConstants: 'Benutzerdefinierte Faktoren verwenden',
-  useStandardFactors: 'Standardfaktoren verwenden',
+  useCustomFactorConstants: 'Benutzerdefinierte Konstanten für Faktoren verwenden',
+  useDefaultFactorConstants: 'Standardkonstanten für Faktoren verwenden',
 
   low: 'Niedrig',
   medium: 'Mittel',

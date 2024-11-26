@@ -4,9 +4,10 @@ import * as tacticalConstants from '../constants/tacticalTourFactors';
 
 export const getFactorMultiplier = (
   inputs: TourInputs,
+  useCustomFactorConstants: boolean
 ): number => {
   let multiplier = 1;
-  const constants = getConstants();
+  const constants = getConstants(useCustomFactorConstants);
 
   // Apply tactical factors using constants
   multiplier *= constants.CONDITION_FACTORS[inputs.condition];
@@ -38,7 +39,6 @@ export const calculateTourTime = (
     typeof constants.BASE_SPEEDS.HORIZONTAL !== 'number' ||
     typeof constants.BASE_SPEEDS.VERTICAL !== 'number'
   ) {
-    console.error('Invalid constants structure:', constants);
     // Return default values to prevent crash
     return {
       totalHours: 0,
@@ -50,7 +50,7 @@ export const calculateTourTime = (
     };
   }
 
-  const multiplier = getFactorMultiplier(inputs);
+  const multiplier = getFactorMultiplier(inputs, useCustomFactorConstants);
 
   const horizontalHours = inputs.horizontalDistance
     ? inputs.horizontalDistance /
@@ -98,21 +98,23 @@ export const calculateTourTime = (
 };
 
 // Returns consolidated constants object
-const getConstants = (useCustomFactorConstants: boolean = false) => {
+export const getConstants = (useCustomFactorConstants: boolean) => {
   // Ensure tactical constants are merged first as base
   let baseConstants = { ...tacticalConstants };
 
+  if (useCustomFactorConstants) {
+    const customConstants = localStorage.getItem('customConstants');
+    if (customConstants) {
+      const parsed = JSON.parse(customConstants);
+      baseConstants = { ...baseConstants, ...parsed };
+    }
+  }
+
   return baseConstants;
-
-  // const customConstants = localStorage.getItem('customConstants');
-  // if (customConstants) {
-  //   console.log('using custom constants');
-  //   const parsed = JSON.parse(customConstants);
-  //   baseConstants = { ...baseConstants, ...parsed };
-  // }
-
   // return standardizeConstants(baseConstants);
 };
+
+
 
 // const standardizeConstants = (constants: Constants): Constants => {
 //   const standardized: Constants = { ...constants };
