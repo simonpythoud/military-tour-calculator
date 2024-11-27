@@ -6,8 +6,8 @@ import {
   FaMountain,
   FaWeightHanging,
   FaHiking,
-  FaChevronDown,
   FaWindowClose,
+  FaCog,
 } from 'react-icons/fa';
 import { useLanguage } from '../contexts/LanguageContext';
 import { calculatePerformanceOverTime } from '../utils/calculatePerformance';
@@ -19,8 +19,8 @@ import ReliabilityIndicator from './ReliabilityIndicator';
 import TacticalTourFactors from './TacticalTourFactors';
 import { validateConstants } from '../utils/manageConstants';
 import { toast } from 'react-toastify';
-import TacticalFactorsDisplay from './TacticalFactorsDisplay';
 import ConstantsToggle from './ConstantsToggle';
+import SettingsModal from './SettingsModal';
 
 const TourCalculator: React.FC = () => {
   const { t } = useLanguage();
@@ -37,6 +37,7 @@ const TourCalculator: React.FC = () => {
   const [calculationName, setCalculationName] = useState('');
   const [savedCalculations, setSavedCalculations] = useState<string[]>([]);
   const [useCustomFactorConstants, setUseCustomFactorConstants] = useState(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
   const tacticalConstants = getConstants(useCustomFactorConstants);
 
@@ -151,10 +152,19 @@ const TourCalculator: React.FC = () => {
 
   return (
     <div className="max-w-4xl mx-auto p-3 sm:p-6 bg-gray-100 rounded-lg shadow-lg">
-      <h1 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 flex items-center gap-2">
-        <FaHiking className="text-military-green" />
-        {t('title')}
-      </h1>
+      <div className="flex justify-between items-center mb-4 sm:mb-6">
+        <h1 className="text-xl sm:text-2xl font-bold flex items-center gap-2">
+          <FaHiking className="text-military-green" />
+          {t('title')}
+        </h1>
+        <button
+          onClick={() => setIsSettingsOpen(true)}
+          className="p-2 text-military-green hover:text-opacity-80"
+          title={t('calculationConstants')}
+        >
+          <FaCog className="w-6 h-6" />
+        </button>
+      </div>
 
       {/* Distance Inputs Section */}
       <div className="bg-white p-3 sm:p-4 rounded-lg shadow mb-4 sm:mb-6">
@@ -370,52 +380,15 @@ const TourCalculator: React.FC = () => {
         />
       </div>
 
-      <details className="mt-6 p-4 bg-white rounded-lg shadow group">
-        <summary className="text-xl font-bold mb-4 cursor-pointer flex items-center justify-between">
-          {t('calculationConstants')}
-          <FaChevronDown className="transform transition-transform duration-200 group-open:rotate-180 text-gray-600" />
-        </summary>
-
-        <ConstantsToggle 
-          useCustomFactorConstants={useCustomFactorConstants}
-          setUseCustomFactorConstants={setUseCustomFactorConstants}
-        />
-
-        <TacticalFactorsDisplay tacticalConstants={tacticalConstants} />
-
-        <div className="space-y-4">
-          <div className="flex justify-end gap-2">
-            <input
-              type="file"
-              accept=".json"
-              onChange={handleConstantsUpload}
-              className="hidden"
-              id="constants-upload"
-            />
-            <label
-              htmlFor="constants-upload"
-              className="px-4 py-2 bg-military-green text-white rounded hover:bg-opacity-90 cursor-pointer"
-            >
-              {t('uploadConstants')}
-            </label>
-            <button
-              onClick={handleResetConstants}
-              className="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300"
-            >
-              {t('resetToDefault')}
-            </button>
-          </div>
-          <div className="text-right">
-            <a
-              href="/tour-calculator-constants-default.json"
-              download
-              className="text-blue-600 hover:text-blue-800 hover:underline"
-            >
-              {t('downloadDefaultConstantsFile')}
-            </a>
-          </div>
-        </div>
-      </details>
+      <SettingsModal
+        isOpen={isSettingsOpen}
+        onClose={() => setIsSettingsOpen(false)}
+        useCustomFactorConstants={useCustomFactorConstants}
+        setUseCustomFactorConstants={setUseCustomFactorConstants}
+        tacticalConstants={tacticalConstants}
+        handleConstantsUpload={handleConstantsUpload}
+        handleResetConstants={handleResetConstants}
+      />
     </div>
   );
 };
