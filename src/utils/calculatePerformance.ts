@@ -1,4 +1,4 @@
-import { TourInputs } from '../types';
+import type { TourInputs } from '../types';
 import { getFactorMultiplier } from './calculateTime';
 
 interface PerformancePoint {
@@ -17,7 +17,7 @@ export const calculatePerformanceOverTime = (
   // Calculate performance points for each hour
   for (let hour = 0; hour <= Math.ceil(totalHours); hour++) {
     // Base fatigue increases exponentially over time
-    const baseFatigue = Math.pow(hour / 4, 1.5);
+    const baseFatigue = (hour / 4) ** 1.5;
 
     // Additional fatigue factors
     const weightFatigue = 

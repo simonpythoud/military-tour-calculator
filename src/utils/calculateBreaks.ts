@@ -6,7 +6,7 @@ interface Break {
 
 export const calculateBreaks = (
   totalHours: number,
-  difficulty: number
+  _difficulty: number
 ): Break[] => {
   const breaks: Break[] = [];
 

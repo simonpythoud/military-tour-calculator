@@ -1,4 +1,4 @@
-import { Constants } from '../types';
+import type { Constants } from '../types';
 
 // const handleConstantsUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
 //     const file = event.target.files?.[0];

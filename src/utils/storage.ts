@@ -1,4 +1,4 @@
-import { TourInputs } from '../types';
+import type { TourInputs } from '../types';
 
 export const saveCalculation = (name: string, inputs: TourInputs) => {
   const saved = localStorage.getItem('savedCalculations') || '{}';

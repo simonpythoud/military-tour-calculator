@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { TourInputs } from '../types';
+import type React from 'react';
+import { useState, useEffect } from 'react';
+import type { TourInputs } from '../types';
 import { calculateTourTime, getConstants } from '../utils/calculateTime';
 import {
   FaRuler,

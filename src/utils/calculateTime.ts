@@ -1,4 +1,4 @@
-import { TourInputs } from '../types';
+import type { TourInputs } from '../types';
 // import { TourInputs, Constants } from '../types';
 import * as tacticalConstants from '../constants/tacticalTourFactors';
 

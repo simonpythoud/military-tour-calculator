@@ -11,10 +11,15 @@
         "noUnusedVariables": "error"
       },
       "suspicious": {
-        "noExplicitAny": "warn"
+        "noExplicitAny": "warn",
+        "noPrototypeBuiltins": "warn"
       },
       "style": {
         "useConst": "error"
+      },
+      "a11y": {
+        "useButtonType": "warn",
+        "noLabelWithoutControl": "warn"
       }
     }
   },
@@ -30,4 +35,4 @@
       "trailingCommas": "es5"
     }
   }
-} 
+}

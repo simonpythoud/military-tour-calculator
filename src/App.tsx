@@ -1,4 +1,4 @@
-import React from 'react';
+import type React from 'react';
 import TourCalculator from './components/TourCalculator';
 import LanguageSwitcher from './components/LanguageSwitcher';
 import { LanguageProvider } from './contexts/LanguageContext';

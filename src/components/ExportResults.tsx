@@ -1,4 +1,4 @@
-import React from 'react';
+import type React from 'react';
 import jsPDF from 'jspdf';
 import { FaFilePdf, FaFileCsv } from 'react-icons/fa';
 import { useLanguage } from '../contexts/LanguageContext';

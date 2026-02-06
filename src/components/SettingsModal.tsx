@@ -1,4 +1,4 @@
-import React from 'react';
+import type React from 'react';
 import { FaTimes } from 'react-icons/fa';
 import { useLanguage } from '../contexts/LanguageContext';
 import ConstantsToggle from './ConstantsToggle';

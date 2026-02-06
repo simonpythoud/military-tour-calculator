@@ -1,6 +1,6 @@
-import React from 'react';
+import type React from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
-import { TourInputs } from '../types';
+import type { TourInputs } from '../types';
 import {
   FaRunning,
   FaMountain,
