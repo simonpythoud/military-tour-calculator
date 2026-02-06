@@ -200,6 +200,7 @@ const germanTranslations = {
   gpxSectionsDescription: 'Jeder Abschnitt hat eine automatisch erkannte Geländeschwierigkeit basierend auf dem Höhengradient. Sie können den Geländetyp pro Abschnitt anpassen.',
   gpxRouteMap: 'Routenkarte',
   gpxTotalDistance: 'Gesamtdistanz',
+  terrainDisabledByRoute: 'Gelände wird pro Abschnitt in den Routenabschnitten oben festgelegt.',
 };
 
 export default germanTranslations;

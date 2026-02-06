@@ -1,5 +1,6 @@
 import type React from 'react';
-import { FaMountain, FaArrowUp, FaArrowDown } from 'react-icons/fa';
+import { useState } from 'react';
+import { FaMountain, FaArrowUp, FaArrowDown, FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import { useLanguage } from '../contexts/LanguageContext';
 import type { RouteSection, Terrain } from '../types';
 
@@ -33,6 +34,7 @@ const SECTION_COLORS = [
 
 const RouteSections: React.FC<Props> = ({ sections, onUpdateSectionTerrain }) => {
   const { t } = useLanguage();
+  const [isVisible, setIsVisible] = useState(true);
 
   const getTerrainLabel = (terrain: Terrain): string => {
     const labels: Record<Terrain, string> = {
@@ -47,11 +49,20 @@ const RouteSections: React.FC<Props> = ({ sections, onUpdateSectionTerrain }) =>
 
   return (
     <div className="bg-white p-3 sm:p-4 rounded-lg shadow mb-4 sm:mb-6">
-      <h2 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4 flex items-center gap-2">
-        <FaMountain className="text-military-green" />
-        {t('gpxRouteSections')}
-      </h2>
-      <p className="text-sm text-gray-600 mb-3">{t('gpxSectionsDescription')}</p>
+      <button
+        type="button"
+        onClick={() => setIsVisible(!isVisible)}
+        className="w-full flex items-center justify-between text-base sm:text-lg font-semibold"
+      >
+        <span className="flex items-center gap-2">
+          <FaMountain className="text-military-green" />
+          {t('gpxRouteSections')}
+        </span>
+        {isVisible ? <FaChevronUp /> : <FaChevronDown />}
+      </button>
+      {isVisible && (
+      <>
+      <p className="text-sm text-gray-600 mb-3 mt-3">{t('gpxSectionsDescription')}</p>
       <div className="space-y-2">
         {sections.map((section, index) => (
           <div
@@ -115,6 +126,8 @@ const RouteSections: React.FC<Props> = ({ sections, onUpdateSectionTerrain }) =>
           </span>
         </div>
       </div>
+      </>
+      )}
     </div>
   );
 };

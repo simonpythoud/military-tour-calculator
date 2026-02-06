@@ -115,6 +115,8 @@ const TourCalculator: React.FC = () => {
   } = calculateTourTime(effectiveInputs, useCustomFactorConstants);
 
   const totalHours = sectionCalc ? sectionCalc.totalHours : directTotalHours;
+  const effectiveHorizontalHours = sectionCalc ? sectionCalc.totalHorizontalHours : horizontalHours;
+  const effectiveVerticalHours = sectionCalc ? sectionCalc.totalVerticalHours : verticalHours;
 
   const formatTime = (hours: number): string => {
     const h = Math.floor(hours);
@@ -289,7 +291,7 @@ const TourCalculator: React.FC = () => {
             {t('influencingFactors')}
           </div>
         </div>
-        <TacticalTourFactors inputs={inputs} setInputs={setInputs} />
+        <TacticalTourFactors inputs={inputs} setInputs={setInputs} hasGpxRoute={!!gpxRoute} />
       </div>
 
       {/* Results Section */}
@@ -320,7 +322,7 @@ const TourCalculator: React.FC = () => {
               {t('horizontalTime')}
             </div>
             <div className="text-lg sm:text-xl font-bold text-blue-700">
-              {formatTime(horizontalHours)}
+              {formatTime(effectiveHorizontalHours)}
             </div>
           </div>
           <div className="p-2 sm:p-3 bg-orange-50 rounded-lg">
@@ -328,7 +330,7 @@ const TourCalculator: React.FC = () => {
               {t('verticalTime')}
             </div>
             <div className="text-lg sm:text-xl font-bold text-orange-700">
-              {formatTime(verticalHours)}
+              {formatTime(effectiveVerticalHours)}
             </div>
           </div>
           <div className="p-2 sm:p-3 bg-gray-50 rounded-lg">
@@ -437,8 +439,8 @@ const TourCalculator: React.FC = () => {
             inputs,
             calculations: {
               total: formatTime(totalHours),
-              horizontal: formatTime(horizontalHours),
-              vertical: formatTime(verticalHours),
+              horizontal: formatTime(effectiveHorizontalHours),
+              vertical: formatTime(effectiveVerticalHours),
               multiplier: multiplier,
             },
             performance: performanceData,

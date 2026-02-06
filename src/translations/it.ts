@@ -200,6 +200,7 @@ const italianTranslations = {
   gpxSectionsDescription: 'Ogni sezione ha una difficoltà del terreno rilevata automaticamente in base al gradiente di altitudine. Puoi modificare il tipo di terreno per ogni sezione.',
   gpxRouteMap: 'Mappa del percorso',
   gpxTotalDistance: 'Distanza totale',
+  terrainDisabledByRoute: 'Il terreno è impostato per sezione nelle Sezioni del percorso sopra.',
 };
 
 export default italianTranslations;

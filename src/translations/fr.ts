@@ -200,6 +200,7 @@ const frenchTranslations = {
   gpxSectionsDescription: 'Chaque section a une difficulté de terrain détectée automatiquement en fonction du gradient d\'altitude. Vous pouvez ajuster le type de terrain par section.',
   gpxRouteMap: 'Carte de la route',
   gpxTotalDistance: 'Distance totale',
+  terrainDisabledByRoute: 'Le terrain est défini par section dans les Sections de la route ci-dessus.',
 };
 
 export default frenchTranslations;

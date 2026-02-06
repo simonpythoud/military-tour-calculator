@@ -200,6 +200,7 @@ const romanshTranslations = {
   gpxSectionsDescription: 'Mintga secziun ha ina difficultad da terrain automaticamain reconuschida basada sin il gradient da autezza. Ti pos adaptar il tip da terrain per secziun.',
   gpxRouteMap: 'Carta da la ruta',
   gpxTotalDistance: 'Distanza totala',
+  terrainDisabledByRoute: 'Il terrain vegn definì per secziun en las Secziuns da la ruta survart.',
 };
 
 export default romanshTranslations;

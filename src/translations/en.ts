@@ -197,6 +197,7 @@ const englishTranslations = {
   gpxSectionsDescription: 'Each section has an auto-detected terrain difficulty based on elevation gradient. You can adjust the terrain type per section.',
   gpxRouteMap: 'Route Map',
   gpxTotalDistance: 'Total distance',
+  terrainDisabledByRoute: 'Terrain is set per section in Route Sections above.',
 
   // TODO: Remove
   standardFactors: 'Standard Factors',
