@@ -1,8 +1,6 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.5.3/schema.json",
-  "organizeImports": {
-    "enabled": true
-  },
+  "$schema": "https://biomejs.dev/schemas/2.3.14/schema.json",
+  "assist": { "actions": { "source": { "organizeImports": "on" } } },
   "linter": {
     "enabled": true,
     "rules": {
@@ -12,7 +10,8 @@
       },
       "suspicious": {
         "noExplicitAny": "warn",
-        "noPrototypeBuiltins": "warn"
+        "noPrototypeBuiltins": "warn",
+        "noUnknownAtRules": "off"
       },
       "style": {
         "useConst": "error"
