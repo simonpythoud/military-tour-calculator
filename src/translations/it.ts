@@ -187,6 +187,19 @@ const italianTranslations = {
   uploadInstructions:
     'Carica un file JSON con le tue costanti personalizzate. Il file deve contenere tutti i fattori necessari per il calcolo.',
   downloadDefaultConstantsFile: 'Scarica costanti predefinite',
+
+  // GPX Import
+  gpxImport: 'Importazione percorso',
+  gpxImportDescription: 'Carica un file di navigazione (.gpx, .kml, .tcx) per calcolare automaticamente distanze e dislivello dal tuo percorso.',
+  gpxUploadFile: 'Carica file percorso',
+  gpxClearRoute: 'Elimina percorso',
+  gpxSupportedFormats: 'Formati supportati',
+  gpxImportSuccess: 'Percorso importato con successo',
+  gpxImportError: 'Importazione del file di percorso fallita. Controlla il formato del file.',
+  gpxRouteSections: 'Sezioni del percorso',
+  gpxSectionsDescription: 'Ogni sezione ha una difficoltà del terreno rilevata automaticamente in base al gradiente di altitudine. Puoi modificare il tipo di terreno per ogni sezione.',
+  gpxRouteMap: 'Mappa del percorso',
+  gpxTotalDistance: 'Distanza totale',
 };
 
 export default italianTranslations;

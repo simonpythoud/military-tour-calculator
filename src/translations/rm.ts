@@ -187,6 +187,19 @@ const romanshTranslations = {
   uploadInstructions:
     'Chargia ina datoteca JSON cun tias constantas persunalisadas. La datoteca sto cuntegnair tut ils facturs necessaris per il calcul.',
   downloadDefaultConstantsFile: 'Descargiar constantas predefinidas',
+
+  // GPX Import
+  gpxImport: 'Import da ruta',
+  gpxImportDescription: 'Chargia ina datoteca da navigaziun (.gpx, .kml, .tcx) per calcular automaticamain distanzas e autezza da tia ruta.',
+  gpxUploadFile: 'Chargiar datoteca da ruta',
+  gpxClearRoute: 'Stizzar ruta',
+  gpxSupportedFormats: 'Formats sustegnids',
+  gpxImportSuccess: 'Ruta importada cun success',
+  gpxImportError: 'Errur durant l\'import da la datoteca da ruta. Controllescha il format da la datoteca.',
+  gpxRouteSections: 'Secziuns da la ruta',
+  gpxSectionsDescription: 'Mintga secziun ha ina difficultad da terrain automaticamain reconuschida basada sin il gradient da autezza. Ti pos adaptar il tip da terrain per secziun.',
+  gpxRouteMap: 'Carta da la ruta',
+  gpxTotalDistance: 'Distanza totala',
 };
 
 export default romanshTranslations;

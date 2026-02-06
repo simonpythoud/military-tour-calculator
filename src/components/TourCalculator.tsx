@@ -1,7 +1,8 @@
 import type React from 'react';
 import { useState, useEffect } from 'react';
-import type { TourInputs } from '../types';
+import type { TourInputs, GpxRoute, Terrain } from '../types';
 import { calculateTourTime, getConstants } from '../utils/calculateTime';
+import { calculateSectionTimes } from '../utils/calculateSections';
 import {
   FaRuler,
   FaMountain,
@@ -22,6 +23,9 @@ import { validateConstants } from '../utils/manageConstants';
 import { toast } from 'react-toastify';
 import ConstantsToggle from './ConstantsToggle';
 import SettingsModal from './SettingsModal';
+import GpxUpload from './GpxUpload';
+import RouteSections from './RouteSections';
+import RouteMap from './RouteMap';
 
 const TourCalculator: React.FC = () => {
   const { t } = useLanguage();
@@ -39,8 +43,35 @@ const TourCalculator: React.FC = () => {
   const [savedCalculations, setSavedCalculations] = useState<string[]>([]);
   const [useCustomFactorConstants, setUseCustomFactorConstants] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [gpxRoute, setGpxRoute] = useState<GpxRoute | null>(null);
 
   const tacticalConstants = getConstants(useCustomFactorConstants);
+
+  const handleRouteLoaded = (route: GpxRoute) => {
+    setGpxRoute(route);
+    setInputs((prev) => ({
+      ...prev,
+      horizontalDistance: route.totalDistance,
+      verticalDistance: route.totalElevationGain,
+    }));
+  };
+
+  const handleClearRoute = () => {
+    setGpxRoute(null);
+    setInputs((prev) => ({
+      ...prev,
+      horizontalDistance: 0,
+      verticalDistance: 0,
+    }));
+  };
+
+  const handleUpdateSectionTerrain = (sectionId: string, terrain: Terrain) => {
+    if (!gpxRoute) return;
+    const updatedSections = gpxRoute.sections.map((s) =>
+      s.id === sectionId ? { ...s, terrain } : s
+    );
+    setGpxRoute({ ...gpxRoute, sections: updatedSections });
+  };
 
   useEffect(() => {
     const saved = localStorage.getItem('savedCalculations') || '{}';
@@ -59,13 +90,31 @@ const TourCalculator: React.FC = () => {
     }
   }, []);
 
+  const sectionCalc = gpxRoute
+    ? calculateSectionTimes(
+        gpxRoute.sections,
+        inputs,
+        useCustomFactorConstants
+      )
+    : null;
+
+  const effectiveInputs: TourInputs = sectionCalc
+    ? {
+        ...inputs,
+        horizontalDistance: sectionCalc.totalHorizontalDistance,
+        verticalDistance: sectionCalc.totalVerticalDistance,
+      }
+    : inputs;
+
   const {
-    totalHours,
+    totalHours: directTotalHours,
     horizontalHours,
     verticalHours,
     multiplier,
     reliabilityFactor,
-  } = calculateTourTime(inputs, useCustomFactorConstants);
+  } = calculateTourTime(effectiveInputs, useCustomFactorConstants);
+
+  const totalHours = sectionCalc ? sectionCalc.totalHours : directTotalHours;
 
   const formatTime = (hours: number): string => {
     const h = Math.floor(hours);
@@ -166,6 +215,22 @@ const TourCalculator: React.FC = () => {
           <FaCog className="w-6 h-6" />
         </button>
       </div>
+
+      <GpxUpload
+        onRouteLoaded={handleRouteLoaded}
+        hasRoute={!!gpxRoute}
+        onClearRoute={handleClearRoute}
+      />
+
+      {gpxRoute && (
+        <>
+          <RouteMap sections={gpxRoute.sections} />
+          <RouteSections
+            sections={gpxRoute.sections}
+            onUpdateSectionTerrain={handleUpdateSectionTerrain}
+          />
+        </>
+      )}
 
       {/* Distance Inputs Section */}
       <div className="bg-white p-3 sm:p-4 rounded-lg shadow mb-4 sm:mb-6">
