@@ -187,6 +187,20 @@ const germanTranslations = {
   uploadInstructions:
     'Laden Sie eine JSON-Datei mit Ihren benutzerdefinierten Konstanten hoch. Die Datei muss alle für die Berechnung erforderlichen Faktoren enthalten.',
   downloadDefaultConstantsFile: 'Standardkonstanten herunterladen',
+
+  // GPX Import
+  gpxImport: 'Routenimport',
+  gpxImportDescription: 'Laden Sie eine Navigationsdatei (.gpx, .kml, .tcx) hoch, um Distanzen und Höhenmeter automatisch aus Ihrer Route zu berechnen.',
+  gpxUploadFile: 'Routendatei hochladen',
+  gpxClearRoute: 'Route löschen',
+  gpxSupportedFormats: 'Unterstützte Formate',
+  gpxImportSuccess: 'Route erfolgreich importiert',
+  gpxImportError: 'Route konnte nicht importiert werden. Bitte überprüfen Sie das Dateiformat.',
+  gpxRouteSections: 'Routenabschnitte',
+  gpxSectionsDescription: 'Jeder Abschnitt hat eine automatisch erkannte Geländeschwierigkeit basierend auf dem Höhengradient. Sie können den Geländetyp pro Abschnitt anpassen.',
+  gpxRouteMap: 'Routenkarte',
+  gpxTotalDistance: 'Gesamtdistanz',
+  terrainDisabledByRoute: 'Gelände wird pro Abschnitt in den Routenabschnitten oben festgelegt.',
 };
 
 export default germanTranslations;

@@ -187,6 +187,20 @@ const frenchTranslations = {
   uploadInstructions:
     'Téléchargez un fichier JSON avec vos constantes personnalisées. Le fichier doit contenir tous les facteurs nécessaires au calcul.',
   downloadDefaultConstantsFile: 'Télécharger les constantes par défaut',
+
+  // GPX Import
+  gpxImport: 'Importation de route',
+  gpxImportDescription: 'Téléchargez un fichier de navigation (.gpx, .kml, .tcx) pour calculer automatiquement les distances et le dénivelé de votre itinéraire.',
+  gpxUploadFile: 'Télécharger un fichier de route',
+  gpxClearRoute: 'Supprimer la route',
+  gpxSupportedFormats: 'Formats supportés',
+  gpxImportSuccess: 'Route importée avec succès',
+  gpxImportError: "Échec de l'importation du fichier de route. Veuillez vérifier le format du fichier.",
+  gpxRouteSections: 'Sections de la route',
+  gpxSectionsDescription: 'Chaque section a une difficulté de terrain détectée automatiquement en fonction du gradient d\'altitude. Vous pouvez ajuster le type de terrain par section.',
+  gpxRouteMap: 'Carte de la route',
+  gpxTotalDistance: 'Distance totale',
+  terrainDisabledByRoute: 'Le terrain est défini par section dans les Sections de la route ci-dessus.',
 };
 
 export default frenchTranslations;

@@ -28,3 +28,31 @@ export interface Constants {
   CONDITION_TYPE_FACTORS: Record<string, number>;
   THREAT_LEVEL_FACTORS: Record<string, number>;
 }
+
+export interface RoutePoint {
+  lat: number;
+  lon: number;
+  ele: number;
+  distanceFromStart: number;
+}
+
+export interface RouteSection {
+  id: string;
+  name: string;
+  points: RoutePoint[];
+  horizontalDistance: number;
+  elevationGain: number;
+  elevationLoss: number;
+  terrain: Terrain;
+  startIndex: number;
+  endIndex: number;
+}
+
+export interface GpxRoute {
+  name: string;
+  points: RoutePoint[];
+  sections: RouteSection[];
+  totalDistance: number;
+  totalElevationGain: number;
+  totalElevationLoss: number;
+}

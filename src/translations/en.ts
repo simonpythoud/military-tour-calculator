@@ -185,6 +185,20 @@ const englishTranslations = {
   uploadInstructions: 'Upload a JSON file with your custom constants',
   downloadDefaultConstantsFile: 'Download default constants file',
 
+  // GPX Import
+  gpxImport: 'Route Import',
+  gpxImportDescription: 'Upload a navigation file (.gpx, .kml, .tcx) to automatically calculate distances and elevation from your route.',
+  gpxUploadFile: 'Upload Route File',
+  gpxClearRoute: 'Clear Route',
+  gpxSupportedFormats: 'Supported formats',
+  gpxImportSuccess: 'Route imported successfully',
+  gpxImportError: 'Failed to import route file. Please check the file format.',
+  gpxRouteSections: 'Route Sections',
+  gpxSectionsDescription: 'Each section has an auto-detected terrain difficulty based on elevation gradient. You can adjust the terrain type per section.',
+  gpxRouteMap: 'Route Map',
+  gpxTotalDistance: 'Total distance',
+  terrainDisabledByRoute: 'Terrain is set per section in Route Sections above.',
+
   // TODO: Remove
   standardFactors: 'Standard Factors',
   dangerFactors: 'Danger Level Factors',

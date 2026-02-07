@@ -14,9 +14,10 @@ import InfoTooltip from './InfoTooltip';
 interface Props {
   inputs: TourInputs;
   setInputs: (inputs: TourInputs) => void;
+  hasGpxRoute?: boolean;
 }
 
-const TacticalTourFactors: React.FC<Props> = ({ inputs, setInputs }) => {
+const TacticalTourFactors: React.FC<Props> = ({ inputs, setInputs, hasGpxRoute }) => {
   const { t } = useLanguage();
 
   return (
@@ -98,7 +99,8 @@ const TacticalTourFactors: React.FC<Props> = ({ inputs, setInputs }) => {
           onChange={(e) =>
             setInputs({ ...inputs, terrain: e.target.value as any })
           }
-          className="w-full p-2 border rounded"
+          className={`w-full p-2 border rounded ${hasGpxRoute ? 'opacity-50 cursor-not-allowed bg-gray-100' : ''}`}
+          disabled={hasGpxRoute}
         >
           <option value="FLAT">{t('terrain_flat')}</option>
           <option value="HIKING_TRAIL">{t('terrain_hiking_trail')}</option>
@@ -108,6 +110,9 @@ const TacticalTourFactors: React.FC<Props> = ({ inputs, setInputs }) => {
             {t('terrain_technical_alpine')}
           </option>
         </select>
+        {hasGpxRoute && (
+          <p className="text-xs text-blue-600 mt-1">{t('terrainDisabledByRoute')}</p>
+        )}
       </div>
 
       {/* Conditions */}
