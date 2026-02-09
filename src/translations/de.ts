@@ -71,6 +71,7 @@ const germanTranslations = {
   savedCalculations: 'Gespeicherte Berechnungen',
   enterCalculationName: 'Berechnungsnamen eingeben',
   save: 'Speichern',
+  removeCalculation: 'Berechnung entfernen',
 
   // Disclaimer translations
   longTourWarning: 'Erweiterte Tourdauerwarnung',

@@ -71,6 +71,7 @@ const italianTranslations = {
   savedCalculations: 'Calcoli salvati',
   enterCalculationName: 'Inserire il nome del calcolo',
   save: 'Salva',
+  removeCalculation: 'Rimuovi calcolo',
 
   // Disclaimer translations
   longTourWarning: 'Avviso sulla durata del tour',

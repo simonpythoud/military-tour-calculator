@@ -71,6 +71,7 @@ const frenchTranslations = {
   savedCalculations: 'Calculs enregistrés',
   enterCalculationName: 'Entrer le nom du calcul',
   save: 'Enregistrer',
+  removeCalculation: 'Supprimer le calcul',
 
   // Disclaimer translations
   longTourWarning: 'Avertissement sur la durée du tour',
