@@ -1,5 +1,5 @@
 import type React from 'react';
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import TourCalculator from './components/TourCalculator';
 import V2Calculator from './components/v2/V2Calculator';
 import LanguageSwitcher from './components/LanguageSwitcher';
@@ -9,52 +9,47 @@ import './App.css';
 
 type AppVersion = 'v1' | 'v2';
 
-const VersionTabs: React.FC<{
-  version: AppVersion;
-  onVersionChange: (v: AppVersion) => void;
-}> = ({ version, onVersionChange }) => {
-  const { t } = useLanguage();
-
-  return (
-    <div className="max-w-4xl mx-auto mb-4 px-3 sm:px-6">
-      <div className="flex rounded-lg overflow-hidden border border-gray-300 w-fit">
-        <button
-          type="button"
-          onClick={() => onVersionChange('v1')}
-          className={`px-4 py-2 text-sm font-medium transition-colors ${
-            version === 'v1'
-              ? 'bg-military-green text-white'
-              : 'bg-white text-gray-700 hover:bg-gray-100'
-          }`}
-        >
-          V1
-        </button>
-        <button
-          type="button"
-          onClick={() => onVersionChange('v2')}
-          className={`px-4 py-2 text-sm font-medium transition-colors ${
-            version === 'v2'
-              ? 'bg-military-green text-white'
-              : 'bg-white text-gray-700 hover:bg-gray-100'
-          }`}
-        >
-          V2 {t('v2_beta_tag')}
-        </button>
-      </div>
-    </div>
-  );
+const getVersionFromPath = (): AppVersion => {
+  const path = window.location.pathname;
+  if (path === '/v2' || path === '/v2/') return 'v2';
+  return 'v1';
 };
 
 const AppContent: React.FC = () => {
-  const [version, setVersion] = useState<AppVersion>('v1');
+  const { t } = useLanguage();
+  const [version, setVersion] = useState<AppVersion>(getVersionFromPath);
+
+  const handleVersionChange = useCallback((v: AppVersion) => {
+    setVersion(v);
+    const newPath = v === 'v2' ? '/v2' : '/';
+    window.history.pushState({}, '', newPath);
+  }, []);
+
+  useEffect(() => {
+    const onPopState = () => {
+      setVersion(getVersionFromPath());
+    };
+    window.addEventListener('popstate', onPopState);
+    return () => window.removeEventListener('popstate', onPopState);
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-50 py-8 pb-16">
-      <VersionTabs version={version} onVersionChange={setVersion} />
       <ErrorBoundary>
         {version === 'v1' ? <TourCalculator /> : <V2Calculator />}
       </ErrorBoundary>
       <LanguageSwitcher />
+      {version === 'v1' && (
+        <div className="max-w-4xl mx-auto mt-8 px-3 sm:px-6 text-center">
+          <button
+            type="button"
+            onClick={() => handleVersionChange('v2')}
+            className="text-xs text-gray-400 hover:text-gray-500 transition-colors"
+          >
+            {t('v2_beta_tag')}
+          </button>
+        </div>
+      )}
     </div>
   );
 };
