@@ -71,6 +71,7 @@ const romanshTranslations = {
   savedCalculations: 'Calculaziuns salvadas',
   enterCalculationName: 'Endatescha il num da la calculaziun',
   save: 'Salvar',
+  removeCalculation: 'Allontanar calculaziun',
 
   // Translations da decleraziuns
   longTourWarning: 'Avis da durada prolungada da la tura',
