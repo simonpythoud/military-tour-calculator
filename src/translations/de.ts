@@ -214,7 +214,7 @@ const germanTranslations = {
   v2_enter_loss: 'Höhenverlust eingeben',
   v2_group_size: 'Gruppengrösse',
   v2_group_small: 'Klein (2-5)',
-  v2_group_section: 'Sektion (6-12)',
+  v2_group_medium: 'Mittel (6-12)',
   v2_group_large: 'Grosser Verband (13+)',
   v2_ascent_time: 'Aufstiegszeit',
   v2_descent_time: 'Abstiegszeit',

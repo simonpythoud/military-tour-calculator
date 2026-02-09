@@ -2,7 +2,7 @@ import type { TourInputs, Terrain } from './index';
 
 export type V2CalculationMode = 'basic' | 'advanced';
 
-export type GroupSize = 'SMALL' | 'SECTION' | 'LARGE_UNIT';
+export type GroupSize = 'SMALL' | 'MEDIUM' | 'LARGE_UNIT';
 
 export interface V2TourInputs extends TourInputs {
   elevationGain: number;

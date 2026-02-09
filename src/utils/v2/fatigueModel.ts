@@ -3,7 +3,7 @@ import type { Weight, Terrain, ConditionType, ThreatLevel } from '../../types';
 
 const GROUP_SIZE_FATIGUE_MULTIPLIERS: Record<GroupSize, number> = {
   SMALL: 1.0,
-  SECTION: 1.1,
+  MEDIUM: 1.1,
   LARGE_UNIT: 1.25,
 };
 

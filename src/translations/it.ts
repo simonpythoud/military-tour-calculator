@@ -214,7 +214,7 @@ const italianTranslations = {
   v2_enter_loss: 'Inserire dislivello negativo',
   v2_group_size: 'Dimensione del gruppo',
   v2_group_small: 'Piccolo (2-5)',
-  v2_group_section: 'Sezione (6-12)',
+  v2_group_medium: 'Medio (6-12)',
   v2_group_large: 'Grande unità (13+)',
   v2_ascent_time: 'Tempo di salita',
   v2_descent_time: 'Tempo di discesa',

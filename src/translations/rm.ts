@@ -214,7 +214,7 @@ const romanshTranslations = {
   v2_enter_loss: 'Endatar meters da descendida',
   v2_group_size: 'Grondezza dal grupp',
   v2_group_small: 'Pitschen (2-5)',
-  v2_group_section: 'Secziun (6-12)',
+  v2_group_medium: 'Mesaun (6-12)',
   v2_group_large: 'Gronda unitad (13+)',
   v2_ascent_time: 'Temp da muntada',
   v2_descent_time: 'Temp da descendida',

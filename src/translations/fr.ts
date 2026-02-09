@@ -214,7 +214,7 @@ const frenchTranslations = {
   v2_enter_loss: 'Entrer le dénivelé négatif',
   v2_group_size: 'Taille du groupe',
   v2_group_small: 'Petit (2-5)',
-  v2_group_section: 'Section (6-12)',
+  v2_group_medium: 'Moyen (6-12)',
   v2_group_large: 'Grande unité (13+)',
   v2_ascent_time: 'Temps de montée',
   v2_descent_time: 'Temps de descente',

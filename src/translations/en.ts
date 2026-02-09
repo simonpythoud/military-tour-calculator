@@ -218,7 +218,7 @@ const englishTranslations = {
   v2_enter_loss: 'Enter elevation loss',
   v2_group_size: 'Group Size',
   v2_group_small: 'Small (2-5)',
-  v2_group_section: 'Section (6-12)',
+  v2_group_medium: 'Medium (6-12)',
   v2_group_large: 'Large Unit (13+)',
   v2_ascent_time: 'Ascent Time',
   v2_descent_time: 'Descent Time',

@@ -370,7 +370,7 @@ const V2Calculator: React.FC = () => {
               className="w-full sm:w-auto p-2 border rounded"
             >
               <option value="SMALL">{t('v2_group_small')}</option>
-              <option value="SECTION">{t('v2_group_section')}</option>
+              <option value="MEDIUM">{t('v2_group_medium')}</option>
               <option value="LARGE_UNIT">{t('v2_group_large')}</option>
             </select>
           </div>
