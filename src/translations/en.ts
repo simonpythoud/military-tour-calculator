@@ -76,6 +76,7 @@ const englishTranslations = {
   savedCalculations: 'Saved Calculations',
   enterCalculationName: 'Enter calculation name',
   save: 'Save',
+  removeCalculation: 'Remove calculation',
 
   // Disclaimer translations
   longTourWarning: 'Extended Tour Duration Warning',

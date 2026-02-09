@@ -210,9 +210,11 @@ const TourCalculator: React.FC = () => {
           {t('title')}
         </h1>
         <button
+          type="button"
           onClick={() => setIsSettingsOpen(true)}
           className="p-2 text-military-green hover:text-opacity-80"
           title={t('calculationConstants')}
+          aria-label={t('calculationConstants')}
         >
           <FaCog className="w-6 h-6" />
         </button>
@@ -399,6 +401,7 @@ const TourCalculator: React.FC = () => {
             value={calculationName}
             onChange={(e) => setCalculationName(e.target.value)}
             placeholder={t('enterCalculationName')}
+            aria-label={t('enterCalculationName')}
             className="flex-1 p-2 border rounded"
           />
           <button
@@ -420,8 +423,11 @@ const TourCalculator: React.FC = () => {
                   {name}
                 </button>
                 <button
+                  type="button"
                   onClick={() => handleRemove(name)}
-                  className="absolute top-0 right-0 h-full px-2 text-gray-600"
+                  className="absolute top-0 right-0 h-full px-2 text-gray-600 hover:text-red-600 focus:text-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 rounded"
+                  aria-label={t('removeCalculation')}
+                  title={t('removeCalculation')}
                 >
                   <FaWindowClose />
                 </button>
