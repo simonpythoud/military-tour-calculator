@@ -256,7 +256,7 @@ const V2Calculator: React.FC = () => {
           <FaRuler className="text-military-green" />
           {t('distanceMeasurements')}
         </h2>
-        <div className={`grid grid-cols-1 ${calculationMode === 'advanced' ? 'sm:grid-cols-2 lg:grid-cols-4' : 'sm:grid-cols-2'} gap-3 sm:gap-4`}>
+        <div className={`grid grid-cols-1 ${calculationMode === 'advanced' ? 'sm:grid-cols-3' : 'sm:grid-cols-2'} gap-3 sm:gap-4`}>
           <div>
             <label className="block mb-2 flex items-center gap-1">
               <FaRuler className="text-blue-600" />
