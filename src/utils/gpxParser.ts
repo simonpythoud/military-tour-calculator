@@ -170,13 +170,13 @@ const splitIntoSections = (
   return sections;
 };
 
-const getRouteName = (xmlDoc: Document, fileType: string): string => {
-  if (fileType === 'kml') {
-    const nameEl = xmlDoc.getElementsByTagName('name')[0];
-    return nameEl?.textContent || 'Imported Route';
-  }
+const getRouteName = (xmlDoc: Document, _fileType: string): string => {
+  let name = 'Imported Route';
   const nameEl = xmlDoc.getElementsByTagName('name')[0];
-  return nameEl?.textContent || 'Imported Route';
+  if (nameEl?.textContent) {
+    name = nameEl.textContent;
+  }
+  return name.replace(/[<>]/g, '').trim().substring(0, 100);
 };
 
 export const parseNavigationFile = (
