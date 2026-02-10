@@ -1,4 +1,4 @@
-import type { TourInputs } from '../types';
+import type { TourInputs, Constants } from '../types';
 import { getFactorMultiplier } from './calculateTime';
 
 interface PerformancePoint {
@@ -9,9 +9,9 @@ interface PerformancePoint {
 export const calculatePerformanceOverTime = (
   inputs: TourInputs,
   totalHours: number,
-  useCustomFactors: boolean
+  constants: Constants
 ): PerformancePoint[] => {
-  const baseMultiplier = getFactorMultiplier(inputs, useCustomFactors);
+  const baseMultiplier = getFactorMultiplier(inputs, constants);
   const points: PerformancePoint[] = [];
 
   // Calculate performance points for each hour
