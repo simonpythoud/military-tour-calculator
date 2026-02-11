@@ -434,8 +434,8 @@ const TourCalculator: React.FC = () => {
                   type="button"
                   onClick={() => handleRemove(name)}
                   className="absolute top-0 right-0 h-full px-2 text-gray-600 hover:text-red-600 focus:text-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 rounded"
-                  aria-label={t('removeCalculation')}
-                  title={t('removeCalculation')}
+                  aria-label={`${t('removeCalculation')} ${name}`}
+                  title={`${t('removeCalculation')} ${name}`}
                 >
                   <FaWindowClose />
                 </button>
