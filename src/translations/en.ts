@@ -182,6 +182,7 @@ const englishTranslations = {
   uploadConstants: 'Upload Constants',
   resetToDefault: 'Reset to Default',
   invalidFormat: 'Invalid file format',
+  fileSizeLimitExceeded: 'File size limit exceeded',
   constantsUpdated: 'Constants updated successfully',
   uploadInstructions: 'Upload a JSON file with your custom constants',
   downloadDefaultConstantsFile: 'Download default constants file',

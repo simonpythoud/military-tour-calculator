@@ -184,6 +184,7 @@ const germanTranslations = {
   uploadConstants: 'Konstanten hochladen',
   resetToDefault: 'Zurücksetzen',
   invalidFormat: 'Ungültiges Dateiformat',
+  fileSizeLimitExceeded: 'Dateigrößenbeschränkung überschritten',
   constantsUpdated: 'Konstanten erfolgreich aktualisiert',
   uploadInstructions:
     'Laden Sie eine JSON-Datei mit Ihren benutzerdefinierten Konstanten hoch. Die Datei muss alle für die Berechnung erforderlichen Faktoren enthalten.',

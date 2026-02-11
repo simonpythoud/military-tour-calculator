@@ -26,6 +26,7 @@ import SettingsModal from './SettingsModal';
 import GpxUpload from './GpxUpload';
 import RouteSections from './RouteSections';
 import RouteMap from './RouteMap';
+import { FILE_SIZE_LIMITS } from '../constants/limits';
 
 const TourCalculator: React.FC = () => {
   const { t } = useLanguage();
@@ -172,6 +173,11 @@ const TourCalculator: React.FC = () => {
   ) => {
     const file = event.target.files?.[0];
     if (!file) return;
+
+    if (file.size > FILE_SIZE_LIMITS.CONSTANTS_UPLOAD_MAX_SIZE_BYTES) {
+      toast.error(t('fileSizeLimitExceeded'));
+      return;
+    }
 
     try {
       const text = await file.text();
