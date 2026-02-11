@@ -197,6 +197,8 @@ const frenchTranslations = {
   gpxSupportedFormats: 'Formats supportés',
   gpxImportSuccess: 'Route importée avec succès',
   gpxImportError: "Échec de l'importation du fichier de route. Veuillez vérifier le format du fichier.",
+  gpxFileTooBig: 'Le fichier est trop volumineux. La taille maximale est de 10 Mo.',
+  invalidFileExtension: 'Extension de fichier invalide. Formats supportés : .gpx, .kml, .tcx',
   gpxRouteSections: 'Sections de la route',
   gpxSectionsDescription: 'Chaque section a une difficulté de terrain détectée automatiquement en fonction du gradient d\'altitude. Vous pouvez ajuster le type de terrain par section.',
   gpxRouteMap: 'Carte de la route',
