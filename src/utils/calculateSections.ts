@@ -1,4 +1,4 @@
-import type { RouteSection, TourInputs } from '../types';
+import type { RouteSection, TourInputs, Constants } from '../types';
 import { calculateTourTime } from './calculateTime';
 
 interface SectionResult {
@@ -22,7 +22,7 @@ interface SectionCalculationResult {
 export const calculateSectionTimes = (
   sections: RouteSection[],
   baseInputs: TourInputs,
-  useCustomFactorConstants: boolean
+  constants: Constants
 ): SectionCalculationResult => {
   const sectionResults: SectionResult[] = [];
   let totalHours = 0;
@@ -39,7 +39,7 @@ export const calculateSectionTimes = (
       terrain: section.terrain,
     };
 
-    const result = calculateTourTime(sectionInputs, useCustomFactorConstants);
+    const result = calculateTourTime(sectionInputs, constants);
 
     sectionResults.push({
       sectionId: section.id,
