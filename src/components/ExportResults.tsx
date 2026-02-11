@@ -1,9 +1,7 @@
 import type React from 'react';
-import jsPDF from 'jspdf';
-import { FaFilePdf, FaFileCsv } from 'react-icons/fa';
+import { useState } from 'react';
+import { FaFilePdf, FaFileCsv, FaSpinner } from 'react-icons/fa';
 import { useLanguage } from '../contexts/LanguageContext';
-import autoTable from 'jspdf-autotable';
-import html2canvas from 'html2canvas';
 
 interface Props {
   results: any;
@@ -13,105 +11,124 @@ interface Props {
 // const ExportResults: React.FC<Props> = ({ results, breaks }) => {
 const ExportResults: React.FC<Props> = ({ results }) => {
   const { t } = useLanguage();
+  const [isExporting, setIsExporting] = useState(false);
 
-  const exportPDF = () => {
-    const doc = new jsPDF();
+  const exportPDF = async () => {
+    setIsExporting(true);
+    try {
+      // Dynamic imports to reduce initial bundle size
+      const { default: jsPDF } = await import('jspdf');
+      const { default: autoTable } = await import('jspdf-autotable');
+      const { default: html2canvas } = await import('html2canvas');
 
-    // Set title
-    doc.setFontSize(20);
-    doc.setTextColor(75, 83, 32); // military green
-    doc.text(t('title'), 105, 20, { align: 'center' });
+      const doc = new jsPDF();
 
-    // Input Parameters Section
-    doc.setFontSize(16);
-    doc.setTextColor(0);
-    doc.text(t('distanceMeasurements'), 20, 40);
+      // Set title
+      doc.setFontSize(20);
+      doc.setTextColor(75, 83, 32); // military green
+      doc.text(t('title'), 105, 20, { align: 'center' });
 
-    // Create a table for distance measurements
-    doc.setFontSize(12);
-    doc.setTextColor(60, 60, 60);
-    const distanceData = [
-      [t('horizontalDistance'), `${results.inputs.horizontalDistance} km`],
-      [t('verticalDistance'), `${results.inputs.verticalDistance} m`],
-    ];
-    autoTable(doc, {
-      startY: 45,
-      head: [],
-      body: distanceData,
-      theme: 'plain',
-      margin: { left: 20 },
-      styles: { fontSize: 12 },
-    });
+      // Input Parameters Section
+      doc.setFontSize(16);
+      doc.setTextColor(0);
+      doc.text(t('distanceMeasurements'), 20, 40);
 
-    // Influencing Factors Section
-    doc.setFontSize(16);
-    doc.text(t('influencingFactors'), 20, 75);
-
-    const factorsData = [
-      [t('condition_title'), t(`condition_${results.inputs.condition.toLowerCase()}` as any)],
-      [t('technical_title'), t(`technical_${results.inputs.technicalSkill.toLowerCase()}` as any)],
-      [t('weight_title'), t(`weight_${results.inputs.weight.toLowerCase()}` as any)],
-      [t('terrain_title'), t(`terrain_${results.inputs.terrain.toLowerCase()}` as any)],
-      [t('conditions_title'), t(`conditions_${results.inputs.conditionType.toLowerCase()}` as any)]
-    ];
-
-    autoTable(doc, {
-      startY: 80,
-      head: [],
-      body: factorsData,
-      theme: 'plain',
-      margin: { left: 20 },
-      styles: { fontSize: 12 },
-    });
-
-    // Results Section
-    doc.setFontSize(16);
-    doc.text(t('results'), 20, 145);
-
-    const resultsData = [
-      [t('totalTime'), results.calculations.total],
-      [t('horizontalTime'), results.calculations.horizontal],
-      [t('verticalTime'), results.calculations.vertical],
-      [
-        t('speedAdaptedToFactorPercentage'),
-        `${Math.round(results.calculations.multiplier * 100)}%`,
-      ],
-    ];
-
-    autoTable(doc, {
-      startY: 150,
-      head: [],
-      body: resultsData,
-      theme: 'striped',
-      margin: { left: 20 },
-      styles: { fontSize: 12 },
-      headStyles: { fillColor: [75, 83, 32] },
-    });
-
-    // Performance Graph
-    doc.addPage();
-    doc.setFontSize(16);
-    doc.text(t('performanceEvolution'), 20, 20);
-
-    // Convert performance graph to image and add it
-    const graphElement = document.querySelector(
-      '.recharts-wrapper'
-    ) as HTMLElement;
-    if (graphElement) {
-      html2canvas(graphElement).then((canvas) => {
-        const imgData = canvas.toDataURL('image/png');
-        doc.addImage(imgData, 'PNG', 20, 30, 170, 100);
-
-        // Add performance warning
-        doc.setFontSize(10);
-        doc.setTextColor(100, 100, 100);
-        doc.text(t('performanceWarning'), 20, 140, { maxWidth: 170 });
-
-        // Save the document
-        doc.save('military-tour-calculation.pdf');
+      // Create a table for distance measurements
+      doc.setFontSize(12);
+      doc.setTextColor(60, 60, 60);
+      const distanceData = [
+        [t('horizontalDistance'), `${results.inputs.horizontalDistance} km`],
+        [t('verticalDistance'), `${results.inputs.verticalDistance} m`],
+      ];
+      autoTable(doc, {
+        startY: 45,
+        head: [],
+        body: distanceData,
+        theme: 'plain',
+        margin: { left: 20 },
+        styles: { fontSize: 12 },
       });
-    } else {
-      doc.save('military-tour-calculation.pdf');
+
+      // Influencing Factors Section
+      doc.setFontSize(16);
+      doc.text(t('influencingFactors'), 20, 75);
+
+      const factorsData = [
+        [t('condition_title'), t(`condition_${results.inputs.condition.toLowerCase()}` as any)],
+        [t('technical_title'), t(`technical_${results.inputs.technicalSkill.toLowerCase()}` as any)],
+        [t('weight_title'), t(`weight_${results.inputs.weight.toLowerCase()}` as any)],
+        [t('terrain_title'), t(`terrain_${results.inputs.terrain.toLowerCase()}` as any)],
+        [t('conditions_title'), t(`conditions_${results.inputs.conditionType.toLowerCase()}` as any)]
+      ];
+
+      autoTable(doc, {
+        startY: 80,
+        head: [],
+        body: factorsData,
+        theme: 'plain',
+        margin: { left: 20 },
+        styles: { fontSize: 12 },
+      });
+
+      // Results Section
+      doc.setFontSize(16);
+      doc.text(t('results'), 20, 145);
+
+      const resultsData = [
+        [t('totalTime'), results.calculations.total],
+        [t('horizontalTime'), results.calculations.horizontal],
+        [t('verticalTime'), results.calculations.vertical],
+        [
+          t('speedAdaptedToFactorPercentage'),
+          `${Math.round(results.calculations.multiplier * 100)}%`,
+        ],
+      ];
+
+      autoTable(doc, {
+        startY: 150,
+        head: [],
+        body: resultsData,
+        theme: 'striped',
+        margin: { left: 20 },
+        styles: { fontSize: 12 },
+        headStyles: { fillColor: [75, 83, 32] },
+      });
+
+      // Performance Graph
+      doc.addPage();
+      doc.setFontSize(16);
+      doc.text(t('performanceEvolution'), 20, 20);
+
+      // Convert performance graph to image and add it
+      const graphElement = document.querySelector(
+        '.recharts-wrapper'
+      ) as HTMLElement;
+      if (graphElement) {
+        try {
+          const canvas = await html2canvas(graphElement);
+          const imgData = canvas.toDataURL('image/png');
+          doc.addImage(imgData, 'PNG', 20, 30, 170, 100);
+
+          // Add performance warning
+          doc.setFontSize(10);
+          doc.setTextColor(100, 100, 100);
+          doc.text(t('performanceWarning'), 20, 140, { maxWidth: 170 });
+
+          // Save the document
+          doc.save('military-tour-calculation.pdf');
+        } catch (canvasError) {
+          console.error("Error generating canvas image", canvasError);
+          // Save without image if canvas fails
+          doc.save('military-tour-calculation.pdf');
+        }
+      } else {
+        doc.save('military-tour-calculation.pdf');
+      }
+    } catch (error) {
+      console.error("Export failed", error);
+      // Could add toast notification here
+    } finally {
+      setIsExporting(false);
     }
   };
 
@@ -161,13 +178,16 @@ const ExportResults: React.FC<Props> = ({ results }) => {
   return (
     <div className="flex gap-2 mt-4">
       <button
+        type="button"
         onClick={exportPDF}
-        className="flex items-center gap-2 px-4 py-2 bg-military-green text-white rounded hover:bg-opacity-90"
+        disabled={isExporting}
+        className={`flex items-center gap-2 px-4 py-2 bg-military-green text-white rounded hover:bg-opacity-90 ${isExporting ? 'opacity-70 cursor-not-allowed' : ''}`}
       >
-        <FaFilePdf />
+        {isExporting ? <FaSpinner className="animate-spin" /> : <FaFilePdf />}
         {t('exportPDF')}
       </button>
       <button
+        type="button"
         onClick={exportCSV}
         className="flex items-center gap-2 px-4 py-2 bg-military-brown text-white rounded hover:bg-opacity-90"
       >
