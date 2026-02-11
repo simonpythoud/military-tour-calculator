@@ -142,11 +142,28 @@ const ExportResults: React.FC<Props> = ({ results }) => {
       ['', ''], // Empty row for separation
 
       // Tactical Factors
-      [t('condition_title'), t(`condition_${results.inputs.condition.toLowerCase()}` as any)],
-      [t('technical_title'), t(`technical_${results.inputs.technicalSkill.toLowerCase()}` as any)],
-      [t('weight_title'), t(`weight_${results.inputs.weight.toLowerCase()}` as any)],
-      [t('terrain_title'), t(`terrain_${results.inputs.terrain.toLowerCase()}` as any)],
-      [t('conditions_title'), t(`conditions_${results.inputs.conditionType.toLowerCase()}` as any), '', ''], // Empty row for separation
+      [
+        t('condition_title'),
+        t(`condition_${results.inputs.condition.toLowerCase()}` as any),
+      ],
+      [
+        t('technical_title'),
+        t(`technical_${results.inputs.technicalSkill.toLowerCase()}` as any),
+      ],
+      [
+        t('weight_title'),
+        t(`weight_${results.inputs.weight.toLowerCase()}` as any),
+      ],
+      [
+        t('terrain_title'),
+        t(`terrain_${results.inputs.terrain.toLowerCase()}` as any),
+      ],
+      [
+        t('conditions_title'),
+        t(`conditions_${results.inputs.conditionType.toLowerCase()}` as any),
+        '',
+        '',
+      ], // Empty row for separation
 
       // Results
       [t('totalTime'), results.calculations.total],

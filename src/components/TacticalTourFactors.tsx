@@ -18,7 +18,11 @@ interface Props {
   hasGpxRoute?: boolean;
 }
 
-const TacticalTourFactors: React.FC<Props> = ({ inputs, setInputs, hasGpxRoute }) => {
+const TacticalTourFactors: React.FC<Props> = ({
+  inputs,
+  setInputs,
+  hasGpxRoute,
+}) => {
   const { t } = useLanguage();
 
   const conditionId = useId();
@@ -33,7 +37,10 @@ const TacticalTourFactors: React.FC<Props> = ({ inputs, setInputs, hasGpxRoute }
       {/* Physical Condition */}
       <div>
         <div className="flex items-center gap-1 mb-2">
-          <label htmlFor={conditionId} className="flex items-center gap-1 cursor-pointer">
+          <label
+            htmlFor={conditionId}
+            className="flex items-center gap-1 cursor-pointer"
+          >
             <FaRunning className="text-military-green" />
             {t('condition_title')}
           </label>
@@ -58,7 +65,10 @@ const TacticalTourFactors: React.FC<Props> = ({ inputs, setInputs, hasGpxRoute }
       {/* Technical Skills */}
       <div>
         <div className="flex items-center gap-1 mb-2">
-          <label htmlFor={technicalId} className="flex items-center gap-1 cursor-pointer">
+          <label
+            htmlFor={technicalId}
+            className="flex items-center gap-1 cursor-pointer"
+          >
             <FaGraduationCap className="text-military-green" />
             {t('technical_title')}
           </label>
@@ -83,7 +93,10 @@ const TacticalTourFactors: React.FC<Props> = ({ inputs, setInputs, hasGpxRoute }
       {/* Weight */}
       <div>
         <div className="flex items-center gap-1 mb-2">
-          <label htmlFor={weightId} className="flex items-center gap-1 cursor-pointer">
+          <label
+            htmlFor={weightId}
+            className="flex items-center gap-1 cursor-pointer"
+          >
             <FaWeightHanging className="text-military-green" />
             {t('weight_title')}
           </label>
@@ -107,7 +120,10 @@ const TacticalTourFactors: React.FC<Props> = ({ inputs, setInputs, hasGpxRoute }
       {/* Terrain */}
       <div>
         <div className="flex items-center gap-1 mb-2">
-          <label htmlFor={terrainId} className="flex items-center gap-1 cursor-pointer">
+          <label
+            htmlFor={terrainId}
+            className="flex items-center gap-1 cursor-pointer"
+          >
             <FaMountain className="text-military-green" />
             {t('terrain_title')}
           </label>
@@ -131,14 +147,19 @@ const TacticalTourFactors: React.FC<Props> = ({ inputs, setInputs, hasGpxRoute }
           </option>
         </select>
         {hasGpxRoute && (
-          <p className="text-xs text-blue-600 mt-1">{t('terrainDisabledByRoute')}</p>
+          <p className="text-xs text-blue-600 mt-1">
+            {t('terrainDisabledByRoute')}
+          </p>
         )}
       </div>
 
       {/* Conditions */}
       <div>
         <div className="flex items-center gap-1 mb-2">
-          <label htmlFor={conditionsId} className="flex items-center gap-1 cursor-pointer">
+          <label
+            htmlFor={conditionsId}
+            className="flex items-center gap-1 cursor-pointer"
+          >
             <FaSnowflake className="text-military-green" />
             {t('conditions_title')}
           </label>
@@ -162,7 +183,10 @@ const TacticalTourFactors: React.FC<Props> = ({ inputs, setInputs, hasGpxRoute }
       {/* Threat Level */}
       <div>
         <div className="flex items-center gap-1 mb-2">
-          <label htmlFor={threatId} className="flex items-center gap-1 cursor-pointer">
+          <label
+            htmlFor={threatId}
+            className="flex items-center gap-1 cursor-pointer"
+          >
             <FaExclamationTriangle className="text-military-green" />
             {t('threat_title')}
           </label>

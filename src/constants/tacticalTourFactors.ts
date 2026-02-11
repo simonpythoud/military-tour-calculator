@@ -48,7 +48,6 @@ export const THREAT_LEVEL_FACTORS = {
   RED: 0.5, // Level 3
 };
 
-
 // Additional factors that could be used
 
 // // Package weight reduction
@@ -78,7 +77,6 @@ export const THREAT_LEVEL_FACTORS = {
 //   LONG: 30,
 //   MEAL: 60,
 // };
-
 
 // export const GROUP_SIZE_FACTORS = {
 //   INDIVIDUAL: 1.0,

@@ -27,7 +27,8 @@ const germanTranslations = {
   verticalCalculation: 'Vertikale Berechnung',
 
   // Factors
-  useCustomFactorConstants: 'Benutzerdefinierte Konstanten für Faktoren verwenden',
+  useCustomFactorConstants:
+    'Benutzerdefinierte Konstanten für Faktoren verwenden',
   useDefaultFactorConstants: 'Standardkonstanten für Faktoren verwenden',
 
   low: 'Niedrig',
@@ -175,7 +176,7 @@ const germanTranslations = {
   terrain_factors: 'Geländefaktoren',
   physiqueFactors: 'Körperliche Konditionsfaktoren',
   experienceFactors: 'Erfahrungsfaktoren',
- condition_factors: 'Konditionsfaktoren',
+  condition_factors: 'Konditionsfaktoren',
   technical_factors: 'Technische Fähigkeitsfaktoren',
   weight_factors: 'Gewichtsfaktoren',
   conditions_factors: 'Bedingungstypfaktoren',
@@ -191,26 +192,32 @@ const germanTranslations = {
 
   // GPX Import
   gpxImport: 'Routenimport',
-  gpxImportDescription: 'Laden Sie eine Navigationsdatei (.gpx, .kml, .tcx) hoch, um Distanzen und Höhenmeter automatisch aus Ihrer Route zu berechnen.',
+  gpxImportDescription:
+    'Laden Sie eine Navigationsdatei (.gpx, .kml, .tcx) hoch, um Distanzen und Höhenmeter automatisch aus Ihrer Route zu berechnen.',
   gpxUploadFile: 'Routendatei hochladen',
   gpxClearRoute: 'Route löschen',
   gpxSupportedFormats: 'Unterstützte Formate',
   gpxImportSuccess: 'Route erfolgreich importiert',
-  gpxImportError: 'Route konnte nicht importiert werden. Bitte überprüfen Sie das Dateiformat.',
+  gpxImportError:
+    'Route konnte nicht importiert werden. Bitte überprüfen Sie das Dateiformat.',
   gpxFileTooBig: 'Datei ist zu groß. Maximale Größe ist 10MB.',
   invalidFileExtension: 'Ungültige Dateiendung. Unterstützte Formate: .gpx, .kml, .tcx',
   gpxRouteSections: 'Routenabschnitte',
-  gpxSectionsDescription: 'Jeder Abschnitt hat eine automatisch erkannte Geländeschwierigkeit basierend auf dem Höhengradient. Sie können den Geländetyp pro Abschnitt anpassen.',
+  gpxSectionsDescription:
+    'Jeder Abschnitt hat eine automatisch erkannte Geländeschwierigkeit basierend auf dem Höhengradient. Sie können den Geländetyp pro Abschnitt anpassen.',
   gpxRouteMap: 'Routenkarte',
   gpxTotalDistance: 'Gesamtdistanz',
-  terrainDisabledByRoute: 'Gelände wird pro Abschnitt in den Routenabschnitten oben festgelegt.',
+  terrainDisabledByRoute:
+    'Gelände wird pro Abschnitt in den Routenabschnitten oben festgelegt.',
 
   // V2
   v2_beta_tag: '(Beta)',
   v2_mode_basic: 'Basis (FM-Stil)',
   v2_mode_advanced: 'Erweitertes Gelände',
-  v2_model_basic_desc: 'Einfache militärische Schätzung: 4 km/h horizontal, 400 m/h vertikal mit einfachen multiplikativen Faktoren.',
-  v2_model_advanced_desc: 'Erweiterte Geländeschätzung: neigungsabhängige Geschwindigkeit, Auf-/Abstiegsunterscheidung, Gruppenermüdung und nichtlineare Lasteffekte.',
+  v2_model_basic_desc:
+    'Einfache militärische Schätzung: 4 km/h horizontal, 400 m/h vertikal mit einfachen multiplikativen Faktoren.',
+  v2_model_advanced_desc:
+    'Erweiterte Geländeschätzung: neigungsabhängige Geschwindigkeit, Auf-/Abstiegsunterscheidung, Gruppenermüdung und nichtlineare Lasteffekte.',
   v2_elevation_gain: 'Höhengewinn (m)',
   v2_elevation_loss: 'Höhenverlust (m)',
   v2_enter_gain: 'Höhengewinn eingeben',
@@ -223,7 +230,8 @@ const germanTranslations = {
   v2_descent_time: 'Abstiegszeit',
   v2_factor_breakdown: 'Faktorenaufschlüsselung',
   v2_base_time: 'Basiszeit',
-  v2_penalty_summary: 'Gesamtzeit angepasst durch Gelände, Last und Bedingungen',
+  v2_penalty_summary:
+    'Gesamtzeit angepasst durch Gelände, Last und Bedingungen',
   v2_factor_condition: 'Kondition',
   v2_factor_skill: 'Technisches Können',
   v2_factor_load: 'Ausrüstungslast',

@@ -60,20 +60,21 @@ const FactorContribution: React.FC<Props> = ({
 }) => {
   const { t } = useLanguage();
 
-  const penalties = contributions.filter(c => c.percentage > 0);
-  const bonuses = contributions.filter(c => c.percentage < 0);
+  const penalties = contributions.filter((c) => c.percentage > 0);
+  const bonuses = contributions.filter((c) => c.percentage < 0);
   const maxAbsPercent = Math.max(
-    ...contributions.map(c => Math.abs(c.percentage)),
+    ...contributions.map((c) => Math.abs(c.percentage)),
     1
   );
 
-  const summaryColor = totalPenaltyPercent > 30
-    ? 'text-red-700 bg-red-50 border-red-200'
-    : totalPenaltyPercent > 10
-      ? 'text-orange-700 bg-orange-50 border-orange-200'
-      : totalPenaltyPercent > 0
-        ? 'text-yellow-700 bg-yellow-50 border-yellow-200'
-        : 'text-green-700 bg-green-50 border-green-200';
+  const summaryColor =
+    totalPenaltyPercent > 30
+      ? 'text-red-700 bg-red-50 border-red-200'
+      : totalPenaltyPercent > 10
+        ? 'text-orange-700 bg-orange-50 border-orange-200'
+        : totalPenaltyPercent > 0
+          ? 'text-yellow-700 bg-yellow-50 border-yellow-200'
+          : 'text-green-700 bg-green-50 border-green-200';
 
   return (
     <div className="space-y-3">
@@ -83,21 +84,22 @@ const FactorContribution: React.FC<Props> = ({
             {t('v2_base_time')}: {formatTime(baseTimeHours)}
           </span>
           <span className="text-sm font-bold">
-            {totalPenaltyPercent > 0 ? '+' : ''}{Math.round(totalPenaltyPercent)}%
+            {totalPenaltyPercent > 0 ? '+' : ''}
+            {Math.round(totalPenaltyPercent)}%
           </span>
         </div>
         {Math.abs(totalPenaltyPercent) >= 1 && (
-          <p className="text-xs mt-1 opacity-80">
-            {t('v2_penalty_summary')}
-          </p>
+          <p className="text-xs mt-1 opacity-80">{t('v2_penalty_summary')}</p>
         )}
       </div>
 
       {penalties.length > 0 && (
         <div className="space-y-1.5">
-          {penalties.map(contribution => (
+          {penalties.map((contribution) => (
             <div key={contribution.id} className="flex items-center gap-2">
-              <span className={`flex-shrink-0 w-6 h-6 flex items-center justify-center rounded ${COLOR_MAP[contribution.color]}`}>
+              <span
+                className={`flex-shrink-0 w-6 h-6 flex items-center justify-center rounded ${COLOR_MAP[contribution.color]}`}
+              >
                 {ICON_MAP[contribution.iconType] || <FaClock />}
               </span>
               <span className="text-xs text-gray-700 flex-1 min-w-0 truncate">
@@ -106,12 +108,18 @@ const FactorContribution: React.FC<Props> = ({
               <div className="w-24 h-2 bg-gray-200 rounded-full overflow-hidden flex-shrink-0">
                 <div
                   className={`h-full rounded-full ${BAR_COLOR_MAP[contribution.color]}`}
-                  style={{ width: `${Math.min(100, (Math.abs(contribution.percentage) / maxAbsPercent) * 100)}%` }}
+                  style={{
+                    width: `${Math.min(100, (Math.abs(contribution.percentage) / maxAbsPercent) * 100)}%`,
+                  }}
                 />
               </div>
-              <span className={`text-xs font-medium flex-shrink-0 w-12 text-right ${
-                contribution.percentage > 0 ? 'text-red-600' : 'text-green-600'
-              }`}>
+              <span
+                className={`text-xs font-medium flex-shrink-0 w-12 text-right ${
+                  contribution.percentage > 0
+                    ? 'text-red-600'
+                    : 'text-green-600'
+                }`}
+              >
                 +{Math.round(contribution.percentage)}%
               </span>
             </div>
@@ -121,7 +129,7 @@ const FactorContribution: React.FC<Props> = ({
 
       {bonuses.length > 0 && (
         <div className="space-y-1.5">
-          {bonuses.map(contribution => (
+          {bonuses.map((contribution) => (
             <div key={contribution.id} className="flex items-center gap-2">
               <span className="flex-shrink-0 w-6 h-6 flex items-center justify-center rounded bg-green-100 text-green-800 border-green-300">
                 {ICON_MAP[contribution.iconType] || <FaClock />}
@@ -132,7 +140,9 @@ const FactorContribution: React.FC<Props> = ({
               <div className="w-24 h-2 bg-gray-200 rounded-full overflow-hidden flex-shrink-0">
                 <div
                   className="h-full rounded-full bg-green-500"
-                  style={{ width: `${Math.min(100, (Math.abs(contribution.percentage) / maxAbsPercent) * 100)}%` }}
+                  style={{
+                    width: `${Math.min(100, (Math.abs(contribution.percentage) / maxAbsPercent) * 100)}%`,
+                  }}
                 />
               </div>
               <span className="text-xs font-medium flex-shrink-0 w-12 text-right text-green-600">

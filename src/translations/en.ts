@@ -143,7 +143,7 @@ const englishTranslations = {
   weight_medium: 'Medium (15-25 kg)',
   weight_heavy: 'Heavy (25-35 kg)',
   weight_very_heavy: 'Very Heavy (>35 kg)',
-  
+
   // Tactical Terrain
   terrain_title: 'Tactical Terrain',
   terrain_factors: 'Terrain Factors',
@@ -188,7 +188,8 @@ const englishTranslations = {
 
   // GPX Import
   gpxImport: 'Route Import',
-  gpxImportDescription: 'Upload a navigation file (.gpx, .kml, .tcx) to automatically calculate distances and elevation from your route.',
+  gpxImportDescription:
+    'Upload a navigation file (.gpx, .kml, .tcx) to automatically calculate distances and elevation from your route.',
   gpxUploadFile: 'Upload Route File',
   gpxClearRoute: 'Clear Route',
   gpxSupportedFormats: 'Supported formats',
@@ -197,7 +198,8 @@ const englishTranslations = {
   gpxFileTooBig: 'File is too large. Maximum size is 10MB.',
   invalidFileExtension: 'Invalid file extension. Supported formats: .gpx, .kml, .tcx',
   gpxRouteSections: 'Route Sections',
-  gpxSectionsDescription: 'Each section has an auto-detected terrain difficulty based on elevation gradient. You can adjust the terrain type per section.',
+  gpxSectionsDescription:
+    'Each section has an auto-detected terrain difficulty based on elevation gradient. You can adjust the terrain type per section.',
   gpxRouteMap: 'Route Map',
   gpxTotalDistance: 'Total distance',
   terrainDisabledByRoute: 'Terrain is set per section in Route Sections above.',
@@ -213,8 +215,10 @@ const englishTranslations = {
   v2_beta_tag: '(Beta)',
   v2_mode_basic: 'Basic (FM-style)',
   v2_mode_advanced: 'Advanced terrain',
-  v2_model_basic_desc: 'Basic military estimation: 4 km/h horizontal, 400 m/h vertical with simple multiplicative factors.',
-  v2_model_advanced_desc: 'Advanced terrain estimation: slope-aware speed, ascent/descent distinction, group fatigue, and non-linear load effects.',
+  v2_model_basic_desc:
+    'Basic military estimation: 4 km/h horizontal, 400 m/h vertical with simple multiplicative factors.',
+  v2_model_advanced_desc:
+    'Advanced terrain estimation: slope-aware speed, ascent/descent distinction, group fatigue, and non-linear load effects.',
   v2_elevation_gain: 'Elevation Gain (m)',
   v2_elevation_loss: 'Elevation Loss (m)',
   v2_enter_gain: 'Enter elevation gain',

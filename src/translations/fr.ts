@@ -27,8 +27,10 @@ const frenchTranslations = {
   verticalCalculation: 'Calcul vertical',
 
   // Factors
-  useCustomFactorConstants: 'Utiliser des constantes personnalisées pour les facteurs',
-  useDefaultFactorConstants: 'Utiliser les constantes standard pour les facteurs',
+  useCustomFactorConstants:
+    'Utiliser des constantes personnalisées pour les facteurs',
+  useDefaultFactorConstants:
+    'Utiliser les constantes standard pour les facteurs',
 
   low: 'Faible',
   medium: 'Moyen',
@@ -175,7 +177,7 @@ const frenchTranslations = {
   terrain_factors: 'Facteurs de terrain',
   physiqueFactors: 'Facteurs de condition physique',
   experienceFactors: "Facteurs d'expérience",
- condition_factors: 'Facteurs de condition',
+  condition_factors: 'Facteurs de condition',
   technical_factors: 'Facteurs de compétence technique',
   weight_factors: 'Facteurs de poids',
   conditions_factors: 'Facteurs de type de condition',
@@ -191,26 +193,32 @@ const frenchTranslations = {
 
   // GPX Import
   gpxImport: 'Importation de route',
-  gpxImportDescription: 'Téléchargez un fichier de navigation (.gpx, .kml, .tcx) pour calculer automatiquement les distances et le dénivelé de votre itinéraire.',
+  gpxImportDescription:
+    'Téléchargez un fichier de navigation (.gpx, .kml, .tcx) pour calculer automatiquement les distances et le dénivelé de votre itinéraire.',
   gpxUploadFile: 'Télécharger un fichier de route',
   gpxClearRoute: 'Supprimer la route',
   gpxSupportedFormats: 'Formats supportés',
   gpxImportSuccess: 'Route importée avec succès',
-  gpxImportError: "Échec de l'importation du fichier de route. Veuillez vérifier le format du fichier.",
+  gpxImportError:
+    "Échec de l'importation du fichier de route. Veuillez vérifier le format du fichier.",
   gpxFileTooBig: 'Le fichier est trop volumineux. La taille maximale est de 10 Mo.',
   invalidFileExtension: 'Extension de fichier invalide. Formats supportés : .gpx, .kml, .tcx',
   gpxRouteSections: 'Sections de la route',
-  gpxSectionsDescription: 'Chaque section a une difficulté de terrain détectée automatiquement en fonction du gradient d\'altitude. Vous pouvez ajuster le type de terrain par section.',
+  gpxSectionsDescription:
+    "Chaque section a une difficulté de terrain détectée automatiquement en fonction du gradient d'altitude. Vous pouvez ajuster le type de terrain par section.",
   gpxRouteMap: 'Carte de la route',
   gpxTotalDistance: 'Distance totale',
-  terrainDisabledByRoute: 'Le terrain est défini par section dans les Sections de la route ci-dessus.',
+  terrainDisabledByRoute:
+    'Le terrain est défini par section dans les Sections de la route ci-dessus.',
 
   // V2
   v2_beta_tag: '(Bêta)',
   v2_mode_basic: 'Base (style FM)',
   v2_mode_advanced: 'Terrain avancé',
-  v2_model_basic_desc: 'Estimation militaire de base : 4 km/h horizontal, 400 m/h vertical avec facteurs multiplicatifs simples.',
-  v2_model_advanced_desc: 'Estimation terrain avancée : vitesse selon la pente, distinction montée/descente, fatigue de groupe et effets de charge non linéaires.',
+  v2_model_basic_desc:
+    'Estimation militaire de base : 4 km/h horizontal, 400 m/h vertical avec facteurs multiplicatifs simples.',
+  v2_model_advanced_desc:
+    'Estimation terrain avancée : vitesse selon la pente, distinction montée/descente, fatigue de groupe et effets de charge non linéaires.',
   v2_elevation_gain: 'Dénivelé positif (m)',
   v2_elevation_loss: 'Dénivelé négatif (m)',
   v2_enter_gain: 'Entrer le dénivelé positif',
@@ -223,10 +231,11 @@ const frenchTranslations = {
   v2_descent_time: 'Temps de descente',
   v2_factor_breakdown: 'Décomposition des facteurs',
   v2_base_time: 'Temps de base',
-  v2_penalty_summary: 'Temps total ajusté par le terrain, la charge et les conditions',
+  v2_penalty_summary:
+    'Temps total ajusté par le terrain, la charge et les conditions',
   v2_factor_condition: 'Condition physique',
   v2_factor_skill: 'Compétences techniques',
-  v2_factor_load: 'Charge d\'équipement',
+  v2_factor_load: "Charge d'équipement",
   v2_factor_terrain: 'Difficulté du terrain',
   v2_factor_season: 'Saison / Conditions',
   v2_factor_threat: 'Niveau de menace',

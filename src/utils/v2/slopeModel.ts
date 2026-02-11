@@ -27,8 +27,8 @@ export const getAscentSpeed = (
   const absSlope = Math.abs(slopePercent);
   if (absSlope <= 5) return baseSpeedKmh * 0.95;
   if (absSlope <= 15) return baseSpeedKmh * 0.75;
-  if (absSlope <= 30) return baseSpeedKmh * 0.50;
-  if (absSlope <= 50) return baseSpeedKmh * 0.30;
+  if (absSlope <= 30) return baseSpeedKmh * 0.5;
+  if (absSlope <= 50) return baseSpeedKmh * 0.3;
   return baseSpeedKmh * 0.15;
 };
 
@@ -37,11 +37,11 @@ export const getDescentSpeed = (
   baseSpeedKmh: number
 ): number => {
   const absSlope = Math.abs(slopePercent);
-  if (absSlope <= 5) return baseSpeedKmh * 1.10;
+  if (absSlope <= 5) return baseSpeedKmh * 1.1;
   if (absSlope <= 15) return baseSpeedKmh * 1.05;
-  if (absSlope <= 30) return baseSpeedKmh * 0.70;
-  if (absSlope <= 50) return baseSpeedKmh * 0.40;
-  return baseSpeedKmh * 0.20;
+  if (absSlope <= 30) return baseSpeedKmh * 0.7;
+  if (absSlope <= 50) return baseSpeedKmh * 0.4;
+  return baseSpeedKmh * 0.2;
 };
 
 export const calculateAdvancedVerticalTime = (
@@ -51,36 +51,42 @@ export const calculateAdvancedVerticalTime = (
   baseVerticalSpeedMh: number
 ): { ascentHours: number; descentHours: number } => {
   if (horizontalDistanceKm <= 0) {
-    const ascentHours = elevationGainM > 0 ? elevationGainM / baseVerticalSpeedMh : 0;
-    const descentHours = elevationLossM > 0 ? elevationLossM / (baseVerticalSpeedMh * 1.2) : 0;
+    const ascentHours =
+      elevationGainM > 0 ? elevationGainM / baseVerticalSpeedMh : 0;
+    const descentHours =
+      elevationLossM > 0 ? elevationLossM / (baseVerticalSpeedMh * 1.2) : 0;
     return { ascentHours, descentHours };
   }
 
-  const ascentSlopePercent = horizontalDistanceKm > 0
-    ? estimateAverageSlope(horizontalDistanceKm, elevationGainM)
-    : 0;
+  const ascentSlopePercent =
+    horizontalDistanceKm > 0
+      ? estimateAverageSlope(horizontalDistanceKm, elevationGainM)
+      : 0;
 
   let ascentMultiplier = 1.0;
   if (ascentSlopePercent > 40) ascentMultiplier = 0.6;
   else if (ascentSlopePercent > 25) ascentMultiplier = 0.75;
   else if (ascentSlopePercent > 15) ascentMultiplier = 0.85;
 
-  const ascentHours = elevationGainM > 0
-    ? elevationGainM / (baseVerticalSpeedMh * ascentMultiplier)
-    : 0;
+  const ascentHours =
+    elevationGainM > 0
+      ? elevationGainM / (baseVerticalSpeedMh * ascentMultiplier)
+      : 0;
 
-  const descentSlopePercent = horizontalDistanceKm > 0
-    ? estimateAverageSlope(horizontalDistanceKm, elevationLossM)
-    : 0;
+  const descentSlopePercent =
+    horizontalDistanceKm > 0
+      ? estimateAverageSlope(horizontalDistanceKm, elevationLossM)
+      : 0;
 
   let descentMultiplier = 1.2;
   if (descentSlopePercent > 40) descentMultiplier = 0.7;
   else if (descentSlopePercent > 25) descentMultiplier = 0.9;
   else if (descentSlopePercent > 15) descentMultiplier = 1.0;
 
-  const descentHours = elevationLossM > 0
-    ? elevationLossM / (baseVerticalSpeedMh * descentMultiplier)
-    : 0;
+  const descentHours =
+    elevationLossM > 0
+      ? elevationLossM / (baseVerticalSpeedMh * descentMultiplier)
+      : 0;
 
   return { ascentHours, descentHours };
 };
@@ -93,7 +99,10 @@ export const getAdvancedHorizontalSpeedMultiplier = (
   if (horizontalDistanceKm <= 0) return 1.0;
 
   const totalElevationChange = elevationGainM + elevationLossM;
-  const avgSlopePercent = estimateAverageSlope(horizontalDistanceKm, totalElevationChange / 2);
+  const avgSlopePercent = estimateAverageSlope(
+    horizontalDistanceKm,
+    totalElevationChange / 2
+  );
 
   return getSlopeSpeedMultiplier(avgSlopePercent);
 };

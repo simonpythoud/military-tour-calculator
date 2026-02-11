@@ -1,15 +1,30 @@
 // Tactical Factors
-export type Condition = 'POOR' | 'SUFFICIENT' | 'GOOD' | 'VERY_GOOD' | 'EXCELLENT';
-export type TechnicalSkill = 'NONE' | 'BASIC' | 'INTERMEDIATE' | 'ADVANCED' | 'EXPERT';
+export type Condition =
+  | 'POOR'
+  | 'SUFFICIENT'
+  | 'GOOD'
+  | 'VERY_GOOD'
+  | 'EXCELLENT';
+export type TechnicalSkill =
+  | 'NONE'
+  | 'BASIC'
+  | 'INTERMEDIATE'
+  | 'ADVANCED'
+  | 'EXPERT';
 export type Weight = 'LIGHT' | 'MEDIUM' | 'HEAVY' | 'VERY_HEAVY';
-export type Terrain = 'FLAT' | 'HIKING_TRAIL' | 'DIFFICULT' | 'ALPINE' | 'TECHNICAL_ALPINE';
+export type Terrain =
+  | 'FLAT'
+  | 'HIKING_TRAIL'
+  | 'DIFFICULT'
+  | 'ALPINE'
+  | 'TECHNICAL_ALPINE';
 export type ConditionType = 'SPRING' | 'SUMMER' | 'AUTUMN' | 'WINTER';
 export type ThreatLevel = 'GREEN' | 'YELLOW' | 'RED';
 
 export interface TourInputs {
   horizontalDistance: number;
   verticalDistance: number;
-  
+
   // Tactical Factors
   condition: Condition;
   technicalSkill: TechnicalSkill;

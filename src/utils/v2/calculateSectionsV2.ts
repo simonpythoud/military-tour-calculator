@@ -1,5 +1,9 @@
 import type { RouteSection } from '../../types';
-import type { V2TourInputs, V2SectionResult, V2SectionCalculationResult } from '../../types/v2';
+import type {
+  V2TourInputs,
+  V2SectionResult,
+  V2SectionCalculationResult,
+} from '../../types/v2';
 import { calculateAdvancedV2, calculateBasicV2 } from './calculateTimeV2';
 import { calculateFatigueMultiplier } from './fatigueModel';
 
@@ -37,9 +41,8 @@ export const calculateSectionTimesV2 = (
       ? calculateFatigueMultiplier(cumulativeHours, baseInputs)
       : 1.0;
 
-    const fatigueAdjustedTotal = fatigueMult < 1
-      ? result.totalHours / fatigueMult
-      : result.totalHours;
+    const fatigueAdjustedTotal =
+      fatigueMult < 1 ? result.totalHours / fatigueMult : result.totalHours;
 
     const cumulativeFatiguePercent = (1 - fatigueMult) * 100;
 
@@ -68,7 +71,8 @@ export const calculateSectionTimesV2 = (
 
   if (totalHours > 0) {
     for (const sr of sectionResults) {
-      sr.delayContributionPercent = Math.round((sr.totalHours / totalHours) * 1000) / 10;
+      sr.delayContributionPercent =
+        Math.round((sr.totalHours / totalHours) * 1000) / 10;
     }
   }
 
@@ -79,14 +83,16 @@ export const calculateSectionTimesV2 = (
     elevationGain: totalElevationGain,
     elevationLoss: totalElevationLoss,
   };
-  const overallResult = baseInputs.calculationMode === 'advanced'
-    ? calculateAdvancedV2(dummyInputs, useCustomFactorConstants)
-    : calculateBasicV2(dummyInputs, useCustomFactorConstants);
+  const overallResult =
+    baseInputs.calculationMode === 'advanced'
+      ? calculateAdvancedV2(dummyInputs, useCustomFactorConstants)
+      : calculateBasicV2(dummyInputs, useCustomFactorConstants);
 
   const baseTimeHours = overallResult.baseTimeHours;
-  const totalPenaltyPercent = baseTimeHours > 0
-    ? ((totalHours - baseTimeHours) / baseTimeHours) * 100
-    : 0;
+  const totalPenaltyPercent =
+    baseTimeHours > 0
+      ? ((totalHours - baseTimeHours) / baseTimeHours) * 100
+      : 0;
 
   return {
     sectionResults,

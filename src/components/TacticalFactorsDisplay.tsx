@@ -13,7 +13,9 @@ interface TacticalFactorsDisplayProps {
   };
 }
 
-const TacticalFactorsDisplay: React.FC<TacticalFactorsDisplayProps> = ({ tacticalConstants }) => {
+const TacticalFactorsDisplay: React.FC<TacticalFactorsDisplayProps> = ({
+  tacticalConstants,
+}) => {
   const { t } = useLanguage();
 
   const formatPercentage = (value: number) => `${Math.round(value * 100)}%`;
@@ -24,22 +26,26 @@ const TacticalFactorsDisplay: React.FC<TacticalFactorsDisplayProps> = ({ tactica
     <div>
       <h4 className="font-medium mb-1">{t('baseSpeeds')}</h4>
       <ul className="list-disc list-inside text-sm">
-        <li>{t('baseHorizontalSpeed')}: {formatHorizontalSpeed(tacticalConstants.BASE_SPEEDS.HORIZONTAL)}</li>
-        <li>{t('baseVerticalSpeed')}: {formatVerticalSpeed(tacticalConstants.BASE_SPEEDS.VERTICAL)}</li>
+        <li>
+          {t('baseHorizontalSpeed')}:{' '}
+          {formatHorizontalSpeed(tacticalConstants.BASE_SPEEDS.HORIZONTAL)}
+        </li>
+        <li>
+          {t('baseVerticalSpeed')}:{' '}
+          {formatVerticalSpeed(tacticalConstants.BASE_SPEEDS.VERTICAL)}
+        </li>
       </ul>
     </div>
   );
 
-  const renderFactorList = (
-    factors: Record<string, number>,
-    title: string
-  ) => (
+  const renderFactorList = (factors: Record<string, number>, title: string) => (
     <div>
       <h4 className="font-medium mb-1">{t(`${title}_factors` as any)}</h4>
       <ul className="list-disc list-inside text-sm">
         {Object.entries(factors).map(([key, value]) => (
           <li key={key}>
-            {t((`${title}_${key.toLowerCase()}`) as any)}: {formatPercentage(value)}
+            {t(`${title}_${key.toLowerCase()}` as any)}:{' '}
+            {formatPercentage(value)}
           </li>
         ))}
       </ul>
@@ -53,14 +59,23 @@ const TacticalFactorsDisplay: React.FC<TacticalFactorsDisplayProps> = ({ tactica
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 text-military-green">
         {renderFactorList(tacticalConstants.CONDITION_FACTORS, 'condition')}
-        {renderFactorList(tacticalConstants.TECHNICAL_SKILL_FACTORS, 'technical')}
+        {renderFactorList(
+          tacticalConstants.TECHNICAL_SKILL_FACTORS,
+          'technical'
+        )}
         {renderFactorList(tacticalConstants.WEIGHT_FACTORS, 'weight')}
-        {renderFactorList(tacticalConstants.TACTICAL_TERRAIN_FACTORS, 'terrain')}
-        {renderFactorList(tacticalConstants.CONDITION_TYPE_FACTORS, 'conditions')}
+        {renderFactorList(
+          tacticalConstants.TACTICAL_TERRAIN_FACTORS,
+          'terrain'
+        )}
+        {renderFactorList(
+          tacticalConstants.CONDITION_TYPE_FACTORS,
+          'conditions'
+        )}
         {renderFactorList(tacticalConstants.THREAT_LEVEL_FACTORS, 'threat')}
       </div>
     </div>
   );
 };
 
-export default TacticalFactorsDisplay; 
+export default TacticalFactorsDisplay;

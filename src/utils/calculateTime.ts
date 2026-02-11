@@ -51,7 +51,7 @@ export const calculateTourTime = (
 
   const horizontalHours = inputs.horizontalDistance
     ? inputs.horizontalDistance /
-    (constants.BASE_SPEEDS.HORIZONTAL * multiplier)
+      (constants.BASE_SPEEDS.HORIZONTAL * multiplier)
     : 0;
 
   const verticalHours = inputs.verticalDistance
@@ -75,7 +75,6 @@ export const calculateTourTime = (
     reliabilityFactor = 'medium';
     warnings.push('longTourWarning');
   }
-
 
   if (inputs.threatLevel === 'RED') {
     warnings.push('highThreatWarning');

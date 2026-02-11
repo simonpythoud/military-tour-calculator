@@ -175,7 +175,7 @@ const romanshTranslations = {
   terrain_factors: 'Facturs da terrain',
   physiqueFactors: 'Facturs da constituziun fisica',
   experienceFactors: "Facturs d'experientscha",
- condition_factors: 'Facturs da cundiziun',
+  condition_factors: 'Facturs da cundiziun',
   technical_factors: 'Facturs da capacitads tecnicas',
   weight_factors: 'Facturs da pais',
   conditions_factors: 'Facturs da tip da cundiziun',
@@ -191,26 +191,32 @@ const romanshTranslations = {
 
   // GPX Import
   gpxImport: 'Import da ruta',
-  gpxImportDescription: 'Chargia ina datoteca da navigaziun (.gpx, .kml, .tcx) per calcular automaticamain distanzas e autezza da tia ruta.',
+  gpxImportDescription:
+    'Chargia ina datoteca da navigaziun (.gpx, .kml, .tcx) per calcular automaticamain distanzas e autezza da tia ruta.',
   gpxUploadFile: 'Chargiar datoteca da ruta',
   gpxClearRoute: 'Stizzar ruta',
   gpxSupportedFormats: 'Formats sustegnids',
   gpxImportSuccess: 'Ruta importada cun success',
-  gpxImportError: 'Errur durant l\'import da la datoteca da ruta. Controllescha il format da la datoteca.',
+  gpxImportError:
+    "Errur durant l'import da la datoteca da ruta. Controllescha il format da la datoteca.",
   gpxFileTooBig: 'La datoteca è memia gronda. La grondezza maximala è 10MB.',
   invalidFileExtension: 'Extensiun da datoteca nunvalida. Formats supportads: .gpx, .kml, .tcx',
   gpxRouteSections: 'Secziuns da la ruta',
-  gpxSectionsDescription: 'Mintga secziun ha ina difficultad da terrain automaticamain reconuschida basada sin il gradient da autezza. Ti pos adaptar il tip da terrain per secziun.',
+  gpxSectionsDescription:
+    'Mintga secziun ha ina difficultad da terrain automaticamain reconuschida basada sin il gradient da autezza. Ti pos adaptar il tip da terrain per secziun.',
   gpxRouteMap: 'Carta da la ruta',
   gpxTotalDistance: 'Distanza totala',
-  terrainDisabledByRoute: 'Il terrain vegn definì per secziun en las Secziuns da la ruta survart.',
+  terrainDisabledByRoute:
+    'Il terrain vegn definì per secziun en las Secziuns da la ruta survart.',
 
   // V2
   v2_beta_tag: '(Beta)',
   v2_mode_basic: 'Basa (stil FM)',
   v2_mode_advanced: 'Terrain avanzà',
-  v2_model_basic_desc: 'Stimaziun militara da basa: 4 km/h orizontal, 400 m/h vertical cun facturs multiplicativs simpels.',
-  v2_model_advanced_desc: 'Stimaziun da terrain avanzada: spertadad tenor inclinaziun, differenziaziun da muntada/descendida, fatiga da gruppa ed effects da chargia betg linears.',
+  v2_model_basic_desc:
+    'Stimaziun militara da basa: 4 km/h orizontal, 400 m/h vertical cun facturs multiplicativs simpels.',
+  v2_model_advanced_desc:
+    'Stimaziun da terrain avanzada: spertadad tenor inclinaziun, differenziaziun da muntada/descendida, fatiga da gruppa ed effects da chargia betg linears.',
   v2_elevation_gain: 'Meters da muntada (m)',
   v2_elevation_loss: 'Meters da descendida (m)',
   v2_enter_gain: 'Endatar meters da muntada',
@@ -226,7 +232,7 @@ const romanshTranslations = {
   v2_penalty_summary: 'Temp total adaptà tras terrain, chargia e cundiziuns',
   v2_factor_condition: 'Cundiziun fisica',
   v2_factor_skill: 'Abilitads tecnicas',
-  v2_factor_load: 'Chargia d\'equipament',
+  v2_factor_load: "Chargia d'equipament",
   v2_factor_terrain: 'Difficultad dal terrain',
   v2_factor_season: 'Stagiun / Cundiziuns',
   v2_factor_threat: 'Nivel da smanatscha',

@@ -41,7 +41,10 @@ const RouteMap: React.FC<Props> = ({ sections }) => {
         {isVisible ? <FaChevronUp /> : <FaChevronDown />}
       </button>
       {isVisible && (
-        <div className="mt-3 rounded-lg overflow-hidden border" style={{ height: '400px' }}>
+        <div
+          className="mt-3 rounded-lg overflow-hidden border"
+          style={{ height: '400px' }}
+        >
           <MapContainer
             bounds={bounds}
             scrollWheelZoom={true}
