@@ -1,5 +1,5 @@
 import type React from 'react';
-import { useState, useEffect, useId } from 'react';
+import { useState, useEffect, useId, useMemo } from 'react';
 import type { TourInputs, GpxRoute, Terrain } from '../types';
 import { calculateTourTime, getConstants } from '../utils/calculateTime';
 import { calculateSectionTimes } from '../utils/calculateSections';
@@ -48,7 +48,10 @@ const TourCalculator: React.FC = () => {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [gpxRoute, setGpxRoute] = useState<GpxRoute | null>(null);
 
-  const tacticalConstants = getConstants(useCustomFactorConstants);
+  const tacticalConstants = useMemo(
+    () => getConstants(useCustomFactorConstants),
+    [useCustomFactorConstants]
+  );
 
   const handleRouteLoaded = (route: GpxRoute) => {
     setGpxRoute(route);
@@ -97,7 +100,7 @@ const TourCalculator: React.FC = () => {
     ? calculateSectionTimes(
         gpxRoute.sections,
         inputs,
-        useCustomFactorConstants
+        tacticalConstants
       )
     : null;
 
@@ -115,7 +118,7 @@ const TourCalculator: React.FC = () => {
     verticalHours,
     multiplier,
     reliabilityFactor,
-  } = calculateTourTime(effectiveInputs, useCustomFactorConstants);
+  } = calculateTourTime(effectiveInputs, tacticalConstants);
 
   const totalHours = sectionCalc ? sectionCalc.totalHours : directTotalHours;
   const effectiveHorizontalHours = sectionCalc ? sectionCalc.totalHorizontalHours : horizontalHours;
@@ -130,7 +133,7 @@ const TourCalculator: React.FC = () => {
   const performanceData = calculatePerformanceOverTime(
     inputs,
     totalHours,
-    useCustomFactorConstants
+    tacticalConstants
   );
 
   const handleSave = () => {

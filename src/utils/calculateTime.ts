@@ -1,13 +1,12 @@
-import type { TourInputs } from '../types';
+import type { TourInputs, Constants } from '../types';
 // import { TourInputs, Constants } from '../types';
 import * as tacticalConstants from '../constants/tacticalTourFactors';
 
 export const getFactorMultiplier = (
   inputs: TourInputs,
-  useCustomFactorConstants: boolean
+  constants: Constants
 ): number => {
   let multiplier = 1;
-  const constants = getConstants(useCustomFactorConstants);
 
   // Apply tactical factors using constants
   multiplier *= constants.CONDITION_FACTORS[inputs.condition];
@@ -22,7 +21,7 @@ export const getFactorMultiplier = (
 
 export const calculateTourTime = (
   inputs: TourInputs,
-  useCustomFactorConstants: boolean
+  constants: Constants
 ): {
   totalHours: number;
   horizontalHours: number;
@@ -31,8 +30,6 @@ export const calculateTourTime = (
   reliabilityFactor: 'high' | 'medium' | 'low';
   warnings: string[];
 } => {
-  const constants = getConstants(useCustomFactorConstants);
-
   if (
     !constants ||
     !constants.BASE_SPEEDS ||
@@ -50,7 +47,7 @@ export const calculateTourTime = (
     };
   }
 
-  const multiplier = getFactorMultiplier(inputs, useCustomFactorConstants);
+  const multiplier = getFactorMultiplier(inputs, constants);
 
   const horizontalHours = inputs.horizontalDistance
     ? inputs.horizontalDistance /
@@ -113,36 +110,3 @@ export const getConstants = (useCustomFactorConstants: boolean) => {
   return baseConstants;
   // return standardizeConstants(baseConstants);
 };
-
-
-
-// const standardizeConstants = (constants: Constants): Constants => {
-//   const standardized: Constants = { ...constants };
-
-//   // Get all possible factor keys from both standard and tactical constants
-//   const factorKeys = new Set([
-//     ...Object.keys(tacticalConstants),
-//   ]);
-
-//   factorKeys.forEach((key) => {
-//     if (
-//       standardized[key as keyof Constants] &&
-//       typeof standardized[key as keyof Constants] === 'object'
-//     ) {
-//       standardized[key as keyof Constants] = Object.entries(
-//         standardized[key as keyof Constants] as Record<string, number>
-//       ).reduce<Record<string, number>>((acc, [subKey, value]) => {
-//         if (typeof value === 'number') {
-//           acc[subKey.toUpperCase()] = value;
-//         } else {
-//           console.warn(
-//             `Invalid value for ${key}.${subKey}: expected number, got ${typeof value}`
-//           );
-//         }
-//         return acc;
-//       }, {});
-//     }
-//   });
-
-//   return standardized;
-// };
