@@ -1,5 +1,5 @@
 import type React from 'react';
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useId, useMemo } from 'react';
 import type { TourInputs, GpxRoute, Terrain } from '../types';
 import { calculateTourTime, getConstants } from '../utils/calculateTime';
 import { calculateSectionTimes } from '../utils/calculateSections';
@@ -29,6 +29,9 @@ import RouteMap from './RouteMap';
 
 const TourCalculator: React.FC = () => {
   const { t } = useLanguage();
+  const horizontalId = useId();
+  const verticalId = useId();
+
   const [inputs, setInputs] = useState<TourInputs>({
     horizontalDistance: 0,
     verticalDistance: 0,
@@ -247,11 +250,12 @@ const TourCalculator: React.FC = () => {
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
           <div>
-            <label className="block mb-2 flex items-center gap-1">
+            <label htmlFor={horizontalId} className="block mb-2 flex items-center gap-1">
               <FaRuler className="text-blue-600" />
               {t('horizontalDistance')}
             </label>
             <input
+              id={horizontalId}
               type="number"
               value={inputs.horizontalDistance ?? ''}
               onChange={(e) =>
@@ -267,11 +271,12 @@ const TourCalculator: React.FC = () => {
           </div>
 
           <div>
-            <label className="block mb-2 flex items-center gap-1">
+            <label htmlFor={verticalId} className="block mb-2 flex items-center gap-1">
               <FaMountain className="text-orange-600" />
               {t('verticalDistance')}
             </label>
             <input
+              id={verticalId}
               type="number"
               value={inputs.verticalDistance ?? ''}
               onChange={(e) =>
