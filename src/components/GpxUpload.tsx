@@ -5,6 +5,7 @@ import { useLanguage } from '../contexts/LanguageContext';
 import { parseNavigationFile, getSupportedExtensions } from '../utils/gpxParser';
 import type { GpxRoute } from '../types';
 import { toast } from 'react-toastify';
+import { FILE_SIZE_LIMITS } from '../constants/limits';
 
 interface Props {
   onRouteLoaded: (route: GpxRoute) => void;
@@ -19,6 +20,14 @@ const GpxUpload: React.FC<Props> = ({ onRouteLoaded, hasRoute, onClearRoute }) =
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+
+    if (file.size > FILE_SIZE_LIMITS.GPX_UPLOAD_MAX_SIZE_BYTES) {
+      toast.error(t('fileSizeLimitExceeded'));
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
+      return;
+    }
 
     try {
       const content = await file.text();
