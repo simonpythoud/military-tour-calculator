@@ -175,7 +175,7 @@ const italianTranslations = {
   terrain_factors: 'Fattori del terreno',
   physiqueFactors: 'Fattori di condizione fisica',
   experienceFactors: 'Fattori di esperienza',
- condition_factors: 'Fattori di condizione',
+  condition_factors: 'Fattori di condizione',
   technical_factors: 'Fattori di abilità tecnica',
   weight_factors: 'Fattori di peso',
   conditions_factors: 'Fattori di tipo di condizione',
@@ -191,26 +191,32 @@ const italianTranslations = {
 
   // GPX Import
   gpxImport: 'Importazione percorso',
-  gpxImportDescription: 'Carica un file di navigazione (.gpx, .kml, .tcx) per calcolare automaticamente distanze e dislivello dal tuo percorso.',
+  gpxImportDescription:
+    'Carica un file di navigazione (.gpx, .kml, .tcx) per calcolare automaticamente distanze e dislivello dal tuo percorso.',
   gpxUploadFile: 'Carica file percorso',
   gpxClearRoute: 'Elimina percorso',
   gpxSupportedFormats: 'Formati supportati',
   gpxImportSuccess: 'Percorso importato con successo',
-  gpxImportError: 'Importazione del file di percorso fallita. Controlla il formato del file.',
+  gpxImportError:
+    'Importazione del file di percorso fallita. Controlla il formato del file.',
   gpxFileTooBig: 'Il file è troppo grande. La dimensione massima è 10MB.',
   invalidFileExtension: 'Estensione file non valida. Formati supportati: .gpx, .kml, .tcx',
   gpxRouteSections: 'Sezioni del percorso',
-  gpxSectionsDescription: 'Ogni sezione ha una difficoltà del terreno rilevata automaticamente in base al gradiente di altitudine. Puoi modificare il tipo di terreno per ogni sezione.',
+  gpxSectionsDescription:
+    'Ogni sezione ha una difficoltà del terreno rilevata automaticamente in base al gradiente di altitudine. Puoi modificare il tipo di terreno per ogni sezione.',
   gpxRouteMap: 'Mappa del percorso',
   gpxTotalDistance: 'Distanza totale',
-  terrainDisabledByRoute: 'Il terreno è impostato per sezione nelle Sezioni del percorso sopra.',
+  terrainDisabledByRoute:
+    'Il terreno è impostato per sezione nelle Sezioni del percorso sopra.',
 
   // V2
   v2_beta_tag: '(Beta)',
   v2_mode_basic: 'Base (stile FM)',
   v2_mode_advanced: 'Terreno avanzato',
-  v2_model_basic_desc: 'Stima militare di base: 4 km/h orizzontale, 400 m/h verticale con fattori moltiplicativi semplici.',
-  v2_model_advanced_desc: 'Stima terreno avanzata: velocità in base alla pendenza, distinzione salita/discesa, fatica di gruppo ed effetti di carico non lineari.',
+  v2_model_basic_desc:
+    'Stima militare di base: 4 km/h orizzontale, 400 m/h verticale con fattori moltiplicativi semplici.',
+  v2_model_advanced_desc:
+    'Stima terreno avanzata: velocità in base alla pendenza, distinzione salita/discesa, fatica di gruppo ed effetti di carico non lineari.',
   v2_elevation_gain: 'Dislivello positivo (m)',
   v2_elevation_loss: 'Dislivello negativo (m)',
   v2_enter_gain: 'Inserire dislivello positivo',

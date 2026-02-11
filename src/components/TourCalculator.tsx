@@ -44,7 +44,8 @@ const TourCalculator: React.FC = () => {
   });
   const [calculationName, setCalculationName] = useState('');
   const [savedCalculations, setSavedCalculations] = useState<string[]>([]);
-  const [useCustomFactorConstants, setUseCustomFactorConstants] = useState(false);
+  const [useCustomFactorConstants, setUseCustomFactorConstants] =
+    useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [gpxRoute, setGpxRoute] = useState<GpxRoute | null>(null);
 
@@ -88,7 +89,10 @@ const TourCalculator: React.FC = () => {
   useEffect(() => {
     const customConstants = localStorage.getItem('customConstants');
     if (customConstants) {
-      console.log('Currently loaded custom constants:', JSON.parse(customConstants));
+      console.log(
+        'Currently loaded custom constants:',
+        JSON.parse(customConstants)
+      );
       setUseCustomFactorConstants(true);
     } else {
       console.log('No custom constants found in localStorage');
@@ -97,11 +101,7 @@ const TourCalculator: React.FC = () => {
   }, []);
 
   const sectionCalc = gpxRoute
-    ? calculateSectionTimes(
-        gpxRoute.sections,
-        inputs,
-        tacticalConstants
-      )
+    ? calculateSectionTimes(gpxRoute.sections, inputs, tacticalConstants)
     : null;
 
   const effectiveInputs: TourInputs = sectionCalc
@@ -121,8 +121,12 @@ const TourCalculator: React.FC = () => {
   } = calculateTourTime(effectiveInputs, tacticalConstants);
 
   const totalHours = sectionCalc ? sectionCalc.totalHours : directTotalHours;
-  const effectiveHorizontalHours = sectionCalc ? sectionCalc.totalHorizontalHours : horizontalHours;
-  const effectiveVerticalHours = sectionCalc ? sectionCalc.totalVerticalHours : verticalHours;
+  const effectiveHorizontalHours = sectionCalc
+    ? sectionCalc.totalHorizontalHours
+    : horizontalHours;
+  const effectiveVerticalHours = sectionCalc
+    ? sectionCalc.totalVerticalHours
+    : verticalHours;
 
   const formatTime = (hours: number): string => {
     const h = Math.floor(hours);
@@ -191,8 +195,11 @@ const TourCalculator: React.FC = () => {
       localStorage.setItem('customConstants', JSON.stringify(constants));
       console.log('Constants saved to localStorage');
       const savedConstants = localStorage.getItem('customConstants');
-      console.log('Verified saved constants:', JSON.parse(savedConstants || '{}'));
-      
+      console.log(
+        'Verified saved constants:',
+        JSON.parse(savedConstants || '{}')
+      );
+
       toast.success(t('constantsUpdated'));
 
       // Reload the page to apply new constants
@@ -250,7 +257,10 @@ const TourCalculator: React.FC = () => {
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
           <div>
-            <label htmlFor={horizontalId} className="block mb-2 flex items-center gap-1">
+            <label
+              htmlFor={horizontalId}
+              className="block mb-2 flex items-center gap-1"
+            >
               <FaRuler className="text-blue-600" />
               {t('horizontalDistance')}
             </label>
@@ -271,7 +281,10 @@ const TourCalculator: React.FC = () => {
           </div>
 
           <div>
-            <label htmlFor={verticalId} className="block mb-2 flex items-center gap-1">
+            <label
+              htmlFor={verticalId}
+              className="block mb-2 flex items-center gap-1"
+            >
               <FaMountain className="text-orange-600" />
               {t('verticalDistance')}
             </label>
@@ -301,17 +314,19 @@ const TourCalculator: React.FC = () => {
             {t('influencingFactors')}
           </div>
         </div>
-        <TacticalTourFactors inputs={inputs} setInputs={setInputs} hasGpxRoute={!!gpxRoute} />
+        <TacticalTourFactors
+          inputs={inputs}
+          setInputs={setInputs}
+          hasGpxRoute={!!gpxRoute}
+        />
       </div>
 
       {/* Results Section */}
       <div className="bg-white p-3 sm:p-4 rounded-lg shadow">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-3 sm:mb-4">
-          <h2 className="text-base sm:text-lg font-semibold">
-            {t('results')}
-          </h2>
+          <h2 className="text-base sm:text-lg font-semibold">{t('results')}</h2>
           <div className="pt-2">
-            <ConstantsToggle 
+            <ConstantsToggle
               useCustomFactorConstants={useCustomFactorConstants}
               setUseCustomFactorConstants={setUseCustomFactorConstants}
             />
@@ -356,7 +371,7 @@ const TourCalculator: React.FC = () => {
         </div>
 
         <div className="mb-4 border-b pb-4">
-            <ReliabilityIndicator reliability={reliabilityFactor} />
+          <ReliabilityIndicator reliability={reliabilityFactor} />
         </div>
 
         <div className="bg-gray-50 p-3 sm:p-4 rounded-lg">
@@ -364,26 +379,34 @@ const TourCalculator: React.FC = () => {
             {t('calculationMethod')}
           </h3>
           <ul className="list-disc list-inside space-y-1 text-xs sm:text-sm">
-            <li>{t('baseHorizontalSpeed')}: {tacticalConstants.BASE_SPEEDS.HORIZONTAL} km/h</li>
-            <li>{t('baseVerticalSpeed')}: {tacticalConstants.BASE_SPEEDS.VERTICAL} m/h</li>
+            <li>
+              {t('baseHorizontalSpeed')}:{' '}
+              {tacticalConstants.BASE_SPEEDS.HORIZONTAL} km/h
+            </li>
+            <li>
+              {t('baseVerticalSpeed')}: {tacticalConstants.BASE_SPEEDS.VERTICAL}{' '}
+              m/h
+            </li>
             <li>
               {t('currentMultiplier')}: {multiplier.toFixed(2)}
             </li>
             <li>
-              {t('horizontalCalculation')}: {inputs.horizontalDistance}km ÷ ({tacticalConstants.BASE_SPEEDS.HORIZONTAL}{' '}
-              × {multiplier.toFixed(2)})
+              {t('horizontalCalculation')}: {inputs.horizontalDistance}km ÷ (
+              {tacticalConstants.BASE_SPEEDS.HORIZONTAL} ×{' '}
+              {multiplier.toFixed(2)})
             </li>
             <li>
-              {t('verticalCalculation')}: {inputs.verticalDistance}m ÷ ({tacticalConstants.BASE_SPEEDS.VERTICAL} ×{' '}
-              {multiplier.toFixed(2)})
+              {t('verticalCalculation')}: {inputs.verticalDistance}m ÷ (
+              {tacticalConstants.BASE_SPEEDS.VERTICAL} × {multiplier.toFixed(2)}
+              )
             </li>
           </ul>
         </div>
 
         <TourDisclaimers
           totalHours={totalHours}
-        // dangerLevel={inputs.dangerLevel}
-        // terrain={inputs.terrain}
+          // dangerLevel={inputs.dangerLevel}
+          // terrain={inputs.terrain}
         />
       </div>
 

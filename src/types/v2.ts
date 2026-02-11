@@ -16,7 +16,17 @@ export interface FactorContribution {
   labelKey: string;
   percentage: number;
   color: 'green' | 'yellow' | 'orange' | 'red';
-  iconType: 'base' | 'terrain' | 'load' | 'season' | 'threat' | 'fatigue' | 'condition' | 'skill' | 'slope' | 'group';
+  iconType:
+    | 'base'
+    | 'terrain'
+    | 'load'
+    | 'season'
+    | 'threat'
+    | 'fatigue'
+    | 'condition'
+    | 'skill'
+    | 'slope'
+    | 'group';
 }
 
 export interface V2CalculationResult {

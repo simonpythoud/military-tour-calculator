@@ -19,10 +19,7 @@ const haversineDistance = (
   return R * c;
 };
 
-const inferTerrain = (
-  elevationGain: number,
-  distance: number
-): Terrain => {
+const inferTerrain = (elevationGain: number, distance: number): Terrain => {
   if (distance === 0) return 'FLAT';
   const gradient = elevationGain / (distance * 1000);
   if (gradient > 0.5) return 'TECHNICAL_ALPINE';
@@ -206,9 +203,10 @@ export const parseNavigationFile = (
 
   computeDistances(points);
 
-  const targetSections = Math.max(1, Math.min(20, Math.ceil(
-    points[points.length - 1].distanceFromStart / 2
-  )));
+  const targetSections = Math.max(
+    1,
+    Math.min(20, Math.ceil(points[points.length - 1].distanceFromStart / 2))
+  );
   const sections = splitIntoSections(points, targetSections);
 
   let totalElevGain = 0;

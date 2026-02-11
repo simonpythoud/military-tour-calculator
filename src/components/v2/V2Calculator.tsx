@@ -35,7 +35,8 @@ import FactorContribution from './FactorContribution';
 
 const V2Calculator: React.FC = () => {
   const { t } = useLanguage();
-  const [calculationMode, setCalculationMode] = useState<V2CalculationMode>('basic');
+  const [calculationMode, setCalculationMode] =
+    useState<V2CalculationMode>('basic');
   const [inputs, setInputs] = useState<V2TourInputs>({
     horizontalDistance: 0,
     verticalDistance: 0,
@@ -52,7 +53,8 @@ const V2Calculator: React.FC = () => {
   });
   const [calculationName, setCalculationName] = useState('');
   const [savedCalculations, setSavedCalculations] = useState<string[]>([]);
-  const [useCustomFactorConstants, setUseCustomFactorConstants] = useState(false);
+  const [useCustomFactorConstants, setUseCustomFactorConstants] =
+    useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [gpxRoute, setGpxRoute] = useState<GpxRoute | null>(null);
 
@@ -60,12 +62,12 @@ const V2Calculator: React.FC = () => {
 
   const handleModeChange = (mode: V2CalculationMode) => {
     setCalculationMode(mode);
-    setInputs(prev => ({ ...prev, calculationMode: mode }));
+    setInputs((prev) => ({ ...prev, calculationMode: mode }));
   };
 
   const handleRouteLoaded = (route: GpxRoute) => {
     setGpxRoute(route);
-    setInputs(prev => ({
+    setInputs((prev) => ({
       ...prev,
       horizontalDistance: route.totalDistance,
       verticalDistance: route.totalElevationGain,
@@ -76,7 +78,7 @@ const V2Calculator: React.FC = () => {
 
   const handleClearRoute = () => {
     setGpxRoute(null);
-    setInputs(prev => ({
+    setInputs((prev) => ({
       ...prev,
       horizontalDistance: 0,
       verticalDistance: 0,
@@ -87,7 +89,7 @@ const V2Calculator: React.FC = () => {
 
   const handleUpdateSectionTerrain = (sectionId: string, terrain: Terrain) => {
     if (!gpxRoute) return;
-    const updatedSections = gpxRoute.sections.map(s =>
+    const updatedSections = gpxRoute.sections.map((s) =>
       s.id === sectionId ? { ...s, terrain } : s
     );
     setGpxRoute({ ...gpxRoute, sections: updatedSections });
@@ -116,7 +118,11 @@ const V2Calculator: React.FC = () => {
   };
 
   const sectionCalc = gpxRoute
-    ? calculateSectionTimesV2(gpxRoute.sections, effectiveInputs, useCustomFactorConstants)
+    ? calculateSectionTimesV2(
+        gpxRoute.sections,
+        effectiveInputs,
+        useCustomFactorConstants
+      )
     : null;
 
   const sectionEffectiveInputs: V2TourInputs = sectionCalc
@@ -131,7 +137,9 @@ const V2Calculator: React.FC = () => {
 
   const result = calculateV2(sectionEffectiveInputs, useCustomFactorConstants);
   const totalHours = sectionCalc ? sectionCalc.totalHours : result.totalHours;
-  const effectiveHorizontalHours = sectionCalc ? sectionCalc.totalHorizontalHours : result.horizontalHours;
+  const effectiveHorizontalHours = sectionCalc
+    ? sectionCalc.totalHorizontalHours
+    : result.horizontalHours;
 
   const formatTime = (hours: number): string => {
     const h = Math.floor(hours);
@@ -148,7 +156,7 @@ const V2Calculator: React.FC = () => {
   const handleSave = () => {
     if (calculationName.trim()) {
       saveCalculation(calculationName, inputs);
-      setSavedCalculations(prev => [...prev, calculationName]);
+      setSavedCalculations((prev) => [...prev, calculationName]);
       setCalculationName('');
     }
   };
@@ -156,7 +164,7 @@ const V2Calculator: React.FC = () => {
   const handleLoad = (name: string) => {
     const loadedInputs = loadCalculation(name);
     if (loadedInputs) {
-      setInputs(prev => ({
+      setInputs((prev) => ({
         ...prev,
         ...loadedInputs,
       }));
@@ -211,10 +219,15 @@ const V2Calculator: React.FC = () => {
         <h1 className="text-xl sm:text-2xl font-bold flex items-center gap-2">
           <FaHiking className="text-military-green" />
           {t('title')}
-          <span className="text-xs font-normal bg-military-green text-white px-2 py-0.5 rounded-full">V2</span>
+          <span className="text-xs font-normal bg-military-green text-white px-2 py-0.5 rounded-full">
+            V2
+          </span>
         </h1>
         <div className="flex items-center gap-2">
-          <CalculationModeToggle mode={calculationMode} onModeChange={handleModeChange} />
+          <CalculationModeToggle
+            mode={calculationMode}
+            onModeChange={handleModeChange}
+          />
           <button
             onClick={() => setIsSettingsOpen(true)}
             className="p-2 text-military-green hover:text-opacity-80"
@@ -225,13 +238,17 @@ const V2Calculator: React.FC = () => {
         </div>
       </div>
 
-      <div className={`p-3 rounded-lg border mb-4 ${
-        calculationMode === 'basic'
-          ? 'bg-blue-50 border-blue-200'
-          : 'bg-amber-50 border-amber-200'
-      }`}>
+      <div
+        className={`p-3 rounded-lg border mb-4 ${
+          calculationMode === 'basic'
+            ? 'bg-blue-50 border-blue-200'
+            : 'bg-amber-50 border-amber-200'
+        }`}
+      >
         <p className="text-xs sm:text-sm">
-          {calculationMode === 'basic' ? t('v2_model_basic_desc') : t('v2_model_advanced_desc')}
+          {calculationMode === 'basic'
+            ? t('v2_model_basic_desc')
+            : t('v2_model_advanced_desc')}
         </p>
       </div>
 
@@ -256,7 +273,9 @@ const V2Calculator: React.FC = () => {
           <FaRuler className="text-military-green" />
           {t('distanceMeasurements')}
         </h2>
-        <div className={`grid grid-cols-1 ${calculationMode === 'advanced' ? 'sm:grid-cols-3' : 'sm:grid-cols-2'} gap-3 sm:gap-4`}>
+        <div
+          className={`grid grid-cols-1 ${calculationMode === 'advanced' ? 'sm:grid-cols-3' : 'sm:grid-cols-2'} gap-3 sm:gap-4`}
+        >
           <div>
             <label className="block mb-2 flex items-center gap-1">
               <FaRuler className="text-blue-600" />
@@ -265,13 +284,13 @@ const V2Calculator: React.FC = () => {
             <input
               type="number"
               value={inputs.horizontalDistance ?? ''}
-              onChange={e =>
+              onChange={(e) =>
                 setInputs({
                   ...inputs,
                   horizontalDistance: Number(e.target.value),
                 })
               }
-              onFocus={e => e.target.select()}
+              onFocus={(e) => e.target.select()}
               className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-300 border-blue-200"
               placeholder={t('enterDistance')}
             />
@@ -286,14 +305,14 @@ const V2Calculator: React.FC = () => {
               <input
                 type="number"
                 value={inputs.verticalDistance ?? ''}
-                onChange={e =>
+                onChange={(e) =>
                   setInputs({
                     ...inputs,
                     verticalDistance: Number(e.target.value),
                     elevationGain: Number(e.target.value),
                   })
                 }
-                onFocus={e => e.target.select()}
+                onFocus={(e) => e.target.select()}
                 className="w-full p-2 border rounded focus:ring-2 focus:ring-orange-300 border-orange-200"
                 placeholder={t('enterAltitude')}
               />
@@ -310,14 +329,14 @@ const V2Calculator: React.FC = () => {
                 <input
                   type="number"
                   value={inputs.elevationGain ?? ''}
-                  onChange={e =>
+                  onChange={(e) =>
                     setInputs({
                       ...inputs,
                       elevationGain: Number(e.target.value),
                       verticalDistance: Number(e.target.value),
                     })
                   }
-                  onFocus={e => e.target.select()}
+                  onFocus={(e) => e.target.select()}
                   className="w-full p-2 border rounded focus:ring-2 focus:ring-green-300 border-green-200"
                   placeholder={t('v2_enter_gain')}
                 />
@@ -330,13 +349,13 @@ const V2Calculator: React.FC = () => {
                 <input
                   type="number"
                   value={inputs.elevationLoss ?? ''}
-                  onChange={e =>
+                  onChange={(e) =>
                     setInputs({
                       ...inputs,
                       elevationLoss: Number(e.target.value),
                     })
                   }
-                  onFocus={e => e.target.select()}
+                  onFocus={(e) => e.target.select()}
                   className="w-full p-2 border rounded focus:ring-2 focus:ring-red-300 border-red-200"
                   placeholder={t('v2_enter_loss')}
                 />
@@ -353,9 +372,13 @@ const V2Calculator: React.FC = () => {
             {t('influencingFactors')}
           </div>
         </div>
-        <TacticalTourFactors inputs={inputs} setInputs={(newInputs) => {
-          setInputs(prev => ({ ...prev, ...newInputs }));
-        }} hasGpxRoute={!!gpxRoute} />
+        <TacticalTourFactors
+          inputs={inputs}
+          setInputs={(newInputs) => {
+            setInputs((prev) => ({ ...prev, ...newInputs }));
+          }}
+          hasGpxRoute={!!gpxRoute}
+        />
 
         {calculationMode === 'advanced' && (
           <div className="mt-4 pt-4 border-t">
@@ -364,8 +387,11 @@ const V2Calculator: React.FC = () => {
             </label>
             <select
               value={inputs.groupSize}
-              onChange={e =>
-                setInputs({ ...inputs, groupSize: e.target.value as V2TourInputs['groupSize'] })
+              onChange={(e) =>
+                setInputs({
+                  ...inputs,
+                  groupSize: e.target.value as V2TourInputs['groupSize'],
+                })
               }
               className="w-full sm:w-auto p-2 border rounded"
             >
@@ -379,9 +405,7 @@ const V2Calculator: React.FC = () => {
 
       <div className="bg-white p-3 sm:p-4 rounded-lg shadow">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-3 sm:mb-4">
-          <h2 className="text-base sm:text-lg font-semibold">
-            {t('results')}
-          </h2>
+          <h2 className="text-base sm:text-lg font-semibold">{t('results')}</h2>
           <div className="pt-2">
             <ConstantsToggle
               useCustomFactorConstants={useCustomFactorConstants}
@@ -390,7 +414,9 @@ const V2Calculator: React.FC = () => {
           </div>
         </div>
 
-        <div className={`grid ${calculationMode === 'advanced' ? 'grid-cols-2 lg:grid-cols-5' : 'grid-cols-2 lg:grid-cols-4'} gap-2 sm:gap-4 mb-4 sm:mb-6`}>
+        <div
+          className={`grid ${calculationMode === 'advanced' ? 'grid-cols-2 lg:grid-cols-5' : 'grid-cols-2 lg:grid-cols-4'} gap-2 sm:gap-4 mb-4 sm:mb-6`}
+        >
           <div className="p-2 sm:p-3 bg-gray-50 rounded-lg">
             <div className="text-xs sm:text-sm text-gray-600">
               {t('totalTime')}
@@ -470,10 +496,19 @@ const V2Calculator: React.FC = () => {
           </h3>
           <ul className="list-disc list-inside space-y-1 text-xs sm:text-sm">
             <li>
-              {t('v2_model_label')}: {calculationMode === 'basic' ? t('v2_mode_basic') : t('v2_mode_advanced')}
+              {t('v2_model_label')}:{' '}
+              {calculationMode === 'basic'
+                ? t('v2_mode_basic')
+                : t('v2_mode_advanced')}
             </li>
-            <li>{t('baseHorizontalSpeed')}: {tacticalConstants.BASE_SPEEDS.HORIZONTAL} km/h</li>
-            <li>{t('baseVerticalSpeed')}: {tacticalConstants.BASE_SPEEDS.VERTICAL} m/h</li>
+            <li>
+              {t('baseHorizontalSpeed')}:{' '}
+              {tacticalConstants.BASE_SPEEDS.HORIZONTAL} km/h
+            </li>
+            <li>
+              {t('baseVerticalSpeed')}: {tacticalConstants.BASE_SPEEDS.VERTICAL}{' '}
+              m/h
+            </li>
             <li>
               {t('currentMultiplier')}: {result.multiplier.toFixed(2)}
             </li>
@@ -508,8 +543,11 @@ const V2Calculator: React.FC = () => {
             {t('v2_section_analysis')}
           </h2>
           <div className="space-y-2">
-            {sectionCalc.sectionResults.map(sr => (
-              <div key={sr.sectionId} className="flex items-center gap-2 text-sm">
+            {sectionCalc.sectionResults.map((sr) => (
+              <div
+                key={sr.sectionId}
+                className="flex items-center gap-2 text-sm"
+              >
                 <span className="flex-1 truncate">{sr.sectionName}</span>
                 <span className="text-xs text-gray-500">
                   {formatTime(sr.totalHours)}
@@ -523,7 +561,9 @@ const V2Calculator: React.FC = () => {
                           ? 'bg-orange-500'
                           : 'bg-green-500'
                     }`}
-                    style={{ width: `${Math.min(100, sr.delayContributionPercent)}%` }}
+                    style={{
+                      width: `${Math.min(100, sr.delayContributionPercent)}%`,
+                    }}
                   />
                 </div>
                 <span className="text-xs w-12 text-right">
@@ -546,7 +586,7 @@ const V2Calculator: React.FC = () => {
           <input
             type="text"
             value={calculationName}
-            onChange={e => setCalculationName(e.target.value)}
+            onChange={(e) => setCalculationName(e.target.value)}
             placeholder={t('enterCalculationName')}
             className="flex-1 p-2 border rounded"
           />
@@ -559,7 +599,7 @@ const V2Calculator: React.FC = () => {
         </div>
         {savedCalculations.length > 0 && (
           <div className="flex flex-wrap gap-2">
-            {savedCalculations.map(name => (
+            {savedCalculations.map((name) => (
               <div key={name} className="relative">
                 <button
                   onClick={() => handleLoad(name)}

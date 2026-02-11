@@ -1,6 +1,13 @@
-import type { V2TourInputs, V2CalculationResult, FactorContribution } from '../../types/v2';
+import type {
+  V2TourInputs,
+  V2CalculationResult,
+  FactorContribution,
+} from '../../types/v2';
 import * as tacticalConstants from '../../constants/tacticalTourFactors';
-import { calculateAdvancedVerticalTime, getAdvancedHorizontalSpeedMultiplier } from './slopeModel';
+import {
+  calculateAdvancedVerticalTime,
+  getAdvancedHorizontalSpeedMultiplier,
+} from './slopeModel';
 import { calculateFatigueTimePenalty } from './fatigueModel';
 
 const getConstants = (useCustomFactorConstants: boolean) => {
@@ -30,7 +37,9 @@ const getBaseMultiplier = (
   return multiplier;
 };
 
-const getFactorColor = (penalty: number): 'green' | 'yellow' | 'orange' | 'red' => {
+const getFactorColor = (
+  penalty: number
+): 'green' | 'yellow' | 'orange' | 'red' => {
   if (penalty <= 5) return 'green';
   if (penalty <= 15) return 'yellow';
   if (penalty <= 30) return 'orange';
@@ -47,31 +56,68 @@ const computeFactorContributions = (
   const constants = getConstants(useCustomFactorConstants);
   const contributions: FactorContribution[] = [];
 
-  const totalPenalty = totalHours > 0 ? ((totalHours - baseTimeHours) / baseTimeHours) * 100 : 0;
+  const totalPenalty =
+    totalHours > 0 ? ((totalHours - baseTimeHours) / baseTimeHours) * 100 : 0;
 
   const conditionFactor = constants.CONDITION_FACTORS[inputs.condition];
-  const skillFactor= constants.TECHNICAL_SKILL_FACTORS[inputs.technicalSkill];
+  const skillFactor = constants.TECHNICAL_SKILL_FACTORS[inputs.technicalSkill];
   const weightFactor = constants.WEIGHT_FACTORS[inputs.weight];
   const terrainFactor = constants.TACTICAL_TERRAIN_FACTORS[inputs.terrain];
   const seasonFactor = constants.CONDITION_TYPE_FACTORS[inputs.conditionType];
   const threatFactor = constants.THREAT_LEVEL_FACTORS[inputs.threatLevel];
 
   const allFactors = [
-    { factor: conditionFactor, id: 'condition', labelKey: 'v2_factor_condition', iconType: 'condition' as const },
-    { factor: skillFactor, id: 'skill', labelKey: 'v2_factor_skill', iconType: 'skill' as const },
-    { factor: weightFactor, id: 'load', labelKey: 'v2_factor_load', iconType: 'load' as const },
-    { factor: terrainFactor, id: 'terrain', labelKey: 'v2_factor_terrain', iconType: 'terrain' as const },
-    { factor: seasonFactor, id: 'season', labelKey: 'v2_factor_season', iconType: 'season' as const },
-    { factor: threatFactor, id: 'threat', labelKey: 'v2_factor_threat', iconType: 'threat' as const },
+    {
+      factor: conditionFactor,
+      id: 'condition',
+      labelKey: 'v2_factor_condition',
+      iconType: 'condition' as const,
+    },
+    {
+      factor: skillFactor,
+      id: 'skill',
+      labelKey: 'v2_factor_skill',
+      iconType: 'skill' as const,
+    },
+    {
+      factor: weightFactor,
+      id: 'load',
+      labelKey: 'v2_factor_load',
+      iconType: 'load' as const,
+    },
+    {
+      factor: terrainFactor,
+      id: 'terrain',
+      labelKey: 'v2_factor_terrain',
+      iconType: 'terrain' as const,
+    },
+    {
+      factor: seasonFactor,
+      id: 'season',
+      labelKey: 'v2_factor_season',
+      iconType: 'season' as const,
+    },
+    {
+      factor: threatFactor,
+      id: 'threat',
+      labelKey: 'v2_factor_threat',
+      iconType: 'threat' as const,
+    },
   ];
 
-  const totalFactorDeviation = allFactors.reduce((sum, f) => sum + Math.abs(1 - f.factor), 0);
+  const totalFactorDeviation = allFactors.reduce(
+    (sum, f) => sum + Math.abs(1 - f.factor),
+    0
+  );
 
   for (const f of allFactors) {
     const deviation = 1 - f.factor;
     let percentage = 0;
     if (totalFactorDeviation > 0 && totalPenalty !== 0) {
-      percentage = (Math.abs(deviation) / totalFactorDeviation) * totalPenalty * Math.sign(deviation);
+      percentage =
+        (Math.abs(deviation) / totalFactorDeviation) *
+        totalPenalty *
+        Math.sign(deviation);
     }
     contributions.push({
       id: f.id,
@@ -83,8 +129,12 @@ const computeFactorContributions = (
   }
 
   if (isAdvanced && baseTimeHours > 2) {
-    const fatigueTimePenalty = calculateFatigueTimePenalty(baseTimeHours, inputs);
-    const fatiguePenaltyPercent = baseTimeHours > 0 ? (fatigueTimePenalty / baseTimeHours) * 100 : 0;
+    const fatigueTimePenalty = calculateFatigueTimePenalty(
+      baseTimeHours,
+      inputs
+    );
+    const fatiguePenaltyPercent =
+      baseTimeHours > 0 ? (fatigueTimePenalty / baseTimeHours) * 100 : 0;
     contributions.push({
       id: 'fatigue',
       labelKey: 'v2_factor_fatigue',
@@ -95,7 +145,8 @@ const computeFactorContributions = (
   }
 
   if (isAdvanced && inputs.elevationLoss > 0) {
-    const descentPenalty = inputs.elevationLoss > 200 ? Math.min(15, inputs.elevationLoss / 200) : 0;
+    const descentPenalty =
+      inputs.elevationLoss > 200 ? Math.min(15, inputs.elevationLoss / 200) : 0;
     if (descentPenalty > 0) {
       contributions.push({
         id: 'slope',
@@ -107,51 +158,74 @@ const computeFactorContributions = (
     }
   }
 
-  return contributions.filter(c => Math.abs(c.percentage) >= 0.1);
+  return contributions.filter((c) => Math.abs(c.percentage) >= 0.1);
 };
 
-export const calculateBasicV2= (
+export const calculateBasicV2 = (
   inputs: V2TourInputs,
   useCustomFactorConstants: boolean
 ): V2CalculationResult => {
   const constants = getConstants(useCustomFactorConstants);
 
-  if (!constants?.BASE_SPEEDS?.HORIZONTAL || !constants?.BASE_SPEEDS?.VERTICAL) {
+  if (
+    !constants?.BASE_SPEEDS?.HORIZONTAL ||
+    !constants?.BASE_SPEEDS?.VERTICAL
+  ) {
     return {
-      totalHours: 0, horizontalHours: 0, verticalHours: 0,
-      ascentHours: 0, descentHours: 0, multiplier: 1,
-      reliabilityFactor: 'low', warnings: ['constantsError'],
-      factorContributions: [], totalPenaltyPercent: 0,
-      baseTimeHours: 0, modelLabel: 'v2_model_basic',
+      totalHours: 0,
+      horizontalHours: 0,
+      verticalHours: 0,
+      ascentHours: 0,
+      descentHours: 0,
+      multiplier: 1,
+      reliabilityFactor: 'low',
+      warnings: ['constantsError'],
+      factorContributions: [],
+      totalPenaltyPercent: 0,
+      baseTimeHours: 0,
+      modelLabel: 'v2_model_basic',
     };
   }
 
   const multiplier = getBaseMultiplier(inputs, useCustomFactorConstants);
-  const horizontalHours = inputs.horizontalDistance > 0
-    ? inputs.horizontalDistance / (constants.BASE_SPEEDS.HORIZONTAL * multiplier)
-    : 0;
-  const verticalHours = inputs.verticalDistance > 0
-    ? inputs.verticalDistance / (constants.BASE_SPEEDS.VERTICAL * multiplier)
-    : 0;
+  const horizontalHours =
+    inputs.horizontalDistance > 0
+      ? inputs.horizontalDistance /
+        (constants.BASE_SPEEDS.HORIZONTAL * multiplier)
+      : 0;
+  const verticalHours =
+    inputs.verticalDistance > 0
+      ? inputs.verticalDistance / (constants.BASE_SPEEDS.VERTICAL * multiplier)
+      : 0;
   const totalHours = horizontalHours + verticalHours;
 
-  const baseTimeHours = inputs.horizontalDistance > 0
-    ? inputs.horizontalDistance / constants.BASE_SPEEDS.HORIZONTAL
-    : 0;
-  const baseVerticalTime = inputs.verticalDistance > 0
-    ? inputs.verticalDistance / constants.BASE_SPEEDS.VERTICAL
-    : 0;
+  const baseTimeHours =
+    inputs.horizontalDistance > 0
+      ? inputs.horizontalDistance / constants.BASE_SPEEDS.HORIZONTAL
+      : 0;
+  const baseVerticalTime =
+    inputs.verticalDistance > 0
+      ? inputs.verticalDistance / constants.BASE_SPEEDS.VERTICAL
+      : 0;
   const totalBaseTime = baseTimeHours + baseVerticalTime;
 
   const contributions = computeFactorContributions(
-    inputs, useCustomFactorConstants, totalBaseTime, totalHours, false
+    inputs,
+    useCustomFactorConstants,
+    totalBaseTime,
+    totalHours,
+    false
   );
 
-  const totalPenaltyPercent = totalBaseTime > 0
-    ? ((totalHours - totalBaseTime) / totalBaseTime) * 100
-    : 0;
+  const totalPenaltyPercent =
+    totalBaseTime > 0
+      ? ((totalHours - totalBaseTime) / totalBaseTime) * 100
+      : 0;
 
-  const { warnings, reliabilityFactor } = getWarningsAndReliability(totalHours, inputs);
+  const { warnings, reliabilityFactor } = getWarningsAndReliability(
+    totalHours,
+    inputs
+  );
 
   return {
     totalHours,
@@ -175,61 +249,91 @@ export const calculateAdvancedV2 = (
 ): V2CalculationResult => {
   const constants = getConstants(useCustomFactorConstants);
 
-  if (!constants?.BASE_SPEEDS?.HORIZONTAL || !constants?.BASE_SPEEDS?.VERTICAL) {
+  if (
+    !constants?.BASE_SPEEDS?.HORIZONTAL ||
+    !constants?.BASE_SPEEDS?.VERTICAL
+  ) {
     return {
-      totalHours: 0, horizontalHours: 0, verticalHours: 0,
-      ascentHours: 0, descentHours: 0, multiplier: 1,
-      reliabilityFactor: 'low', warnings: ['constantsError'],
-      factorContributions: [], totalPenaltyPercent: 0,
-      baseTimeHours: 0, modelLabel: 'v2_model_advanced',
+      totalHours: 0,
+      horizontalHours: 0,
+      verticalHours: 0,
+      ascentHours: 0,
+      descentHours: 0,
+      multiplier: 1,
+      reliabilityFactor: 'low',
+      warnings: ['constantsError'],
+      factorContributions: [],
+      totalPenaltyPercent: 0,
+      baseTimeHours: 0,
+      modelLabel: 'v2_model_advanced',
     };
   }
 
   const multiplier = getBaseMultiplier(inputs, useCustomFactorConstants);
 
-  const elevGain = inputs.elevationGain > 0 ? inputs.elevationGain : inputs.verticalDistance;
+  const elevGain =
+    inputs.elevationGain > 0 ? inputs.elevationGain : inputs.verticalDistance;
   const elevLoss = inputs.elevationLoss > 0 ? inputs.elevationLoss : 0;
 
   const slopeMultiplier = getAdvancedHorizontalSpeedMultiplier(
-    elevGain, elevLoss, inputs.horizontalDistance
+    elevGain,
+    elevLoss,
+    inputs.horizontalDistance
   );
-  const effectiveHorizontalMultiplier = multiplier * Math.min(1.15, Math.max(0.5, slopeMultiplier));
+  const effectiveHorizontalMultiplier =
+    multiplier * Math.min(1.15, Math.max(0.5, slopeMultiplier));
 
-  const horizontalHours = inputs.horizontalDistance > 0
-    ? inputs.horizontalDistance / (constants.BASE_SPEEDS.HORIZONTAL * effectiveHorizontalMultiplier)
-    : 0;
+  const horizontalHours =
+    inputs.horizontalDistance > 0
+      ? inputs.horizontalDistance /
+        (constants.BASE_SPEEDS.HORIZONTAL * effectiveHorizontalMultiplier)
+      : 0;
 
-  const { ascentHours: rawAscent, descentHours: rawDescent } = calculateAdvancedVerticalTime(
-    elevGain, elevLoss, inputs.horizontalDistance, constants.BASE_SPEEDS.VERTICAL
-  );
+  const { ascentHours: rawAscent, descentHours: rawDescent } =
+    calculateAdvancedVerticalTime(
+      elevGain,
+      elevLoss,
+      inputs.horizontalDistance,
+      constants.BASE_SPEEDS.VERTICAL
+    );
   const ascentHours = rawAscent > 0 ? rawAscent / multiplier : 0;
   const descentHours = rawDescent > 0 ? rawDescent / multiplier : 0;
 
   const preFatigueTotal = horizontalHours + ascentHours + descentHours;
 
-  const fatigueTimePenalty = calculateFatigueTimePenalty(preFatigueTotal, inputs);
+  const fatigueTimePenalty = calculateFatigueTimePenalty(
+    preFatigueTotal,
+    inputs
+  );
   const totalHours = preFatigueTotal + fatigueTimePenalty;
 
-  const baseHorizontalTime = inputs.horizontalDistance > 0
-    ? inputs.horizontalDistance / constants.BASE_SPEEDS.HORIZONTAL
-    : 0;
-  const baseVerticalTime = elevGain > 0
-    ? elevGain / constants.BASE_SPEEDS.VERTICAL
-    : 0;
-  const baseDescentTime = elevLoss > 0
-    ? elevLoss / (constants.BASE_SPEEDS.VERTICAL * 1.2)
-    : 0;
+  const baseHorizontalTime =
+    inputs.horizontalDistance > 0
+      ? inputs.horizontalDistance / constants.BASE_SPEEDS.HORIZONTAL
+      : 0;
+  const baseVerticalTime =
+    elevGain > 0 ? elevGain / constants.BASE_SPEEDS.VERTICAL : 0;
+  const baseDescentTime =
+    elevLoss > 0 ? elevLoss / (constants.BASE_SPEEDS.VERTICAL * 1.2) : 0;
   const totalBaseTime = baseHorizontalTime + baseVerticalTime + baseDescentTime;
 
   const contributions = computeFactorContributions(
-    inputs, useCustomFactorConstants, totalBaseTime, totalHours, true
+    inputs,
+    useCustomFactorConstants,
+    totalBaseTime,
+    totalHours,
+    true
   );
 
-  const totalPenaltyPercent = totalBaseTime > 0
-    ? ((totalHours - totalBaseTime) / totalBaseTime) * 100
-    : 0;
+  const totalPenaltyPercent =
+    totalBaseTime > 0
+      ? ((totalHours - totalBaseTime) / totalBaseTime) * 100
+      : 0;
 
-  const { warnings, reliabilityFactor } = getWarningsAndReliability(totalHours, inputs);
+  const { warnings, reliabilityFactor } = getWarningsAndReliability(
+    totalHours,
+    inputs
+  );
 
   return {
     totalHours,

@@ -29,7 +29,9 @@ const ConstantsToggle: React.FC<ConstantsToggleProps> = ({
       </button>
       <span
         className={`${
-          useCustomFactorConstants ? 'text-military-green font-bold' : 'text-gray-900'
+          useCustomFactorConstants
+            ? 'text-military-green font-bold'
+            : 'text-gray-900'
         }`}
       >
         {useCustomFactorConstants
@@ -40,4 +42,4 @@ const ConstantsToggle: React.FC<ConstantsToggleProps> = ({
   );
 };
 
-export default ConstantsToggle; 
+export default ConstantsToggle;

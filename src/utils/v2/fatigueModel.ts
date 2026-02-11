@@ -11,7 +11,7 @@ const WEIGHT_FATIGUE_RATES: Record<Weight, number> = {
   LIGHT: 0.08,
   MEDIUM: 0.18,
   HEAVY: 0.32,
-  VERY_HEAVY: 0.50,
+  VERY_HEAVY: 0.5,
 };
 
 const TERRAIN_FATIGUE_RATES: Record<Terrain, number> = {
@@ -19,7 +19,7 @@ const TERRAIN_FATIGUE_RATES: Record<Terrain, number> = {
   HIKING_TRAIL: 0.12,
   DIFFICULT: 0.22,
   ALPINE: 0.35,
-  TECHNICAL_ALPINE: 0.50,
+  TECHNICAL_ALPINE: 0.5,
 };
 
 const SEASON_FATIGUE_RATES: Record<ConditionType, number> = {
@@ -31,8 +31,8 @@ const SEASON_FATIGUE_RATES: Record<ConditionType, number> = {
 
 const THREAT_FATIGUE_RATES: Record<ThreatLevel, number> = {
   GREEN: 0.02,
-  YELLOW: 0.10,
-  RED: 0.20,
+  YELLOW: 0.1,
+  RED: 0.2,
 };
 
 export const calculateFatigueMultiplier = (
@@ -47,17 +47,20 @@ export const calculateFatigueMultiplier = (
   const seasonRate = SEASON_FATIGUE_RATES[inputs.conditionType];
   const threatRate = THREAT_FATIGUE_RATES[inputs.threatLevel];
 
-  const linearFatigue = (weightRate + terrainRate + seasonRate + threatRate) * elapsedHours;
+  const linearFatigue =
+    (weightRate + terrainRate + seasonRate + threatRate) * elapsedHours;
 
-  const weightNonLinear = inputs.weight === 'VERY_HEAVY'
-    ? Math.pow(elapsedHours / 6, 1.3) * 0.03
-    : inputs.weight === 'HEAVY'
-      ? Math.pow(elapsedHours / 7, 1.2) * 0.02
-      : 0;
+  const weightNonLinear =
+    inputs.weight === 'VERY_HEAVY'
+      ? Math.pow(elapsedHours / 6, 1.3) * 0.03
+      : inputs.weight === 'HEAVY'
+        ? Math.pow(elapsedHours / 7, 1.2) * 0.02
+        : 0;
 
   const groupMultiplier = GROUP_SIZE_FATIGUE_MULTIPLIERS[inputs.groupSize];
 
-  const totalFatiguePercent = (baseFatigue + linearFatigue + weightNonLinear) * groupMultiplier * 100;
+  const totalFatiguePercent =
+    (baseFatigue + linearFatigue + weightNonLinear) * groupMultiplier * 100;
   const clampedFatigue = Math.min(80, Math.max(0, totalFatiguePercent));
 
   return 1 - clampedFatigue / 100;
@@ -97,7 +100,10 @@ export const calculatePerformanceOverTimeV2 = (
 
   for (let hour = 0; hour <= maxHour; hour++) {
     const fatigueMultiplier = calculateFatigueMultiplier(hour, inputs);
-    const performance = Math.max(0, fatigueMultiplier * 100 * Math.min(1, baseMultiplier + 0.3));
+    const performance = Math.max(
+      0,
+      fatigueMultiplier * 100 * Math.min(1, baseMultiplier + 0.3)
+    );
     points.push({
       hour,
       performance: Math.min(100, Math.round(performance * 10) / 10),
