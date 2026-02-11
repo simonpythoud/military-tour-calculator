@@ -194,7 +194,7 @@ const englishTranslations = {
   gpxSupportedFormats: 'Supported formats',
   gpxImportSuccess: 'Route imported successfully',
   gpxImportError: 'Failed to import route file. Please check the file format.',
-  gpxFileTooBig: 'File is too large. Maximum size is 10MB.',
+  gpxFileTooBig: 'File is too large. Maximum size is 100MB.',
   invalidFileExtension: 'Invalid file extension. Supported formats: .gpx, .kml, .tcx',
   gpxRouteSections: 'Route Sections',
   gpxSectionsDescription: 'Each section has an auto-detected terrain difficulty based on elevation gradient. You can adjust the terrain type per section.',
