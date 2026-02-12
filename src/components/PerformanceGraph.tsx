@@ -1,4 +1,4 @@
-import type React from 'react';
+import React from 'react';
 import {
   LineChart,
   Line,
@@ -19,7 +19,7 @@ interface Props {
   data: PerformancePoint[];
 }
 
-const FatigueGraph: React.FC<Props> = ({ data }) => {
+const FatigueGraph: React.FC<Props> = React.memo(({ data }) => {
   const { t } = useLanguage();
 
   return (
@@ -59,6 +59,6 @@ const FatigueGraph: React.FC<Props> = ({ data }) => {
       </ResponsiveContainer>
     </div>
   );
-};
+});
 
 export default FatigueGraph;

@@ -1,5 +1,5 @@
 import type React from 'react';
-import { useState, useEffect, useId, useMemo } from 'react';
+import { useState, useEffect, useId, useMemo, useCallback } from 'react';
 import type { TourInputs, GpxRoute, Terrain } from '../types';
 import { calculateTourTime, getConstants } from '../utils/calculateTime';
 import { calculateSectionTimes } from '../utils/calculateSections';
@@ -21,6 +21,7 @@ import ReliabilityIndicator from './ReliabilityIndicator';
 import TacticalTourFactors from './TacticalTourFactors';
 import { validateConstants } from '../utils/manageConstants';
 import { toast } from 'react-toastify';
+import { MAX_HORIZONTAL_DISTANCE, MAX_VERTICAL_DISTANCE } from '../constants/limits';
 import ConstantsToggle from './ConstantsToggle';
 import SettingsModal from './SettingsModal';
 import GpxUpload from './GpxUpload';
@@ -72,13 +73,18 @@ const TourCalculator: React.FC = () => {
     }));
   };
 
-  const handleUpdateSectionTerrain = (sectionId: string, terrain: Terrain) => {
-    if (!gpxRoute) return;
-    const updatedSections = gpxRoute.sections.map((s) =>
-      s.id === sectionId ? { ...s, terrain } : s
-    );
-    setGpxRoute({ ...gpxRoute, sections: updatedSections });
-  };
+  const handleUpdateSectionTerrain = useCallback(
+    (sectionId: string, terrain: Terrain) => {
+      setGpxRoute((currentRoute) => {
+        if (!currentRoute) return null;
+        const updatedSections = currentRoute.sections.map((s) =>
+          s.id === sectionId ? { ...s, terrain } : s
+        );
+        return { ...currentRoute, sections: updatedSections };
+      });
+    },
+    []
+  );
 
   useEffect(() => {
     const saved = localStorage.getItem('savedCalculations') || '{}';
@@ -100,17 +106,30 @@ const TourCalculator: React.FC = () => {
     }
   }, []);
 
-  const sectionCalc = gpxRoute
-    ? calculateSectionTimes(gpxRoute.sections, inputs, tacticalConstants)
-    : null;
+  const sectionCalc = useMemo(
+    () =>
+      gpxRoute
+        ? calculateSectionTimes(gpxRoute.sections, inputs, tacticalConstants)
+        : null,
+    [gpxRoute, inputs, tacticalConstants]
+  );
 
-  const effectiveInputs: TourInputs = sectionCalc
-    ? {
-        ...inputs,
-        horizontalDistance: sectionCalc.totalHorizontalDistance,
-        verticalDistance: sectionCalc.totalVerticalDistance,
-      }
-    : inputs;
+  const effectiveInputs: TourInputs = useMemo(
+    () =>
+      sectionCalc
+        ? {
+            ...inputs,
+            horizontalDistance: sectionCalc.totalHorizontalDistance,
+            verticalDistance: sectionCalc.totalVerticalDistance,
+          }
+        : inputs,
+    [sectionCalc, inputs]
+  );
+
+  const tourTimeResult = useMemo(
+    () => calculateTourTime(effectiveInputs, tacticalConstants),
+    [effectiveInputs, tacticalConstants]
+  );
 
   const {
     totalHours: directTotalHours,
@@ -118,7 +137,7 @@ const TourCalculator: React.FC = () => {
     verticalHours,
     multiplier,
     reliabilityFactor,
-  } = calculateTourTime(effectiveInputs, tacticalConstants);
+  } = tourTimeResult;
 
   const totalHours = sectionCalc ? sectionCalc.totalHours : directTotalHours;
   const effectiveHorizontalHours = sectionCalc
@@ -134,10 +153,9 @@ const TourCalculator: React.FC = () => {
     return `${h}h ${m}m`;
   };
 
-  const performanceData = calculatePerformanceOverTime(
-    inputs,
-    totalHours,
-    tacticalConstants
+  const performanceData = useMemo(
+    () => calculatePerformanceOverTime(inputs, totalHours, tacticalConstants),
+    [inputs, totalHours, tacticalConstants]
   );
 
   const handleSave = () => {
@@ -271,10 +289,16 @@ const TourCalculator: React.FC = () => {
               onChange={(e) =>
                 setInputs({
                   ...inputs,
-                  horizontalDistance: Number(e.target.value),
+                  // Limit horizontal distance to prevent DoS
+                  horizontalDistance: Math.min(
+                    Math.max(0, Number(e.target.value)),
+                    MAX_HORIZONTAL_DISTANCE
+                  ),
                 })
               }
               onFocus={(e) => e.target.select()}
+              max={MAX_HORIZONTAL_DISTANCE}
+              min={0}
               className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-300 border-blue-200"
               placeholder={t('enterDistance')}
             />
@@ -295,10 +319,16 @@ const TourCalculator: React.FC = () => {
               onChange={(e) =>
                 setInputs({
                   ...inputs,
-                  verticalDistance: Number(e.target.value),
+                  // Limit vertical distance to prevent DoS
+                  verticalDistance: Math.min(
+                    Math.max(0, Number(e.target.value)),
+                    MAX_VERTICAL_DISTANCE
+                  ),
                 })
               }
               onFocus={(e) => e.target.select()}
+              max={MAX_VERTICAL_DISTANCE}
+              min={0}
               className="w-full p-2 border rounded focus:ring-2 focus:ring-orange-300 border-orange-200"
               placeholder={t('enterAltitude')}
             />
