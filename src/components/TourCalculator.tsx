@@ -1,5 +1,5 @@
 import type React from 'react';
-import { useState, useEffect, useId, useMemo } from 'react';
+import { useState, useEffect, useId, useMemo, useCallback } from 'react';
 import type { TourInputs, GpxRoute, Terrain } from '../types';
 import { calculateTourTime, getConstants } from '../utils/calculateTime';
 import { calculateSectionTimes } from '../utils/calculateSections';
@@ -72,13 +72,18 @@ const TourCalculator: React.FC = () => {
     }));
   };
 
-  const handleUpdateSectionTerrain = (sectionId: string, terrain: Terrain) => {
-    if (!gpxRoute) return;
-    const updatedSections = gpxRoute.sections.map((s) =>
-      s.id === sectionId ? { ...s, terrain } : s
-    );
-    setGpxRoute({ ...gpxRoute, sections: updatedSections });
-  };
+  const handleUpdateSectionTerrain = useCallback(
+    (sectionId: string, terrain: Terrain) => {
+      setGpxRoute((currentRoute) => {
+        if (!currentRoute) return null;
+        const updatedSections = currentRoute.sections.map((s) =>
+          s.id === sectionId ? { ...s, terrain } : s
+        );
+        return { ...currentRoute, sections: updatedSections };
+      });
+    },
+    []
+  );
 
   useEffect(() => {
     const saved = localStorage.getItem('savedCalculations') || '{}';
@@ -100,17 +105,30 @@ const TourCalculator: React.FC = () => {
     }
   }, []);
 
-  const sectionCalc = gpxRoute
-    ? calculateSectionTimes(gpxRoute.sections, inputs, tacticalConstants)
-    : null;
+  const sectionCalc = useMemo(
+    () =>
+      gpxRoute
+        ? calculateSectionTimes(gpxRoute.sections, inputs, tacticalConstants)
+        : null,
+    [gpxRoute, inputs, tacticalConstants]
+  );
 
-  const effectiveInputs: TourInputs = sectionCalc
-    ? {
-        ...inputs,
-        horizontalDistance: sectionCalc.totalHorizontalDistance,
-        verticalDistance: sectionCalc.totalVerticalDistance,
-      }
-    : inputs;
+  const effectiveInputs: TourInputs = useMemo(
+    () =>
+      sectionCalc
+        ? {
+            ...inputs,
+            horizontalDistance: sectionCalc.totalHorizontalDistance,
+            verticalDistance: sectionCalc.totalVerticalDistance,
+          }
+        : inputs,
+    [sectionCalc, inputs]
+  );
+
+  const tourTimeResult = useMemo(
+    () => calculateTourTime(effectiveInputs, tacticalConstants),
+    [effectiveInputs, tacticalConstants]
+  );
 
   const {
     totalHours: directTotalHours,
@@ -118,7 +136,7 @@ const TourCalculator: React.FC = () => {
     verticalHours,
     multiplier,
     reliabilityFactor,
-  } = calculateTourTime(effectiveInputs, tacticalConstants);
+  } = tourTimeResult;
 
   const totalHours = sectionCalc ? sectionCalc.totalHours : directTotalHours;
   const effectiveHorizontalHours = sectionCalc
@@ -134,10 +152,9 @@ const TourCalculator: React.FC = () => {
     return `${h}h ${m}m`;
   };
 
-  const performanceData = calculatePerformanceOverTime(
-    inputs,
-    totalHours,
-    tacticalConstants
+  const performanceData = useMemo(
+    () => calculatePerformanceOverTime(inputs, totalHours, tacticalConstants),
+    [inputs, totalHours, tacticalConstants]
   );
 
   const handleSave = () => {

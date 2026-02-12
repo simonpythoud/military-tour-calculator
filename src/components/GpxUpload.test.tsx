@@ -5,7 +5,6 @@ import { LanguageProvider } from '../contexts/LanguageContext';
 import { toast } from 'react-toastify';
 import { MAX_FILE_SIZE } from '../constants/limits';
 import * as gpxParser from '../utils/gpxParser';
-import type React from 'react';
 
 // Mock react-toastify
 vi.mock('react-toastify', () => ({
@@ -133,9 +132,9 @@ describe('GpxUpload', () => {
 
     // Find the drop zone (the main container)
     // We can identify it by text content or structure.
-    // The closest div to the title seems safe.
+    // The closest section to the title seems safe since the component uses <section>
     const title = screen.getByText('Route Import');
-    const dropZone = title.closest('div');
+    const dropZone = title.closest('section');
 
     if (!dropZone) throw new Error('Drop zone not found');
 

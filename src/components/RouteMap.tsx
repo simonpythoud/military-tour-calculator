@@ -1,5 +1,4 @@
-import type React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { MapContainer, TileLayer, Polyline, Tooltip } from 'react-leaflet';
 import { FaMap, FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import { useLanguage } from '../contexts/LanguageContext';
@@ -11,7 +10,7 @@ interface Props {
   sections: RouteSection[];
 }
 
-const RouteMap: React.FC<Props> = ({ sections }) => {
+const RouteMap: React.FC<Props> = React.memo(({ sections }) => {
   const { t } = useLanguage();
   const [isVisible, setIsVisible] = useState(true);
 
@@ -31,6 +30,7 @@ const RouteMap: React.FC<Props> = ({ sections }) => {
   return (
     <div className="bg-white p-3 sm:p-4 rounded-lg shadow mb-4 sm:mb-6">
       <button
+        type="button"
         onClick={() => setIsVisible(!isVisible)}
         className="w-full flex items-center justify-between text-base sm:text-lg font-semibold"
       >
@@ -79,6 +79,6 @@ const RouteMap: React.FC<Props> = ({ sections }) => {
       )}
     </div>
   );
-};
+});
 
 export default RouteMap;
