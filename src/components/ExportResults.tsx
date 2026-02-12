@@ -54,11 +54,26 @@ const ExportResults: React.FC<Props> = ({ results }) => {
       doc.text(t('influencingFactors'), 20, 75);
 
       const factorsData = [
-        [t('condition_title'), t(`condition_${results.inputs.condition.toLowerCase()}` as any)],
-        [t('technical_title'), t(`technical_${results.inputs.technicalSkill.toLowerCase()}` as any)],
-        [t('weight_title'), t(`weight_${results.inputs.weight.toLowerCase()}` as any)],
-        [t('terrain_title'), t(`terrain_${results.inputs.terrain.toLowerCase()}` as any)],
-        [t('conditions_title'), t(`conditions_${results.inputs.conditionType.toLowerCase()}` as any)]
+        [
+          t('condition_title'),
+          t(`condition_${results.inputs.condition.toLowerCase()}` as any),
+        ],
+        [
+          t('technical_title'),
+          t(`technical_${results.inputs.technicalSkill.toLowerCase()}` as any),
+        ],
+        [
+          t('weight_title'),
+          t(`weight_${results.inputs.weight.toLowerCase()}` as any),
+        ],
+        [
+          t('terrain_title'),
+          t(`terrain_${results.inputs.terrain.toLowerCase()}` as any),
+        ],
+        [
+          t('conditions_title'),
+          t(`conditions_${results.inputs.conditionType.toLowerCase()}` as any),
+        ],
       ];
 
       autoTable(doc, {
@@ -117,7 +132,7 @@ const ExportResults: React.FC<Props> = ({ results }) => {
           // Save the document
           doc.save('military-tour-calculation.pdf');
         } catch (canvasError) {
-          console.error("Error generating canvas image", canvasError);
+          console.error('Error generating canvas image', canvasError);
           // Save without image if canvas fails
           doc.save('military-tour-calculation.pdf');
         }
@@ -125,7 +140,7 @@ const ExportResults: React.FC<Props> = ({ results }) => {
         doc.save('military-tour-calculation.pdf');
       }
     } catch (error) {
-      console.error("Export failed", error);
+      console.error('Export failed', error);
       // Could add toast notification here
     } finally {
       setIsExporting(false);

@@ -200,7 +200,8 @@ const italianTranslations = {
   gpxImportError:
     'Importazione del file di percorso fallita. Controlla il formato del file.',
   gpxFileTooBig: 'Il file è troppo grande. La dimensione massima è 10MB.',
-  invalidFileExtension: 'Estensione file non valida. Formati supportati: .gpx, .kml, .tcx',
+  invalidFileExtension:
+    'Estensione file non valida. Formati supportati: .gpx, .kml, .tcx',
   gpxRouteSections: 'Sezioni del percorso',
   gpxSectionsDescription:
     'Ogni sezione ha una difficoltà del terreno rilevata automaticamente in base al gradiente di altitudine. Puoi modificare il tipo di terreno per ogni sezione.',

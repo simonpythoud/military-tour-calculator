@@ -42,7 +42,9 @@ describe('GpxUpload', () => {
   it('shows error when file is too large', () => {
     renderComponent();
 
-    const input = document.querySelector('input[type="file"]') as HTMLInputElement;
+    const input = document.querySelector(
+      'input[type="file"]'
+    ) as HTMLInputElement;
     expect(input).toBeInTheDocument();
 
     // Mock a large file
@@ -54,23 +56,31 @@ describe('GpxUpload', () => {
     });
     fireEvent.change(input);
 
-    expect(toast.error).toHaveBeenCalledWith(expect.stringMatching(/too large/i));
+    expect(toast.error).toHaveBeenCalledWith(
+      expect.stringMatching(/too large/i)
+    );
     expect(mockOnRouteLoaded).not.toHaveBeenCalled();
   });
 
   it('shows error when file extension is invalid', () => {
     renderComponent();
 
-    const input = document.querySelector('input[type="file"]') as HTMLInputElement;
+    const input = document.querySelector(
+      'input[type="file"]'
+    ) as HTMLInputElement;
 
-    const file = new File(['content'], 'test.exe', { type: 'application/x-msdownload' });
+    const file = new File(['content'], 'test.exe', {
+      type: 'application/x-msdownload',
+    });
 
     Object.defineProperty(input, 'files', {
       value: [file],
     });
     fireEvent.change(input);
 
-    expect(toast.error).toHaveBeenCalledWith(expect.stringMatching(/invalid file extension/i));
+    expect(toast.error).toHaveBeenCalledWith(
+      expect.stringMatching(/invalid file extension/i)
+    );
     expect(mockOnRouteLoaded).not.toHaveBeenCalled();
   });
 
