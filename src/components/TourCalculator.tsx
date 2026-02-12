@@ -21,6 +21,7 @@ import ReliabilityIndicator from './ReliabilityIndicator';
 import TacticalTourFactors from './TacticalTourFactors';
 import { validateConstants } from '../utils/manageConstants';
 import { toast } from 'react-toastify';
+import { MAX_HORIZONTAL_DISTANCE, MAX_VERTICAL_DISTANCE } from '../constants/limits';
 import ConstantsToggle from './ConstantsToggle';
 import SettingsModal from './SettingsModal';
 import GpxUpload from './GpxUpload';
@@ -271,10 +272,16 @@ const TourCalculator: React.FC = () => {
               onChange={(e) =>
                 setInputs({
                   ...inputs,
-                  horizontalDistance: Number(e.target.value),
+                  // Limit horizontal distance to prevent DoS
+                  horizontalDistance: Math.min(
+                    Math.max(0, Number(e.target.value)),
+                    MAX_HORIZONTAL_DISTANCE
+                  ),
                 })
               }
               onFocus={(e) => e.target.select()}
+              max={MAX_HORIZONTAL_DISTANCE}
+              min={0}
               className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-300 border-blue-200"
               placeholder={t('enterDistance')}
             />
@@ -295,10 +302,16 @@ const TourCalculator: React.FC = () => {
               onChange={(e) =>
                 setInputs({
                   ...inputs,
-                  verticalDistance: Number(e.target.value),
+                  // Limit vertical distance to prevent DoS
+                  verticalDistance: Math.min(
+                    Math.max(0, Number(e.target.value)),
+                    MAX_VERTICAL_DISTANCE
+                  ),
                 })
               }
               onFocus={(e) => e.target.select()}
+              max={MAX_VERTICAL_DISTANCE}
+              min={0}
               className="w-full p-2 border rounded focus:ring-2 focus:ring-orange-300 border-orange-200"
               placeholder={t('enterAltitude')}
             />
