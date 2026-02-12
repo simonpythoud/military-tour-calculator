@@ -1,5 +1,4 @@
-import type React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import {
   FaMountain,
   FaArrowUp,
@@ -38,12 +37,10 @@ const SECTION_COLORS = [
   '#0e7490',
 ];
 
-const RouteSections: React.FC<Props> = ({
-  sections,
-  onUpdateSectionTerrain,
-}) => {
-  const { t } = useLanguage();
-  const [isVisible, setIsVisible] = useState(true);
+const RouteSections: React.FC<Props> = React.memo(
+  ({ sections, onUpdateSectionTerrain }) => {
+    const { t } = useLanguage();
+    const [isVisible, setIsVisible] = useState(true);
 
   const getTerrainLabel = (terrain: Terrain): string => {
     const labels: Record<Terrain, string> = {
@@ -161,7 +158,8 @@ const RouteSections: React.FC<Props> = ({
       )}
     </div>
   );
-};
+  }
+);
 
 export { SECTION_COLORS };
 export default RouteSections;

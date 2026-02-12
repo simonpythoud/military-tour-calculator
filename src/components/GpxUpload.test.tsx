@@ -132,7 +132,7 @@ describe('GpxUpload', () => {
 
     // Find the drop zone (the main container)
     // We can identify it by text content or structure.
-    // The closest section to the title seems safe.
+    // The closest section to the title seems safe since the component uses <section>
     const title = screen.getByText('Route Import');
     const dropZone = title.closest('section');
 
