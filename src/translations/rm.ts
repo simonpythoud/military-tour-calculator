@@ -200,7 +200,8 @@ const romanshTranslations = {
   gpxImportError:
     "Errur durant l'import da la datoteca da ruta. Controllescha il format da la datoteca.",
   gpxFileTooBig: 'La datoteca è memia gronda. La grondezza maximala è 10MB.',
-  invalidFileExtension: 'Extensiun da datoteca nunvalida. Formats supportads: .gpx, .kml, .tcx',
+  invalidFileExtension:
+    'Extensiun da datoteca nunvalida. Formats supportads: .gpx, .kml, .tcx',
   gpxRouteSections: 'Secziuns da la ruta',
   gpxSectionsDescription:
     'Mintga secziun ha ina difficultad da terrain automaticamain reconuschida basada sin il gradient da autezza. Ti pos adaptar il tip da terrain per secziun.',

@@ -35,19 +35,19 @@ describe('validateConstants', () => {
 
   it('should invalidate wrong type for number value', () => {
     const invalidConstants = JSON.parse(JSON.stringify(tacticalConstants));
-    invalidConstants.BASE_SPEEDS.HORIZONTAL = "not a number";
+    invalidConstants.BASE_SPEEDS.HORIZONTAL = 'not a number';
     expect(validateConstants(invalidConstants)).toBe(false);
   });
 
   it('should invalidate wrong type for nested object', () => {
     const invalidConstants = JSON.parse(JSON.stringify(tacticalConstants));
-    invalidConstants.BASE_SPEEDS = "not an object";
+    invalidConstants.BASE_SPEEDS = 'not an object';
     expect(validateConstants(invalidConstants)).toBe(false);
   });
 
   it('should validate with extra keys (lenient check for extra keys, strict for required)', () => {
     const constantsWithExtra = JSON.parse(JSON.stringify(tacticalConstants));
-    constantsWithExtra.EXTRA_KEY = "something";
+    constantsWithExtra.EXTRA_KEY = 'something';
     expect(validateConstants(constantsWithExtra)).toBe(true);
   });
 });
