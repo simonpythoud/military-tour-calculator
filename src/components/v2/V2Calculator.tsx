@@ -25,6 +25,7 @@ import ReliabilityIndicator from '../ReliabilityIndicator';
 import TacticalTourFactors from '../TacticalTourFactors';
 import { validateConstants } from '../../utils/manageConstants';
 import { toast } from 'react-toastify';
+import { MAX_HORIZONTAL_DISTANCE, MAX_VERTICAL_DISTANCE } from '../../constants/limits';
 import ConstantsToggle from '../ConstantsToggle';
 import SettingsModal from '../SettingsModal';
 import GpxUpload from '../GpxUpload';
@@ -287,9 +288,14 @@ const V2Calculator: React.FC = () => {
               onChange={(e) =>
                 setInputs({
                   ...inputs,
-                  horizontalDistance: Number(e.target.value),
+                  horizontalDistance: Math.min(
+                    Math.max(0, Number(e.target.value)),
+                    MAX_HORIZONTAL_DISTANCE
+                  ),
                 })
               }
+              max={MAX_HORIZONTAL_DISTANCE}
+              min={0}
               onFocus={(e) => e.target.select()}
               className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-300 border-blue-200"
               placeholder={t('enterDistance')}
@@ -305,13 +311,19 @@ const V2Calculator: React.FC = () => {
               <input
                 type="number"
                 value={inputs.verticalDistance ?? ''}
-                onChange={(e) =>
+              onChange={(e) => {
+                const val = Math.min(
+                  Math.max(0, Number(e.target.value)),
+                  MAX_VERTICAL_DISTANCE
+                );
                   setInputs({
                     ...inputs,
-                    verticalDistance: Number(e.target.value),
-                    elevationGain: Number(e.target.value),
-                  })
-                }
+                  verticalDistance: val,
+                  elevationGain: val,
+                });
+              }}
+              max={MAX_VERTICAL_DISTANCE}
+              min={0}
                 onFocus={(e) => e.target.select()}
                 className="w-full p-2 border rounded focus:ring-2 focus:ring-orange-300 border-orange-200"
                 placeholder={t('enterAltitude')}
@@ -329,13 +341,19 @@ const V2Calculator: React.FC = () => {
                 <input
                   type="number"
                   value={inputs.elevationGain ?? ''}
-                  onChange={(e) =>
+                  onChange={(e) => {
+                    const val = Math.min(
+                      Math.max(0, Number(e.target.value)),
+                      MAX_VERTICAL_DISTANCE
+                    );
                     setInputs({
                       ...inputs,
-                      elevationGain: Number(e.target.value),
-                      verticalDistance: Number(e.target.value),
-                    })
-                  }
+                      elevationGain: val,
+                      verticalDistance: val,
+                    });
+                  }}
+                  max={MAX_VERTICAL_DISTANCE}
+                  min={0}
                   onFocus={(e) => e.target.select()}
                   className="w-full p-2 border rounded focus:ring-2 focus:ring-green-300 border-green-200"
                   placeholder={t('v2_enter_gain')}
@@ -352,9 +370,14 @@ const V2Calculator: React.FC = () => {
                   onChange={(e) =>
                     setInputs({
                       ...inputs,
-                      elevationLoss: Number(e.target.value),
+                      elevationLoss: Math.min(
+                        Math.max(0, Number(e.target.value)),
+                        MAX_VERTICAL_DISTANCE
+                      ),
                     })
                   }
+                  max={MAX_VERTICAL_DISTANCE}
+                  min={0}
                   onFocus={(e) => e.target.select()}
                   className="w-full p-2 border rounded focus:ring-2 focus:ring-red-300 border-red-200"
                   placeholder={t('v2_enter_loss')}
