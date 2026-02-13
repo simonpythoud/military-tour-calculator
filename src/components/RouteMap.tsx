@@ -20,11 +20,23 @@ const RouteMap: React.FC<Props> = React.memo(({ sections }) => {
     s.points.map((p) => [p.lat, p.lon] as [number, number])
   );
 
-  const lats = allPoints.map((p) => p[0]);
-  const lons = allPoints.map((p) => p[1]);
+  let minLat = Number.POSITIVE_INFINITY;
+  let minLon = Number.POSITIVE_INFINITY;
+  let maxLat = Number.NEGATIVE_INFINITY;
+  let maxLon = Number.NEGATIVE_INFINITY;
+
+  for (const p of allPoints) {
+    const lat = p[0];
+    const lon = p[1];
+    if (lat < minLat) minLat = lat;
+    if (lat > maxLat) maxLat = lat;
+    if (lon < minLon) minLon = lon;
+    if (lon > maxLon) maxLon = lon;
+  }
+
   const bounds: [[number, number], [number, number]] = [
-    [Math.min(...lats), Math.min(...lons)],
-    [Math.max(...lats), Math.max(...lons)],
+    [minLat, minLon],
+    [maxLat, maxLon],
   ];
 
   return (
