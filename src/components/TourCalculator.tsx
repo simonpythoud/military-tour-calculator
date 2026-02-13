@@ -282,26 +282,31 @@ const TourCalculator: React.FC = () => {
               <FaRuler className="text-blue-600" />
               {t('horizontalDistance')}
             </label>
-            <input
-              id={horizontalId}
-              type="number"
-              value={inputs.horizontalDistance ?? ''}
-              onChange={(e) =>
-                setInputs({
-                  ...inputs,
-                  // Limit horizontal distance to prevent DoS
-                  horizontalDistance: Math.min(
-                    Math.max(0, Number(e.target.value)),
-                    MAX_HORIZONTAL_DISTANCE
-                  ),
-                })
-              }
-              onFocus={(e) => e.target.select()}
-              max={MAX_HORIZONTAL_DISTANCE}
-              min={0}
-              className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-300 border-blue-200"
-              placeholder={t('enterDistance')}
-            />
+            <div className="relative">
+              <input
+                id={horizontalId}
+                type="number"
+                value={inputs.horizontalDistance ?? ''}
+                onChange={(e) =>
+                  setInputs({
+                    ...inputs,
+                    // Limit horizontal distance to prevent DoS
+                    horizontalDistance: Math.min(
+                      Math.max(0, Number(e.target.value)),
+                      MAX_HORIZONTAL_DISTANCE
+                    ),
+                  })
+                }
+                onFocus={(e) => e.target.select()}
+                max={MAX_HORIZONTAL_DISTANCE}
+                min={0}
+                className="w-full p-2 pr-8 border rounded focus:ring-2 focus:ring-blue-300 border-blue-200 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                placeholder={t('enterDistance')}
+              />
+              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none text-sm">
+                km
+              </span>
+            </div>
           </div>
 
           <div>
@@ -312,26 +317,31 @@ const TourCalculator: React.FC = () => {
               <FaMountain className="text-orange-600" />
               {t('verticalDistance')}
             </label>
-            <input
-              id={verticalId}
-              type="number"
-              value={inputs.verticalDistance ?? ''}
-              onChange={(e) =>
-                setInputs({
-                  ...inputs,
-                  // Limit vertical distance to prevent DoS
-                  verticalDistance: Math.min(
-                    Math.max(0, Number(e.target.value)),
-                    MAX_VERTICAL_DISTANCE
-                  ),
-                })
-              }
-              onFocus={(e) => e.target.select()}
-              max={MAX_VERTICAL_DISTANCE}
-              min={0}
-              className="w-full p-2 border rounded focus:ring-2 focus:ring-orange-300 border-orange-200"
-              placeholder={t('enterAltitude')}
-            />
+            <div className="relative">
+              <input
+                id={verticalId}
+                type="number"
+                value={inputs.verticalDistance ?? ''}
+                onChange={(e) =>
+                  setInputs({
+                    ...inputs,
+                    // Limit vertical distance to prevent DoS
+                    verticalDistance: Math.min(
+                      Math.max(0, Number(e.target.value)),
+                      MAX_VERTICAL_DISTANCE
+                    ),
+                  })
+                }
+                onFocus={(e) => e.target.select()}
+                max={MAX_VERTICAL_DISTANCE}
+                min={0}
+                className="w-full p-2 pr-8 border rounded focus:ring-2 focus:ring-orange-300 border-orange-200 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                placeholder={t('enterAltitude')}
+              />
+              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none text-sm">
+                m
+              </span>
+            </div>
           </div>
         </div>
       </div>
