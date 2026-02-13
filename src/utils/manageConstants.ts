@@ -8,9 +8,9 @@ import * as tacticalConstants from '../constants/tacticalTourFactors';
  * @returns true if input matches schema structure and types
  */
 const validateStructure = (input: unknown, schema: unknown): boolean => {
-  // If schema is a number, input must be a number
+  // If schema is a number, input must be a number, finite, and positive (> 0)
   if (typeof schema === 'number') {
-    return typeof input === 'number' && !Number.isNaN(input);
+    return typeof input === 'number' && Number.isFinite(input) && input > 0;
   }
 
   // If schema is an object (and not null), input must be an object

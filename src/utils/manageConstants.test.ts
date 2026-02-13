@@ -50,4 +50,14 @@ describe('validateConstants', () => {
     constantsWithExtra.EXTRA_KEY = 'something';
     expect(validateConstants(constantsWithExtra)).toBe(true);
   });
+
+  it('should invalidate negative or zero number values', () => {
+    const negativeConstants = JSON.parse(JSON.stringify(tacticalConstants));
+    negativeConstants.BASE_SPEEDS.HORIZONTAL = -1;
+    expect(validateConstants(negativeConstants)).toBe(false);
+
+    const zeroConstants = JSON.parse(JSON.stringify(tacticalConstants));
+    zeroConstants.BASE_SPEEDS.HORIZONTAL = 0;
+    expect(validateConstants(zeroConstants)).toBe(false);
+  });
 });
