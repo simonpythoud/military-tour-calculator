@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { MapContainer, TileLayer, Polyline, Tooltip } from 'react-leaflet';
 import { FaMap, FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import { useLanguage } from '../contexts/LanguageContext';
@@ -16,16 +16,37 @@ const RouteMap: React.FC<Props> = React.memo(({ sections }) => {
 
   if (sections.length === 0) return null;
 
-  const allPoints = sections.flatMap((s) =>
-    s.points.map((p) => [p.lat, p.lon] as [number, number])
-  );
+  // Optimization: Calculate bounds in a single pass without large intermediate arrays
+  // This prevents stack overflow errors with large routes (avoiding spread operator on large arrays)
+  // and improves performance by removing O(N) allocations.
+  const bounds = useMemo(() => {
+    let minLat = Infinity;
+    let minLon = Infinity;
+    let maxLat = -Infinity;
+    let maxLon = -Infinity;
 
-  const lats = allPoints.map((p) => p[0]);
-  const lons = allPoints.map((p) => p[1]);
-  const bounds: [[number, number], [number, number]] = [
-    [Math.min(...lats), Math.min(...lons)],
-    [Math.max(...lats), Math.max(...lons)],
-  ];
+    for (const section of sections) {
+      for (const p of section.points) {
+        if (p.lat < minLat) minLat = p.lat;
+        if (p.lat > maxLat) maxLat = p.lat;
+        if (p.lon < minLon) minLon = p.lon;
+        if (p.lon > maxLon) maxLon = p.lon;
+      }
+    }
+
+    // Fallback if no points found (though check above handles empty sections)
+    if (minLat === Infinity) {
+      return [
+        [0, 0],
+        [0, 0],
+      ] as [[number, number], [number, number]];
+    }
+
+    return [
+      [minLat, minLon],
+      [maxLat, maxLon],
+    ] as [[number, number], [number, number]];
+  }, [sections]);
 
   return (
     <div className="bg-white p-3 sm:p-4 rounded-lg shadow mb-4 sm:mb-6">
