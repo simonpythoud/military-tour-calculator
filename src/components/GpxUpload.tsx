@@ -1,6 +1,6 @@
 import type React from 'react';
 import { useRef, useState } from 'react';
-import { FaUpload, FaRoute } from 'react-icons/fa';
+import { FaUpload, FaRoute, FaTrash, FaFile } from 'react-icons/fa';
 import { useLanguage } from '../contexts/LanguageContext';
 import {
   parseNavigationFile,
@@ -14,12 +14,14 @@ interface Props {
   onRouteLoaded: (route: GpxRoute) => void;
   hasRoute: boolean;
   onClearRoute: () => void;
+  fileName?: string;
 }
 
 const GpxUpload: React.FC<Props> = ({
   onRouteLoaded,
   hasRoute,
   onClearRoute,
+  fileName,
 }) => {
   const { t } = useLanguage();
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -100,16 +102,29 @@ const GpxUpload: React.FC<Props> = ({
             className="sr-only"
           />
         </label>
-        <span className="text-sm text-gray-500 hidden sm:inline">
-          or drag & drop file here
-        </span>
+        {!hasRoute && (
+          <span className="text-sm text-gray-500 hidden sm:inline">
+            or drag & drop file here
+          </span>
+        )}
+        {hasRoute && fileName && (
+          <div className="flex items-center gap-2 text-sm bg-gray-100 px-3 py-2 rounded-md border border-gray-200">
+            <FaFile className="text-military-green" />
+            <span className="font-medium text-gray-700 truncate max-w-[150px] sm:max-w-[300px]" title={fileName}>
+              <span className="font-normal text-gray-500 mr-1">{t('gpxLoadedFile')}:</span>
+              {fileName}
+            </span>
+          </div>
+        )}
         {hasRoute && (
           <button
             type="button"
             onClick={onClearRoute}
-            className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 ml-auto sm:ml-0"
+            className="p-2 text-red-600 hover:bg-red-50 rounded-md transition-colors border border-transparent hover:border-red-200 ml-auto sm:ml-0"
+            aria-label={t('gpxClearRoute')}
+            title={t('gpxClearRoute')}
           >
-            {t('gpxClearRoute')}
+            <FaTrash />
           </button>
         )}
       </div>

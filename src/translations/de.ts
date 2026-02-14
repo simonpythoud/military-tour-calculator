@@ -195,6 +195,7 @@ const germanTranslations = {
   gpxImportDescription:
     'Laden Sie eine Navigationsdatei (.gpx, .kml, .tcx) hoch, um Distanzen und Höhenmeter automatisch aus Ihrer Route zu berechnen.',
   gpxUploadFile: 'Routendatei hochladen',
+  gpxLoadedFile: 'Geladene Datei',
   gpxClearRoute: 'Route löschen',
   gpxSupportedFormats: 'Unterstützte Formate',
   gpxImportSuccess: 'Route erfolgreich importiert',

@@ -194,6 +194,7 @@ const italianTranslations = {
   gpxImportDescription:
     'Carica un file di navigazione (.gpx, .kml, .tcx) per calcolare automaticamente distanze e dislivello dal tuo percorso.',
   gpxUploadFile: 'Carica file percorso',
+  gpxLoadedFile: 'File caricato',
   gpxClearRoute: 'Elimina percorso',
   gpxSupportedFormats: 'Formati supportati',
   gpxImportSuccess: 'Percorso importato con successo',

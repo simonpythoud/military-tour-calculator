@@ -194,6 +194,7 @@ const romanshTranslations = {
   gpxImportDescription:
     'Chargia ina datoteca da navigaziun (.gpx, .kml, .tcx) per calcular automaticamain distanzas e autezza da tia ruta.',
   gpxUploadFile: 'Chargiar datoteca da ruta',
+  gpxLoadedFile: 'Datoteca chargiada',
   gpxClearRoute: 'Stizzar ruta',
   gpxSupportedFormats: 'Formats sustegnids',
   gpxImportSuccess: 'Ruta importada cun success',

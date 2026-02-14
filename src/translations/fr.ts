@@ -196,6 +196,7 @@ const frenchTranslations = {
   gpxImportDescription:
     'Téléchargez un fichier de navigation (.gpx, .kml, .tcx) pour calculer automatiquement les distances et le dénivelé de votre itinéraire.',
   gpxUploadFile: 'Télécharger un fichier de route',
+  gpxLoadedFile: 'Fichier chargé',
   gpxClearRoute: 'Supprimer la route',
   gpxSupportedFormats: 'Formats supportés',
   gpxImportSuccess: 'Route importée avec succès',
