@@ -203,6 +203,7 @@ const frenchTranslations = {
     "Échec de l'importation du fichier de route. Veuillez vérifier le format du fichier.",
   gpxFileTooBig:
     'Le fichier est trop volumineux. La taille maximale est de 10 Mo.',
+  fileTooBig: 'Le fichier est trop volumineux. La taille maximale est de 1 Mo.',
   invalidFileExtension:
     'Extension de fichier invalide. Formats supportés : .gpx, .kml, .tcx',
   gpxRouteSections: 'Sections de la route',

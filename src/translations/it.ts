@@ -200,6 +200,7 @@ const italianTranslations = {
   gpxImportError:
     'Importazione del file di percorso fallita. Controlla il formato del file.',
   gpxFileTooBig: 'Il file è troppo grande. La dimensione massima è 10MB.',
+  fileTooBig: 'Il file è troppo grande. La dimensione massima è 1 MB.',
   invalidFileExtension:
     'Estensione file non valida. Formati supportati: .gpx, .kml, .tcx',
   gpxRouteSections: 'Sezioni del percorso',

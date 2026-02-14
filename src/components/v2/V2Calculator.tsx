@@ -25,7 +25,10 @@ import ReliabilityIndicator from '../ReliabilityIndicator';
 import TacticalTourFactors from '../TacticalTourFactors';
 import { validateConstants } from '../../utils/manageConstants';
 import { toast } from 'react-toastify';
-import { MAX_HORIZONTAL_DISTANCE, MAX_VERTICAL_DISTANCE } from '../../constants/limits';
+import {
+  MAX_HORIZONTAL_DISTANCE,
+  MAX_VERTICAL_DISTANCE,
+} from '../../constants/limits';
 import ConstantsToggle from '../ConstantsToggle';
 import SettingsModal from '../SettingsModal';
 import GpxUpload from '../GpxUpload';
@@ -311,19 +314,19 @@ const V2Calculator: React.FC = () => {
               <input
                 type="number"
                 value={inputs.verticalDistance ?? ''}
-              onChange={(e) => {
-                const val = Math.min(
-                  Math.max(0, Number(e.target.value)),
-                  MAX_VERTICAL_DISTANCE
-                );
+                onChange={(e) => {
+                  const val = Math.min(
+                    Math.max(0, Number(e.target.value)),
+                    MAX_VERTICAL_DISTANCE
+                  );
                   setInputs({
                     ...inputs,
-                  verticalDistance: val,
-                  elevationGain: val,
-                });
-              }}
-              max={MAX_VERTICAL_DISTANCE}
-              min={0}
+                    verticalDistance: val,
+                    elevationGain: val,
+                  });
+                }}
+                max={MAX_VERTICAL_DISTANCE}
+                min={0}
                 onFocus={(e) => e.target.select()}
                 className="w-full p-2 border rounded focus:ring-2 focus:ring-orange-300 border-orange-200"
                 placeholder={t('enterAltitude')}

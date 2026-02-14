@@ -21,7 +21,11 @@ import ReliabilityIndicator from './ReliabilityIndicator';
 import TacticalTourFactors from './TacticalTourFactors';
 import { validateConstants } from '../utils/manageConstants';
 import { toast } from 'react-toastify';
-import { MAX_HORIZONTAL_DISTANCE, MAX_VERTICAL_DISTANCE } from '../constants/limits';
+import {
+  MAX_HORIZONTAL_DISTANCE,
+  MAX_VERTICAL_DISTANCE,
+  MAX_CONSTANTS_FILE_SIZE,
+} from '../constants/limits';
 import ConstantsToggle from './ConstantsToggle';
 import SettingsModal from './SettingsModal';
 import GpxUpload from './GpxUpload';
@@ -194,6 +198,11 @@ const TourCalculator: React.FC = () => {
   ) => {
     const file = event.target.files?.[0];
     if (!file) return;
+
+    if (file.size > MAX_CONSTANTS_FILE_SIZE) {
+      toast.error(t('fileTooBig'));
+      return;
+    }
 
     try {
       const text = await file.text();
