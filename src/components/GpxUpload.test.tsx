@@ -91,6 +91,27 @@ describe('GpxUpload', () => {
     expect(screen.getByText(/or drag & drop file here/i)).toBeInTheDocument();
   });
 
+  it('displays the filename when route is loaded', () => {
+    render(
+      <LanguageProvider>
+        <GpxUpload
+          onRouteLoaded={mockOnRouteLoaded}
+          hasRoute={true}
+          onClearRoute={mockOnClearRoute}
+          fileName="test-hike.gpx"
+        />
+      </LanguageProvider>
+    );
+
+    expect(screen.getByText('test-hike.gpx')).toBeInTheDocument();
+  });
+
+  it('renders clear button with correct aria-label', () => {
+    renderComponent(true);
+    const clearButton = screen.getByLabelText('Clear Route');
+    expect(clearButton).toBeInTheDocument();
+  });
+
   it('handles file upload via input', async () => {
     const mockRoute = {
       name: 'Test Route',

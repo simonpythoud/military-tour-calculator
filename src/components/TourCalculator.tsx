@@ -255,6 +255,7 @@ const TourCalculator: React.FC = () => {
         onRouteLoaded={handleRouteLoaded}
         hasRoute={!!gpxRoute}
         onClearRoute={handleClearRoute}
+        fileName={gpxRoute?.name}
       />
 
       {gpxRoute && (

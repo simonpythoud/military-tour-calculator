@@ -191,6 +191,7 @@ const englishTranslations = {
   gpxImportDescription:
     'Upload a navigation file (.gpx, .kml, .tcx) to automatically calculate distances and elevation from your route.',
   gpxUploadFile: 'Upload Route File',
+  gpxLoadedFile: 'Loaded file',
   gpxClearRoute: 'Clear Route',
   gpxSupportedFormats: 'Supported formats',
   gpxImportSuccess: 'Route imported successfully',
