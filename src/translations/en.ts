@@ -196,6 +196,7 @@ const englishTranslations = {
   gpxImportSuccess: 'Route imported successfully',
   gpxImportError: 'Failed to import route file. Please check the file format.',
   gpxFileTooBig: 'File is too large. Maximum size is 10MB.',
+  fileTooBig: 'File is too large. Maximum size is 1MB.',
   invalidFileExtension:
     'Invalid file extension. Supported formats: .gpx, .kml, .tcx',
   gpxRouteSections: 'Route Sections',

@@ -2,7 +2,10 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import TourCalculator from './TourCalculator';
 import { LanguageProvider } from '../contexts/LanguageContext';
-import { MAX_HORIZONTAL_DISTANCE, MAX_VERTICAL_DISTANCE } from '../constants/limits';
+import {
+  MAX_HORIZONTAL_DISTANCE,
+  MAX_VERTICAL_DISTANCE,
+} from '../constants/limits';
 
 // Mock child components to simplify testing
 vi.mock('./GpxUpload', () => ({
@@ -39,10 +42,14 @@ describe('TourCalculator Input Limits', () => {
     renderComponent();
 
     // Find the input by label text (using regex to match partial text)
-    const input = screen.getByLabelText(/Horizontal Distance/i) as HTMLInputElement;
+    const input = screen.getByLabelText(
+      /Horizontal Distance/i
+    ) as HTMLInputElement;
 
     // Try to enter a value larger than MAX
-    fireEvent.change(input, { target: { value: String(MAX_HORIZONTAL_DISTANCE + 100) } });
+    fireEvent.change(input, {
+      target: { value: String(MAX_HORIZONTAL_DISTANCE + 100) },
+    });
 
     // Check if the value is clamped
     expect(Number(input.value)).toBe(MAX_HORIZONTAL_DISTANCE);
@@ -59,9 +66,13 @@ describe('TourCalculator Input Limits', () => {
   it('limits vertical distance input', () => {
     renderComponent();
 
-    const input = screen.getByLabelText(/Vertical Distance/i) as HTMLInputElement;
+    const input = screen.getByLabelText(
+      /Vertical Distance/i
+    ) as HTMLInputElement;
 
-    fireEvent.change(input, { target: { value: String(MAX_VERTICAL_DISTANCE + 1000) } });
+    fireEvent.change(input, {
+      target: { value: String(MAX_VERTICAL_DISTANCE + 1000) },
+    });
     expect(Number(input.value)).toBe(MAX_VERTICAL_DISTANCE);
 
     fireEvent.change(input, { target: { value: '-100' } });

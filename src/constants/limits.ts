@@ -1,4 +1,5 @@
 export const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
+export const MAX_CONSTANTS_FILE_SIZE = 1 * 1024 * 1024; // 1MB
 export const SUPPORTED_EXTENSIONS = ['.gpx', '.kml', '.tcx'];
 
 // Input limits to prevent DoS (infinite loops in calculation)

@@ -201,6 +201,7 @@ const germanTranslations = {
   gpxImportError:
     'Route konnte nicht importiert werden. Bitte überprüfen Sie das Dateiformat.',
   gpxFileTooBig: 'Datei ist zu groß. Maximale Größe ist 10MB.',
+  fileTooBig: 'Datei ist zu groß. Maximale Größe ist 1MB.',
   invalidFileExtension:
     'Ungültige Dateiendung. Unterstützte Formate: .gpx, .kml, .tcx',
   gpxRouteSections: 'Routenabschnitte',

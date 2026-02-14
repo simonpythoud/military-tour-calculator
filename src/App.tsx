@@ -6,6 +6,8 @@ import LanguageSwitcher from './components/LanguageSwitcher';
 import { LanguageProvider, useLanguage } from './contexts/LanguageContext';
 import ErrorBoundary from './components/ErrorBoundary';
 import './App.css';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 type AppVersion = 'v1' | 'v2';
 
@@ -57,6 +59,18 @@ const AppContent: React.FC = () => {
 const App: React.FC = () => {
   return (
     <LanguageProvider>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       <AppContent />
     </LanguageProvider>
   );

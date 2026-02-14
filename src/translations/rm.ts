@@ -200,6 +200,7 @@ const romanshTranslations = {
   gpxImportError:
     "Errur durant l'import da la datoteca da ruta. Controllescha il format da la datoteca.",
   gpxFileTooBig: 'La datoteca è memia gronda. La grondezza maximala è 10MB.',
+  fileTooBig: 'La datoteca è memia gronda. La grondezza maximala è 1 MB.',
   invalidFileExtension:
     'Extensiun da datoteca nunvalida. Formats supportads: .gpx, .kml, .tcx',
   gpxRouteSections: 'Secziuns da la ruta',
