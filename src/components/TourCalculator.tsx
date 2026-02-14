@@ -21,7 +21,10 @@ import ReliabilityIndicator from './ReliabilityIndicator';
 import TacticalTourFactors from './TacticalTourFactors';
 import { validateConstants } from '../utils/manageConstants';
 import { toast } from 'react-toastify';
-import { MAX_HORIZONTAL_DISTANCE, MAX_VERTICAL_DISTANCE } from '../constants/limits';
+import {
+  MAX_HORIZONTAL_DISTANCE,
+  MAX_VERTICAL_DISTANCE,
+} from '../constants/limits';
 import ConstantsToggle from './ConstantsToggle';
 import SettingsModal from './SettingsModal';
 import GpxUpload from './GpxUpload';

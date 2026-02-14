@@ -1,4 +1,8 @@
 import type { RoutePoint, RouteSection, GpxRoute, Terrain } from '../types';
+import {
+  MAX_HORIZONTAL_DISTANCE,
+  MAX_VERTICAL_DISTANCE,
+} from '../constants/limits';
 
 const haversineDistance = (
   lat1: number,
@@ -203,6 +207,28 @@ export const parseNavigationFile = (
 
   computeDistances(points);
 
+  // Security check: Validate total distance
+  const totalDistance =
+    Math.round(points[points.length - 1].distanceFromStart * 100) / 100;
+  if (totalDistance > MAX_HORIZONTAL_DISTANCE) {
+    throw new Error(
+      `Route distance (${totalDistance}km) exceeds maximum allowed (${MAX_HORIZONTAL_DISTANCE}km)`
+    );
+  }
+
+  // Security check: Validate total elevation gain
+  let preCheckElevGain = 0;
+  for (let i = 1; i < points.length; i++) {
+    const diff = points[i].ele - points[i - 1].ele;
+    if (diff > 0) preCheckElevGain += diff;
+  }
+
+  if (preCheckElevGain > MAX_VERTICAL_DISTANCE) {
+    throw new Error(
+      `Route elevation gain (${Math.round(preCheckElevGain)}m) exceeds maximum allowed (${MAX_VERTICAL_DISTANCE}m)`
+    );
+  }
+
   const targetSections = Math.max(
     1,
     Math.min(20, Math.ceil(points[points.length - 1].distanceFromStart / 2))
@@ -220,8 +246,7 @@ export const parseNavigationFile = (
     name: getRouteName(xmlDoc, ext),
     points,
     sections,
-    totalDistance:
-      Math.round(points[points.length - 1].distanceFromStart * 100) / 100,
+    totalDistance,
     totalElevationGain: Math.round(totalElevGain),
     totalElevationLoss: Math.round(totalElevLoss),
   };
