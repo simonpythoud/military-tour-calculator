@@ -7,10 +7,14 @@ import type React from 'react';
 
 // Mock react-leaflet components
 vi.mock('react-leaflet', () => ({
-  MapContainer: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
+  MapContainer: ({ children }: { children: React.ReactNode }) => (
+    <div>{children}</div>
+  ),
   TileLayer: () => <div>TileLayer</div>,
   Polyline: () => <div>Polyline</div>,
-  Tooltip: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
+  Tooltip: ({ children }: { children: React.ReactNode }) => (
+    <div>{children}</div>
+  ),
 }));
 
 describe('RouteMap', () => {
